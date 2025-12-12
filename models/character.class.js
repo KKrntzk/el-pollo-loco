@@ -1,3 +1,3 @@
-class Character extends MovableObject{
-    
+class Character extends MovableObject {
+  jump() {}
 }
