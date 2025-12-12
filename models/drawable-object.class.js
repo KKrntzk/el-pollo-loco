@@ -1,0 +1,3 @@
+class DrawableObject extends World{
+
+}
