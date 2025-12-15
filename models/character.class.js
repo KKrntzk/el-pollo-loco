@@ -2,6 +2,8 @@ class Character extends MovableObject {
   height = 300;
   y = 135;
   imagesWalking = ImageHub.character.walking;
+  world;
+  speed = 10;
 
   //  ImageHub.character.walking;
 
@@ -13,11 +15,24 @@ class Character extends MovableObject {
 
   animate() {
     setInterval(() => {
-      let i = this.currentImage % this.imagesWalking.length;
-      let path = this.imagesWalking[i];
-      this.img = this.imageCache[path];
-      this.currentImage++;
-    }, 150);
+      if (this.world.keyboard.RIGHT) {
+        this.x += this.speed;
+        this.otherDirection = false;
+      }
+
+      if (this.world.keyboard.LEFT) {
+        this.x -= this.speed;
+        this.otherDirection = true;
+      }
+    }, 1000 / 60);
+    setInterval(() => {
+      if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
+        let i = this.currentImage % this.imagesWalking.length;
+        let path = this.imagesWalking[i];
+        this.img = this.imageCache[path];
+        this.currentImage++;
+      }
+    }, 50);
   }
 
   jump() {}
