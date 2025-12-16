@@ -6,6 +6,13 @@ class Character extends MovableObject {
   world;
   speed = 10;
 
+  offset = {
+    top: 150,
+    right: 30,
+    bottom: 20,
+    left: 30,
+  };
+
   //  ImageHub.character.walking;
 
   constructor() {
@@ -14,6 +21,7 @@ class Character extends MovableObject {
     this.loadImages(this.imagesJumping);
     this.applyGravity();
     this.animate();
+    this.getRealFrame();
   }
 
   animate() {

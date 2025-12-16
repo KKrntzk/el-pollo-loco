@@ -2,14 +2,33 @@ class MovableObject {
   x = 120;
   y = 330;
   img;
-  width = 100;
-  height = 100;
+  width = 120;
+  height = 50;
   imageCache = [];
   currentImage = 0;
   speed = 0.15;
   otherDirection = false;
   speedY = 0;
   acceleration = 2.5;
+
+  real_x;
+  real_y;
+  real_width;
+  real_height;
+
+  offset = {
+    top: 10,
+    right: 10,
+    bottom: 10,
+    left: 10,
+  };
+
+  getRealFrame() {
+    this.real_x = this.x + this.offset.left;
+    this.real_y = this.y + this.offset.top;
+    this.real_width = this.width - this.offset.left - this.offset.right;
+    this.real_height = this.height - this.offset.top - this.offset.bottom;
+  }
 
   loadImg(path) {
     this.img = new Image();
@@ -33,9 +52,23 @@ class MovableObject {
       ctx.beginPath();
       ctx.lineWidth = "5";
       ctx.strokeStyle = "blue";
-      ctx.rect(this.x, this.y, this.width, this.height);
+      ctx.rect(
+        this.x + this.offset.left,
+        this.y + this.offset.top,
+        this.width - this.offset.left - this.offset.right,
+        this.height - this.offset.top - this.offset.bottom
+      );
       ctx.stroke();
     }
+  }
+
+  isColliding(mo) {
+    return (
+      this.real_x + this.real_width > mo.real_x &&
+      this.real_y + this.real_height > mo.real_y &&
+      this.real_x < mo.real_x &&
+      this.real_y < mo.real_y + mo.real_height
+    );
   }
 
   playAnimation(images) {
