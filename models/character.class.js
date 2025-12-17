@@ -7,12 +7,11 @@ class Character extends MovableObject {
   speed = 10;
 
   offset = {
-    top: 150,
+    top: 130,
     right: 60,
-    bottom: 170,
+    bottom: 140,
     left: 30,
   };
-
   //  ImageHub.character.walking;
 
   constructor() {
