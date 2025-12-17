@@ -3,6 +3,9 @@ class Character extends MovableObject {
   y = 30;
   imagesWalking = ImageHub.character.walking;
   imagesJumping = ImageHub.character.jumping;
+  imagesHurt = ImageHub.character.hurt;
+  imagesDead = ImageHub.character.dead;
+  imagesIdle = ImageHub.character.idle;
   world;
   speed = 10;
 
