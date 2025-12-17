@@ -11,8 +11,8 @@ class Character extends MovableObject {
 
   offset = {
     top: 130,
-    right: 60,
-    bottom: 140,
+    right: 20,
+    bottom: 10,
     left: 30,
   };
   //  ImageHub.character.walking;

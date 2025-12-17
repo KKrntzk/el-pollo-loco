@@ -7,6 +7,38 @@ class DrawableObject {
   imageCache = [];
   currentImage = 0;
 
+  offset = {
+    top: 10,
+    right: 10,
+    bottom: 10,
+    left: 10,
+  };
+
+  realX;
+  realY;
+  realWidth;
+  realHeight;
+
+  constructor() {
+    IntervalHub.startInterval(this.getRealFrame, 1000 / 60);
+  }
+
+  getRealFrame = () => {
+    this.realX = this.x + this.offset.left;
+    this.realY = this.y + this.offset.top;
+    this.realWidth = this.width - this.offset.left - this.offset.right;
+    this.realHeight = this.height - this.offset.top - this.offset.bottom;
+  };
+
+  isColliding(mo) {
+    return (
+      this.realX + this.realWidth > mo.realX &&
+      this.realY + this.realHeight > mo.realY &&
+      this.realX < mo.realX + mo.realWidth &&
+      this.realY < mo.realY + mo.realHeight
+    );
+  }
+
   loadImg(path) {
     this.img = new Image();
     this.img.src = path;
@@ -25,16 +57,15 @@ class DrawableObject {
   }
 
   drawFrame(ctx) {
-    if (this instanceof Character || this instanceof Chicken) {
+    if (
+      this instanceof Character ||
+      this instanceof Chicken ||
+      this instanceof Endboss
+    ) {
       ctx.beginPath();
       ctx.lineWidth = "5";
       ctx.strokeStyle = "blue";
-      ctx.rect(
-        this.x + this.offset.left,
-        this.y + this.offset.top,
-        this.width - this.offset.right,
-        this.height - this.offset.bottom
-      );
+      ctx.rect(this.realX, this.realY, this.realWidth, this.realHeight);
       ctx.stroke();
     }
   }
