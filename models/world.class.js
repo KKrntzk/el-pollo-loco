@@ -6,6 +6,7 @@ class World {
   character = new Character();
   level = level1;
   statusbar = new Statusbar();
+  throwabelObjects = [new ThrowableObject()];
 
   constructor(canvas, keyboard) {
     this.ctx = canvas.getContext("2d");
@@ -36,8 +37,10 @@ class World {
     this.ctx.translate(this.camera_x, 0);
 
     this.addObjectsToMap(this.level.backgroundObjects);
+    this.addObjectsToMap(this.throwabelObjects);
     this.addToMap(this.character);
     this.addToMap(this.statusbar);
+
     this.addObjectsToMap(this.level.clouds);
     this.addObjectsToMap(this.level.enemies);
 
