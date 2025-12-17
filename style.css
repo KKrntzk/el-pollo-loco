@@ -1,9 +1,28 @@
 body {
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
+  min-height: 100vh;
+  margin: 0;
+  background-image: url(img_pollo_locco/img/background/desert.png);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  font-family: "riogrande", Arial, Helvetica, sans-serif;
 }
 
 canvas {
   background-color: black;
+}
+
+@font-face {
+  font-family: "riogrande";
+  src: url("fonts/riogrande.ttf");
+}
+
+h1 {
+  font-size: 120px;
+  letter-spacing: 3px;
+  text-shadow: 8px, 8px, 8px rgba(0, 0, 0, 0.5);
 }
