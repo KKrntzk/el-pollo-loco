@@ -8,8 +8,8 @@ class Character extends MovableObject {
 
   offset = {
     top: 150,
-    right: 30,
-    bottom: 20,
+    right: 60,
+    bottom: 170,
     left: 30,
   };
 
@@ -21,7 +21,6 @@ class Character extends MovableObject {
     this.loadImages(this.imagesJumping);
     this.applyGravity();
     this.animate();
-    this.getRealFrame();
   }
 
   animate() {

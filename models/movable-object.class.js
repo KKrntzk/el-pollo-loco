@@ -11,24 +11,12 @@ class MovableObject {
   speedY = 0;
   acceleration = 2.5;
 
-  real_x;
-  real_y;
-  real_width;
-  real_height;
-
   offset = {
     top: 10,
     right: 10,
     bottom: 10,
     left: 10,
   };
-
-  getRealFrame() {
-    this.real_x = this.x + this.offset.left;
-    this.real_y = this.y + this.offset.top;
-    this.real_width = this.width - this.offset.left - this.offset.right;
-    this.real_height = this.height - this.offset.top - this.offset.bottom;
-  }
 
   loadImg(path) {
     this.img = new Image();
@@ -55,8 +43,8 @@ class MovableObject {
       ctx.rect(
         this.x + this.offset.left,
         this.y + this.offset.top,
-        this.width - this.offset.left - this.offset.right,
-        this.height - this.offset.top - this.offset.bottom
+        this.width - this.offset.right,
+        this.height - this.offset.bottom
       );
       ctx.stroke();
     }
@@ -64,10 +52,23 @@ class MovableObject {
 
   isColliding(mo) {
     return (
-      this.real_x + this.real_width > mo.real_x &&
-      this.real_y + this.real_height > mo.real_y &&
-      this.real_x < mo.real_x &&
-      this.real_y < mo.real_y + mo.real_height
+      this.x + this.offset.left + this.width - this.offset.left >
+        mo.x + mo.offset.left &&
+      this.y +
+        this.offset.top +
+        this.height -
+        this.offset.top -
+        this.offset.bottom >
+        mo.y + mo.offset.top &&
+      this.x + this.offset.left <
+        mo.x + mo.offset.left + mo.width - mo.offset.left - mo.offset.right &&
+      this.y + this.offset.top <
+        mo.y +
+          mo.offset.top +
+          mo.height -
+          mo.offset.top -
+          mo -
+          this.offset.bottom
     );
   }
 
