@@ -61,7 +61,7 @@ class DrawableObject {
       this instanceof Character ||
       this instanceof Chicken ||
       this instanceof Endboss ||
-      this instanceof CollectableObject
+      this instanceof Coins
     ) {
       ctx.beginPath();
       ctx.lineWidth = "5";

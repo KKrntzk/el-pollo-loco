@@ -12,7 +12,7 @@ class World {
   statusbar = new Statusbar();
   statusbarCoin = new StatusbarCoin();
   coins = [];
-  collectableObjects = [new CollectableObject()];
+  collectableObjects = [new Coins()];
 
   constructor(canvas, keyboard) {
     this.ctx = canvas.getContext("2d");

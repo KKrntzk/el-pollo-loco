@@ -1,20 +1,19 @@
 class Coins extends DrawableObject {
-  height = 50;
-  width = 50;
+  height = 100;
+  width = 100;
   images = ImageHub.coin.coin;
 
-  //   offset = {
-  //     top: 10,
-  //     right: 10,
-  //     bottom: 10,
-  //     left: 10,
-  //   };
+  offset = {
+    top: 35,
+    right: 35,
+    bottom: 35,
+    left: 35,
+  };
 
   constructor() {
     super().loadImg("img_pollo_locco/img/8_coin/coin_1.png");
-    this.loadImages(this.images);
-    this.x = 150 + Math.random() * 2000;
-    this.y = 70 + Math.random() * 70;
+    this.x = 300 + Math.random() * 2000;
+    this.y = 150 + Math.random() * 100;
     // this.animateCoin();
   }
 
