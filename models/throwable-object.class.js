@@ -10,20 +10,17 @@ class ThrowableObject extends MovableObject {
     this.y = y;
     this.height = 60;
     this.width = 40;
-    this.throw();
+    this.runThrowAnimation();
   }
 
-  throw() {
+  runThrowAnimation() {
     this.speedY = 30;
     this.applyGravity();
-    setInterval(() => {
-      this.x += 10;
-    }, 25);
-    bottleCount--;
-    console.log(bottleCount);
-
-    setInterval(() => {
-      this.playAnimation(this.imagesRotation);
-    }, 1000 / 20);
+    IntervalHub.startInterval(this.throw, 1000 / 20);
   }
+
+  throw = () => {
+    this.x += 10;
+    this.playAnimation(this.imagesRotation);
+  };
 }

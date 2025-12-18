@@ -34,13 +34,18 @@ class World {
   }
 
   checkThrowObjects = () => {
-    if (this.keyboard.D && !this.throwObject) {
+    if (
+      this.keyboard.D &&
+      !this.throwObject &&
+      this.character.bottleCount >= 1
+    ) {
       let bottle = new ThrowableObject(
         this.character.x + 100,
         this.character.y + 100
       );
       this.throwObject = true;
       this.throwabelObjects.push(bottle);
+      this.character.useBottle();
     } else if (this.throwObject && !this.keyboard.D) {
       this.throwObject = false;
     }
