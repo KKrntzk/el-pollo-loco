@@ -4,6 +4,7 @@ class MovableObject extends DrawableObject {
   otherDirection = false;
   speedY = 0;
   acceleration = 2.5;
+  energy = 100;
 
   playAnimation(images) {
     let i = this.currentImage % this.imagesWalking.length;
@@ -26,6 +27,17 @@ class MovableObject extends DrawableObject {
       return true;
     }
     return this.y < 130;
+  }
+
+  hit() {
+    this.energy -= 0.5;
+    if (this.energy < 0) {
+      this.energy = 0;
+    }
+  }
+
+  isDead() {
+    return this.energy == 0;
   }
 
   moveRight() {
