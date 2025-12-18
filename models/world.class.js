@@ -56,12 +56,10 @@ class World {
   };
 
   checkBottleCollisions = () => {
-    this.level.bottles.forEach((bottles) => {
-      if (this.character.isColliding(bottles)) {
+    this.level.bottles.forEach((bottle) => {
+      if (!bottle.collected && this.character.isColliding(bottle)) {
+        bottle.collected = true;
         this.character.collect();
-        console.log("Flasche kollidiert", this.character.bottleCount);
-
-        // this.statusbar.setPercentage(this.character.energy);
       }
     });
   };
@@ -84,7 +82,11 @@ class World {
     this.ctx.translate(this.camera_x, 0);
 
     this.addToMap(this.character);
-    this.addObjectsToMap(this.level.bottles);
+
+    if (!this.collected) {
+      this.addObjectsToMap(this.level.bottles);
+    }
+
     this.addObjectsToMap(this.level.enemies);
 
     this.ctx.translate(-this.camera_x, 0);
@@ -97,7 +99,9 @@ class World {
 
   addObjectsToMap(objects) {
     objects.forEach((o) => {
-      this.addToMap(o);
+      if (!o.collected) {
+        this.addToMap(o);
+      }
     });
   }
 
