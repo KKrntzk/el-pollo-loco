@@ -8,6 +8,7 @@ const level1 = new Level(
     new Cloud(),
     new Cloud(),
   ],
+
   [
     new BackgroundObject(
       "img_pollo_locco/img/5_background/layers/air.png",
@@ -86,5 +87,18 @@ const level1 = new Level(
       "img_pollo_locco/img/5_background/layers/1_first_layer/2.png",
       719 * 3
     ),
+  ],
+  [
+    new Coins(),
+    new Coins(),
+    new Coins(),
+    new Coins(),
+    new Coins(),
+    new Coins(),
+    new Coins(),
+    new Coins(),
+    new Coins(),
+    new Coins(),
+    new Coins(),
   ]
 );

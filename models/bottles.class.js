@@ -1,7 +1,7 @@
-class Coins extends DrawableObject {
+class Bottles extends DrawableObject {
   height = 100;
   width = 100;
-  images = ImageHub.coin.coin;
+  images = ImageHub.bottle.onGround;
 
   offset = {
     top: 35,

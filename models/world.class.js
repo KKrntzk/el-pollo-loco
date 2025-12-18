@@ -12,7 +12,6 @@ class World {
   statusbar = new Statusbar();
   statusbarCoin = new StatusbarCoin();
   coins = [];
-  collectableObjects = [new Coins()];
 
   constructor(canvas, keyboard) {
     this.ctx = canvas.getContext("2d");
@@ -61,9 +60,8 @@ class World {
 
     this.addObjectsToMap(this.level.backgroundObjects);
     this.addObjectsToMap(this.throwabelObjects);
-    this.addObjectsToMap(this.collectableObjects);
+    this.addObjectsToMap(this.level.coins);
     this.addObjectsToMap(this.level.clouds);
-    this.addObjectsToMap(this.coins);
 
     this.ctx.translate(-this.camera_x, 0);
     this.addToMap(this.statusbar);
