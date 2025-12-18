@@ -3,6 +3,13 @@ class Bottles extends DrawableObject {
   width = 70;
   images = [ImageHub.bottle.onGround];
 
+  offset = {
+    top: 15,
+    right: 15,
+    bottom: 5,
+    left: 28,
+  };
+
   constructor() {
     super().loadImg(
       "img_pollo_locco/img/6_salsa_bottle/1_salsa_bottle_on_ground.png"
