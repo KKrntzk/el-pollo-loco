@@ -19,6 +19,8 @@ class ThrowableObject extends MovableObject {
     setInterval(() => {
       this.x += 10;
     }, 25);
+    bottleCount--;
+    console.log(bottleCount);
 
     setInterval(() => {
       this.playAnimation(this.imagesRotation);

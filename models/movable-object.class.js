@@ -6,6 +6,7 @@ class MovableObject extends DrawableObject {
   acceleration = 2.5;
   energy = 100;
   lastHit = 0;
+  bottleCount = 10;
 
   playAnimation(images) {
     let i = this.currentImage % images.length;
@@ -37,6 +38,16 @@ class MovableObject extends DrawableObject {
     } else {
       this.lastHit = new Date().getTime();
     }
+  }
+
+  collect() {
+    this.bottleCount++;
+    // bottle collided with needs to disappear
+    // counter of MAX bottles needs to raise
+    // max bottle Count 10 => 10 bottles in lvl
+    // counter connected to pictures
+    // if you throw bottle counter --;
+    // start with no bottles available
   }
 
   isHurt() {

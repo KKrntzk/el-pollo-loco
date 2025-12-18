@@ -30,6 +30,7 @@ class World {
   run() {
     IntervalHub.startInterval(this.checkCollisions, 1000 / 60);
     IntervalHub.startInterval(this.checkThrowObjects, 1000 / 60);
+    IntervalHub.startInterval(this.checkBottleCollisions, 1000 / 60);
   }
 
   checkThrowObjects = () => {
@@ -50,6 +51,17 @@ class World {
       if (this.character.isColliding(enemy)) {
         this.character.hit();
         this.statusbar.setPercentage(this.character.energy);
+      }
+    });
+  };
+
+  checkBottleCollisions = () => {
+    this.level.bottles.forEach((bottles) => {
+      if (this.character.isColliding(bottles)) {
+        this.character.collect();
+        console.log("Flasche kollidiert", this.character.bottleCount);
+
+        // this.statusbar.setPercentage(this.character.energy);
       }
     });
   };
