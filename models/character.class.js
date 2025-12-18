@@ -22,6 +22,7 @@ class Character extends MovableObject {
     this.loadImages(this.imagesWalking);
     this.loadImages(this.imagesJumping);
     this.loadImages(this.imagesDead);
+    this.loadImages(this.imagesHurt);
     this.applyGravity();
     this.animate();
   }
@@ -48,6 +49,8 @@ class Character extends MovableObject {
     setInterval(() => {
       if (this.isDead()) {
         this.playAnimation(this.imagesDead);
+      } else if (this.isHurt()) {
+        this.playAnimation(this.imagesHurt);
       } else if (this.isAboveGround()) {
         this.playAnimation(this.imagesJumping);
       } else {

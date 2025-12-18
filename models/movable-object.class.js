@@ -5,9 +5,10 @@ class MovableObject extends DrawableObject {
   speedY = 0;
   acceleration = 2.5;
   energy = 100;
+  lastHit = 0;
 
   playAnimation(images) {
-    let i = this.currentImage % this.imagesWalking.length;
+    let i = this.currentImage % images.length;
     let path = images[i];
     this.img = this.imageCache[path];
     this.currentImage++;
@@ -33,7 +34,17 @@ class MovableObject extends DrawableObject {
     this.energy -= 0.5;
     if (this.energy < 0) {
       this.energy = 0;
+    } else {
+      this.lastHit = new Date().getTime();
     }
+  }
+
+  isHurt() {
+    let timePassed = new Date().getTime() - this.lastHit;
+    timePassed = timePassed / 1000;
+    console.log(timePassed);
+
+    return timePassed < 1;
   }
 
   isDead() {
