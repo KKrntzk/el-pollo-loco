@@ -28,7 +28,8 @@ class Character extends MovableObject {
 
   animate() {
     IntervalHub.startInterval(this.checkMovement, 1000 / 60);
-    IntervalHub.startInterval(this.animateMovement, 1000 / 20);
+    IntervalHub.startInterval(this.checkDeathByJump, 1000 / 60);
+    IntervalHub.startInterval(this.animateMovement, 200);
   }
 
   checkMovement = () => {
@@ -61,6 +62,14 @@ class Character extends MovableObject {
         this.playAnimation(this.imagesWalking);
       }
     }
+  };
+
+  checkDeathByJump = () => {
+    world.level.enemies.forEach((enemy) => {
+      if (this.isAboveGround() && this.speedY < 0 && this.isColliding(enemy)) {
+        enemy.dead = true;
+      }
+    });
   };
 
   useBottle() {

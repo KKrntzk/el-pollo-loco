@@ -109,8 +109,9 @@ class World {
     if (!this.collected) {
       this.addObjectsToMap(this.level.coins);
     }
-
-    this.addObjectsToMap(this.level.enemies);
+    if (!this.dead) {
+      this.addObjectsToMap(this.level.enemies.filter((enemy) => !enemy.dead));
+    }
 
     this.ctx.translate(-this.camera_x, 0);
 
