@@ -66,6 +66,8 @@ class World {
       if (!bottle.collected && this.character.isColliding(bottle)) {
         bottle.collected = true;
         this.character.collect();
+        let percentage = (this.character.bottleCount / 10) * 100;
+        this.statusbarBottle.setPercentage(percentage);
       }
     });
   };
@@ -75,6 +77,8 @@ class World {
       if (!coin.collected && this.character.isColliding(coin)) {
         coin.collected = true;
         this.character.collectCoin();
+        let percentage = (this.character.coinCount / 10) * 100;
+        this.statusbarCoin.setPercentage(percentage);
       }
     });
   };

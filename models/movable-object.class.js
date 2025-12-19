@@ -54,6 +54,7 @@ class MovableObject extends DrawableObject {
     if (this.coinCount >= 10) {
       this.coinCount = 10;
     }
+
     console.log(world.character.coinCount, "coin");
   }
 
