@@ -4,10 +4,16 @@ class Cloud extends MovableObject {
   y = 20;
   imagesClouds = ImageHub.background.clouds;
 
+  randomImg;
+
   constructor() {
-    super().loadImg("img_pollo_locco/img/5_background/layers/4_clouds/1.png");
-    this.loadImg("img_pollo_locco/img/5_background/layers/4_clouds/2.png");
-    this.loadImages(this.imagesClouds);
+    super();
+    this.getRandomImg();
+    if (this.randomImg === 0) {
+      this.loadImg("img_pollo_locco/img/5_background/layers/4_clouds/1.png");
+    } else {
+      this.loadImg("img_pollo_locco/img/5_background/layers/4_clouds/2.png");
+    }
     this.x = Math.random() * 2000;
     this.animate();
   }
@@ -16,5 +22,9 @@ class Cloud extends MovableObject {
     setInterval(() => {
       this.moveLeft();
     }, 1000 / 60);
+  }
+
+  getRandomImg() {
+    this.randomImg = Math.floor(Math.random() * 2);
   }
 }
