@@ -2,8 +2,6 @@ class Cloud extends MovableObject {
   width = 700;
   height = 300;
   y = 20;
-  imagesClouds = ImageHub.background.clouds;
-
   randomImg;
 
   constructor() {
@@ -14,7 +12,7 @@ class Cloud extends MovableObject {
     } else {
       this.loadImg("img_pollo_locco/img/5_background/layers/4_clouds/2.png");
     }
-    this.x = Math.random() * 2000;
+    this.x = Math.random() * 3500;
     this.animate();
   }
 
