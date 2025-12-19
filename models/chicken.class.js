@@ -9,7 +9,7 @@ class Chicken extends MovableObject {
       "img_pollo_locco/img/3_enemies_chicken/chicken_normal/1_walk/1_w.png"
     );
     this.loadImages(this.imagesWalking);
-    this.x = 200 + Math.random() * 500;
+    this.x = 500 + Math.random() * 500;
     this.animate();
     this.speed = 0.15 + Math.random() * 0.5;
     this.dead = false;
