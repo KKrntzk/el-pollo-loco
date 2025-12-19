@@ -115,7 +115,6 @@ class World {
     this.addToMap(this.statusbarCoin);
     this.ctx.translate(this.camera_x, 0);
 
-    this.addToMap(this.character);
     this.addObjectsToMap(this.level.endboss);
 
     if (!this.collected) {
@@ -129,6 +128,7 @@ class World {
     if (!this.dead) {
       this.addObjectsToMap(this.level.enemies.filter((enemy) => !enemy.dead));
     }
+    this.addToMap(this.character);
 
     this.ctx.translate(-this.camera_x, 0);
 

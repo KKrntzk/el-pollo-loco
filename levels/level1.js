@@ -3,6 +3,7 @@ const level1 = new Level(
     new Chicken(),
     new Chicken(),
     new Chicken(),
+    new Chicken(),
     new Chicks(),
     new Chicks(),
     new Chicks(),

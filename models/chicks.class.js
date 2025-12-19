@@ -1,5 +1,5 @@
 class Chicks extends MovableObject {
-  y = 400;
+  y = 390;
   height = 30;
   width = 30;
   imagesWalking = ImageHub.chicks.walking;

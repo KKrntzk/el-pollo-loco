@@ -1,6 +1,6 @@
 class Character extends MovableObject {
   height = 300;
-  y = 30;
+  y = 25;
   imagesWalking = ImageHub.character.walking;
   imagesJumping = ImageHub.character.jumping;
   imagesHurt = ImageHub.character.hurt;
