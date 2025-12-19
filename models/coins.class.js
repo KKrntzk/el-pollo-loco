@@ -15,6 +15,7 @@ class Coins extends DrawableObject {
     this.loadImages(this.images);
     this.x = 200 + Math.random() * 1500;
     this.y = 150 + Math.random() * 100;
+    this.collected = false;
     this.animateCoin();
   }
 

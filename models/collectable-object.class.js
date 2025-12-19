@@ -1,0 +1,1 @@
+class Collectables extends DrawableObject {}

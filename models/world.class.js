@@ -31,6 +31,7 @@ class World {
     IntervalHub.startInterval(this.checkCollisions, 1000 / 60);
     IntervalHub.startInterval(this.checkThrowObjects, 1000 / 60);
     IntervalHub.startInterval(this.checkBottleCollisions, 1000 / 60);
+    IntervalHub.startInterval(this.checkCoinCollisions, 1000 / 60);
   }
 
   checkThrowObjects = () => {
@@ -69,6 +70,15 @@ class World {
     });
   };
 
+  checkCoinCollisions = () => {
+    this.level.coins.forEach((coin) => {
+      if (!coin.collected && this.character.isColliding(coin)) {
+        coin.collected = true;
+        this.character.collectCoin();
+      }
+    });
+  };
+
   draw() {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
@@ -90,6 +100,10 @@ class World {
 
     if (!this.collected) {
       this.addObjectsToMap(this.level.bottles);
+    }
+
+    if (!this.collected) {
+      this.addObjectsToMap(this.level.coins);
     }
 
     this.addObjectsToMap(this.level.enemies);

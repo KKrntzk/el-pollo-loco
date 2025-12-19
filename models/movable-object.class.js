@@ -7,6 +7,7 @@ class MovableObject extends DrawableObject {
   energy = 100;
   lastHit = 0;
   bottleCount = 0;
+  coinCount = 0;
 
   playAnimation(images) {
     let i = this.currentImage % images.length;
@@ -45,7 +46,15 @@ class MovableObject extends DrawableObject {
     if (this.bottleCount >= 10) {
       this.bottleCount = 10;
     }
-    console.log(world.character.bottleCount);
+    console.log(world.character.bottleCount, "bottle");
+  }
+
+  collectCoin() {
+    this.coinCount++;
+    if (this.coinCount >= 10) {
+      this.coinCount = 10;
+    }
+    console.log(world.character.coinCount, "coin");
   }
 
   isHurt() {
