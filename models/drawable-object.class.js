@@ -60,7 +60,8 @@ class DrawableObject {
     if (
       // this instanceof Coins
       // this instanceof Character ||
-      // this instanceof Chicken ||
+      this instanceof Chicken ||
+      this instanceof Chicks ||
       this instanceof Endboss
     ) {
       ctx.beginPath();

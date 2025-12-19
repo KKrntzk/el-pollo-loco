@@ -56,6 +56,16 @@ class ImageHub {
       "img_pollo_locco/img/3_enemies_chicken/chicken_normal/2_dead/dead.png",
     ],
   };
+  static chicks = {
+    walking: [
+      "img_pollo_locco/img/3_enemies_chicken/chicken_small/1_walk/1_w.png",
+      "img_pollo_locco/img/3_enemies_chicken/chicken_small/1_walk/2_w.png",
+      "img_pollo_locco/img/3_enemies_chicken/chicken_small/1_walk/3_w.png",
+    ],
+    dead: [
+      "img_pollo_locco/img/3_enemies_chicken/chicken_small/2_dead/dead.png",
+    ],
+  };
   static endboss = {
     walking: [
       "img_pollo_locco/img/4_enemie_boss_chicken/1_walk/G1.png",
