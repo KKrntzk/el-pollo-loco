@@ -46,7 +46,6 @@ class MovableObject extends DrawableObject {
     if (this.bottleCount >= 10) {
       this.bottleCount = 10;
     }
-    console.log(world.character.bottleCount, "bottle");
   }
 
   collectCoin() {
@@ -54,8 +53,6 @@ class MovableObject extends DrawableObject {
     if (this.coinCount >= 10) {
       this.coinCount = 10;
     }
-
-    console.log(world.character.coinCount, "coin");
   }
 
   isHurt() {
