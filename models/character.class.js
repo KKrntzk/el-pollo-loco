@@ -6,6 +6,7 @@ class Character extends MovableObject {
   imagesHurt = ImageHub.character.hurt;
   imagesDead = ImageHub.character.dead;
   imagesIdle = ImageHub.character.idle;
+  imagesSleep = ImageHub.character.sleep;
   world;
   speed = 10;
 
@@ -23,6 +24,7 @@ class Character extends MovableObject {
     this.loadImages(this.imagesDead);
     this.loadImages(this.imagesHurt);
     this.loadImages(this.imagesIdle);
+    this.loadImages(this.imagesSleep);
     this.applyGravity();
     this.animate();
   }
@@ -30,7 +32,6 @@ class Character extends MovableObject {
   animate() {
     IntervalHub.startInterval(this.checkMovement, 1000 / 60);
     IntervalHub.startInterval(this.animateMovement, 200);
-    // IntervalHub.startInterval(this.isMoving, 200);
   }
 
   checkMovement = () => {
@@ -48,39 +49,22 @@ class Character extends MovableObject {
       this.jump();
     }
 
-    // if (
-    //   !this.world.keyboard.RIGHT &&
-    //   !this.world.keyboard.LEFT &&
-    //   !this.world.keyboard.SPACE
-    // ) {
-    //   this.playAnimation(this.imagesIdle);
-    // }
-
     this.world.camera_x = -this.x + 100;
   };
 
-  // isMoving = () => {
-  //   if (
-  //     !this.world.keyboard.RIGHT &&
-  //     !this.world.keyboard.LEFT &&
-  //     !this.world.keyboard.SPACE
-  //   ) {
-  //     this.playAnimation(this.imagesIdle);
-  //   }
-  // };
-
   animateMovement = () => {
-    this.playAnimation(this.imagesIdle);
     if (this.isDead()) {
       this.playAnimation(this.imagesDead);
     } else if (this.isHurt()) {
       this.playAnimation(this.imagesHurt);
     } else if (this.isAboveGround()) {
       this.playAnimation(this.imagesJumping);
+    } else if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
+      this.playAnimation(this.imagesWalking);
+    } else if (this.isSleeping()) {
+      this.playAnimation(this.imagesSleep);
     } else {
-      if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
-        this.playAnimation(this.imagesWalking);
-      }
+      this.playAnimation(this.imagesIdle);
     }
   };
 

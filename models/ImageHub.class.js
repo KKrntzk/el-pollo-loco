@@ -12,6 +12,18 @@ class ImageHub {
       "img_pollo_locco/img/2_character_pepe/1_idle/idle/I-9.png",
       "img_pollo_locco/img/2_character_pepe/1_idle/idle/I-10.png",
     ],
+    sleep: [
+      "img_pollo_locco/img/2_character_pepe/1_idle/long_idle/I-11.png",
+      "img_pollo_locco/img/2_character_pepe/1_idle/long_idle/I-12.png",
+      "img_pollo_locco/img/2_character_pepe/1_idle/long_idle/I-13.png",
+      "img_pollo_locco/img/2_character_pepe/1_idle/long_idle/I-14.png",
+      "img_pollo_locco/img/2_character_pepe/1_idle/long_idle/I-15.png",
+      "img_pollo_locco/img/2_character_pepe/1_idle/long_idle/I-16.png",
+      "img_pollo_locco/img/2_character_pepe/1_idle/long_idle/I-17.png",
+      "img_pollo_locco/img/2_character_pepe/1_idle/long_idle/I-18.png",
+      "img_pollo_locco/img/2_character_pepe/1_idle/long_idle/I-19.png",
+      "img_pollo_locco/img/2_character_pepe/1_idle/long_idle/I-20.png",
+    ],
     walking: [
       "img_pollo_locco/img/2_character_pepe/2_walk/W-21.png",
       "img_pollo_locco/img/2_character_pepe/2_walk/W-22.png",

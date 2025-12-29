@@ -8,7 +8,7 @@ class MovableObject extends DrawableObject {
   lastHit = 0;
   bottleCount = 0;
   coinCount = 0;
-  lastMove = 0;
+  lastMove = Date.now();
 
   playAnimation(images) {
     let i = this.currentImage % images.length;
@@ -54,6 +54,10 @@ class MovableObject extends DrawableObject {
     if (this.coinCount >= 10) {
       this.coinCount = 10;
     }
+  }
+
+  isSleeping() {
+    return Date.now() - this.lastMove > 15000;
   }
 
   isHurt() {
