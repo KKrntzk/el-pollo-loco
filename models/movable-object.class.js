@@ -8,6 +8,7 @@ class MovableObject extends DrawableObject {
   lastHit = 0;
   bottleCount = 0;
   coinCount = 0;
+  lastMove = 0;
 
   playAnimation(images) {
     let i = this.currentImage % images.length;
