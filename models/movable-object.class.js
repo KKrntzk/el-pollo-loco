@@ -72,13 +72,16 @@ class MovableObject extends DrawableObject {
 
   moveRight() {
     this.x += this.speed;
+    this.lastMove = Date.now();
   }
 
   moveLeft() {
     this.x -= this.speed;
+    this.lastMove = Date.now();
   }
 
   jump() {
     this.speedY = 30;
+    this.lastMove = Date.now();
   }
 }

@@ -31,6 +31,7 @@ class World {
     IntervalHub.startInterval(this.checkCollisions, 1000 / 60);
     IntervalHub.startInterval(this.checkThrowObjects, 1000 / 60);
     IntervalHub.startInterval(this.checkBottleCollisions, 1000 / 60);
+    IntervalHub.startInterval(this.checkBottleThrowCollisions, 1000 / 60);
     IntervalHub.startInterval(this.checkCoinCollisions, 1000 / 60);
     IntervalHub.startInterval(this.checkEndbossCollisions, 1000 / 60);
   }
@@ -51,6 +52,18 @@ class World {
     } else if (this.throwObject && !this.keyboard.D) {
       this.throwObject = false;
     }
+  };
+
+  checkBottleThrowCollisions = () => {
+    this.throwabelObjects.forEach((bottle) => {
+      this.level.enemies.forEach((enemy) => {
+        if (enemy.dead) return;
+
+        if (bottle.isColliding(enemy)) {
+          enemy.dead = true;
+        }
+      });
+    });
   };
 
   checkCollisions = () => {
