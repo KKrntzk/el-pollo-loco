@@ -3,25 +3,35 @@ class Chicken extends MovableObject {
   height = 60;
   width = 60;
   imagesWalking = ImageHub.chicken.walking;
+  imagesDead = ImageHub.chicken.dead;
 
   constructor() {
     super().loadImg(
       "img_pollo_locco/img/3_enemies_chicken/chicken_normal/1_walk/1_w.png"
     );
     this.loadImages(this.imagesWalking);
+    this.loadImages(this.imagesDead);
     this.x = 500 + Math.random() * 500;
-    this.animate();
     this.speed = 0.15 + Math.random() * 0.5;
     this.dead = false;
+    this.isDying = false;
+    this.animate();
   }
 
   animate() {
     setInterval(() => {
-      this.moveLeft();
+      if (!this.dead && !this.isDying) {
+        this.moveLeft();
+      }
     }, 1000 / 60);
-
     setInterval(() => {
-      this.playAnimation(this.imagesWalking);
+      if (this.dead) return;
+
+      if (this.isDying) {
+        this.playAnimation(this.imagesDead);
+      } else {
+        this.playAnimation(this.imagesWalking);
+      }
     }, 170);
   }
 }
