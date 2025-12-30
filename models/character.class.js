@@ -71,5 +71,6 @@ class Character extends MovableObject {
   useBottle() {
     this.bottleCount--;
     this.world.statusbarBottle.setPercentage(this.bottleCount * 10);
+    this.lastMove = Date.now();
   }
 }
