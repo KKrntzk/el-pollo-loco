@@ -32,9 +32,15 @@ class ThrowableObject extends MovableObject {
     this.speedY = 25;
     this.applyGravity();
 
+    const groundY = 390;
+
     IntervalHub.startInterval(() => {
       if (!this.targetHit) {
         this.x += 10;
+      }
+      if (this.y >= groundY && !this.targetHit) {
+        this.y = groundY;
+        this.startSplash();
       }
     }, 1000 / 60);
   }

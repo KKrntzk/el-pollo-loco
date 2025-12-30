@@ -19,7 +19,7 @@ class MovableObject extends DrawableObject {
 
   applyGravity() {
     setInterval(() => {
-      if (this.targetHit) {
+      if (this.splashed || this.targetHit) {
         return;
       }
       if (this.isAboveGround() || this.speedY > 0) {
