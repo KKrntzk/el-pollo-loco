@@ -58,12 +58,13 @@ class DrawableObject {
 
   drawFrame(ctx) {
     if (
-      // this instanceof Coins
+      this instanceof Coins
       // this instanceof Character ||
-      this instanceof Chicken ||
-      this instanceof Chicks ||
-      this instanceof Endboss ||
-      this instanceof ThrowableObject
+      // this instanceof Chicken ||
+      // this instanceof Chicks ||
+      // this instanceof Endboss ||
+
+      // this instanceof ThrowableObject
     ) {
       ctx.beginPath();
       ctx.lineWidth = "5";

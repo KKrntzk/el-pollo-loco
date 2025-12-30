@@ -57,10 +57,11 @@ class World {
   checkBottleThrowCollisions = () => {
     this.throwabelObjects.forEach((bottle) => {
       this.level.enemies.forEach((enemy) => {
-        if (enemy.dead) return;
+        if (enemy.dead || bottle.targetHit) return;
 
         if (bottle.isColliding(enemy)) {
           enemy.dead = true;
+          bottle.startSplash();
         }
       });
     });
@@ -123,7 +124,11 @@ class World {
     this.ctx.translate(this.camera_x, 0);
 
     this.addObjectsToMap(this.level.backgroundObjects);
-    this.addObjectsToMap(this.throwabelObjects);
+
+    this.addObjectsToMap(
+      this.throwabelObjects.filter((bottle) => !bottle.splashed)
+    );
+
     this.addObjectsToMap(this.level.coins);
 
     this.addObjectsToMap(this.level.clouds);

@@ -13,24 +13,50 @@ class ThrowableObject extends MovableObject {
     this.height = 60;
     this.width = 40;
 
+    this.acceleration = 4;
+
+    this.targetHit = false;
+    this.splashed = false;
+
     this.offset = {
       top: 5,
       right: 5,
       bottom: 5,
       left: 5,
     };
-    this.runThrowAnimation();
+    this.runThrow();
+    this.runAnimation();
   }
 
-  runThrowAnimation() {
-    this.speedY = 30;
+  runThrow() {
+    this.speedY = 25;
     this.applyGravity();
-    IntervalHub.startInterval(this.throw, 1000 / 20);
+
+    IntervalHub.startInterval(() => {
+      if (!this.targetHit) {
+        this.x += 10;
+      }
+    }, 1000 / 60);
   }
 
-  throw = () => {
-    this.x += 10;
-    this.playAnimation(this.imagesRotation);
-    this.getRealFrame();
-  };
+  runAnimation() {
+    IntervalHub.startInterval(() => {
+      if (this.targetHit && !this.splashed) {
+        this.playAnimation(this.imagesSplash);
+        return;
+      }
+
+      if (!this.targetHit) {
+        this.playAnimation(this.imagesRotation);
+      }
+    }, 1000 / 10);
+  }
+
+  startSplash() {
+    this.targetHit = true;
+    const splashDuration = (this.imagesSplash.length * 1000) / 20;
+    setTimeout(() => {
+      this.splashed = true;
+    }, splashDuration);
+  }
 }
