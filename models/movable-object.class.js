@@ -60,7 +60,7 @@ class MovableObject extends DrawableObject {
   }
 
   isSleeping() {
-    return Date.now() - this.lastMove > 15000;
+    return Date.now() - this.lastMove > 10000;
   }
 
   isHurt() {

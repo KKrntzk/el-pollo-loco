@@ -32,6 +32,7 @@ class Character extends MovableObject {
   animate() {
     IntervalHub.startInterval(this.checkMovement, 1000 / 60);
     IntervalHub.startInterval(this.animateMovement, 200);
+    IntervalHub.startInterval(this.animateJump, 200);
   }
 
   checkMovement = () => {
@@ -57,14 +58,18 @@ class Character extends MovableObject {
       this.playAnimation(this.imagesDead);
     } else if (this.isHurt()) {
       this.playAnimation(this.imagesHurt);
-    } else if (this.isAboveGround()) {
-      this.playAnimation(this.imagesJumping);
     } else if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
       this.playAnimation(this.imagesWalking);
     } else if (this.isSleeping()) {
       this.playAnimation(this.imagesSleep);
     } else {
       this.playAnimation(this.imagesIdle);
+    }
+  };
+
+  animateJump = () => {
+    if (this.isAboveGround() && !this.isDead()) {
+      this.playAnimation(this.imagesJumping);
     }
   };
 
