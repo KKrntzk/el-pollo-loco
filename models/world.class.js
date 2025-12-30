@@ -60,7 +60,11 @@ class World {
         if (enemy.dead || bottle.targetHit) return;
 
         if (bottle.isColliding(enemy)) {
-          enemy.dead = true;
+          enemy.isDying = true;
+
+          setTimeout(() => {
+            enemy.dead = true;
+          }, 1000);
           bottle.startSplash();
         }
       });
@@ -77,7 +81,7 @@ class World {
 
             setTimeout(() => {
               enemy.dead = true;
-            }, 1500);
+            }, 1000);
           }
         } else {
           this.character.hit();
