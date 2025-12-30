@@ -45,6 +45,15 @@ class MovableObject extends DrawableObject {
     }
   }
 
+  hitBoss() {
+    this.energy -= 10;
+    if (this.energy < 0) {
+      this.energy = 0;
+    } else {
+      this.lastHit = new Date().getTime();
+    }
+  }
+
   collect() {
     this.bottleCount++;
     if (this.bottleCount >= 10) {

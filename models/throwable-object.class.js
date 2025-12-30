@@ -63,6 +63,12 @@ class ThrowableObject extends MovableObject {
     const splashDuration = (this.imagesSplash.length * 1000) / 20;
     setTimeout(() => {
       this.splashed = true;
+
+      if (this.world) {
+        this.world.throwabelObjects = this.world.throwabelObjects.filter(
+          (b) => b !== this
+        );
+      }
     }, splashDuration);
   }
 }

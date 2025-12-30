@@ -75,16 +75,24 @@ class World {
 
   checkEndbossBottleCollision = () => {
     this.throwabelObjects.forEach((bottle) => {
+      if (bottle.targetHit) return;
+
       this.level.endboss.forEach((boss) => {
-        if (boss.dead || bottle.targetHit) return;
+        if (boss.dead) return;
 
         if (bottle.isColliding(boss)) {
+          bottle.targetHit = true;
+          boss.hitBoss();
+          this.statusbarBoss.setPercentage(boss.energy);
+          bottle.startSplash();
+        }
+
+        if (boss.isDead()) {
           boss.isDying = true;
 
           setTimeout(() => {
             boss.dead = true;
           }, 1500);
-          bottle.startSplash();
         }
       });
     });
