@@ -36,6 +36,7 @@ class World {
     IntervalHub.startInterval(this.checkCoinCollisions, 1000 / 60);
     IntervalHub.startInterval(this.checkEndbossCollisions, 1000 / 60);
     IntervalHub.startInterval(this.checkEndbossBottleCollision, 1000 / 60);
+    IntervalHub.startInterval(this.checkEndbossActivation, 1000 / 60);
   }
 
   checkThrowObjects = () => {
@@ -70,6 +71,14 @@ class World {
           bottle.startSplash();
         }
       });
+    });
+  };
+
+  checkEndbossActivation = () => {
+    this.level.endboss.forEach((boss) => {
+      if (!boss.isActive && this.character.x >= boss.activationX) {
+        boss.isActive = true;
+      }
     });
   };
 

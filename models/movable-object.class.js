@@ -55,7 +55,7 @@ class MovableObject extends DrawableObject {
 
     setTimeout(() => {
       this.isHurt = false;
-    }, 600);
+    }, 400);
   }
 
   collect() {

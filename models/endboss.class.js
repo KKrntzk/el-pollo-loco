@@ -14,22 +14,30 @@ class Endboss extends MovableObject {
     this.loadImages(this.imagesWalking);
     this.loadImages(this.imagesDead);
     this.loadImages(this.imagesHurt);
+    this.loadImages(this.imagesAlert);
     this.x = 2000;
     this.speed = 0.15 + Math.random() * 0.5;
     this.dead = false;
     this.isDying = false;
     this.isHurt = false;
+    this.isActive = false;
+    this.activationX = 1700;
     this.animate();
   }
 
   animate() {
     setInterval(() => {
-      if (!this.dead && !this.isDying) {
+      if (this.isActive && !this.dead && !this.isDying) {
         this.moveLeft();
       }
     }, 1000 / 60);
 
     setInterval(() => {
+      if (!this.isActive) {
+        this.playAnimation(this.imagesAlert);
+        return;
+      }
+
       if (this.dead || this.isDying) {
         this.playAnimation(this.imagesDead);
         return;
