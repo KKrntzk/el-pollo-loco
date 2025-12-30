@@ -79,6 +79,7 @@ class World {
 
         if (bottle.isColliding(boss)) {
           boss.isDying = true;
+
           setTimeout(() => {
             boss.dead = true;
           }, 1500);
