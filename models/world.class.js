@@ -11,6 +11,7 @@ class World {
   statusbarBottle = new StatusbarBottle();
   statusbar = new Statusbar();
   statusbarCoin = new StatusbarCoin();
+  statusbarBoss = new StatusbarBoss();
   coins = [];
   bottles = [];
 
@@ -157,6 +158,7 @@ class World {
 
     this.ctx.translate(-this.camera_x, 0);
     this.addToMap(this.statusbar);
+    this.addToMap(this.statusbarBoss);
     this.addToMap(this.statusbarBottle);
     this.addToMap(this.statusbarCoin);
     this.ctx.translate(this.camera_x, 0);
