@@ -15,20 +15,30 @@ class Endboss extends MovableObject {
     this.loadImages(this.imagesDead);
     this.loadImages(this.imagesHurt);
     this.loadImages(this.imagesAlert);
+    this.loadImages(this.imagesAttack);
     this.x = 2000;
     this.speed = 0.15 + Math.random() * 0.5;
+    this.attackSpeed = this.speed * 2;
+    this.enrageSpeed = this.speed * 5;
     this.dead = false;
     this.isDying = false;
     this.isHurt = false;
     this.isActive = false;
     this.activationX = 1700;
+    this.isAttacking = false;
     this.animate();
   }
 
   animate() {
     setInterval(() => {
-      if (this.isActive && !this.dead && !this.isDying) {
-        this.moveLeft();
+      if (this.isActive && !this.dead && !this.isDying && !this.isHurt) {
+        if (this.energy < 40) {
+          this.x -= this.enrageSpeed;
+        } else if (this.isAttacking) {
+          this.x -= this.attackSpeed;
+        } else {
+          this.moveLeft();
+        }
       }
     }, 1000 / 60);
 
@@ -48,7 +58,18 @@ class Endboss extends MovableObject {
         return;
       }
 
+      if (this.isAttacking) {
+        this.playAnimation(this.imagesAttack);
+        return;
+      }
+
       this.playAnimation(this.imagesWalking);
     }, 170);
+  }
+
+  checkAttackState() {
+    if (!this.isAttacking && this.energy < 50 && this.isActive && !this.dead) {
+      this.isAttacking = true;
+    }
   }
 }

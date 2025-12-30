@@ -37,6 +37,9 @@ class World {
     IntervalHub.startInterval(this.checkEndbossCollisions, 1000 / 60);
     IntervalHub.startInterval(this.checkEndbossBottleCollision, 1000 / 60);
     IntervalHub.startInterval(this.checkEndbossActivation, 1000 / 60);
+    IntervalHub.startInterval(() => {
+      this.level.endboss.forEach((boss) => boss.checkAttackState());
+    }, 1000 / 60);
   }
 
   checkThrowObjects = () => {
