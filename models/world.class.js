@@ -34,6 +34,7 @@ class World {
     IntervalHub.startInterval(this.checkBottleThrowCollisions, 1000 / 60);
     IntervalHub.startInterval(this.checkCoinCollisions, 1000 / 60);
     IntervalHub.startInterval(this.checkEndbossCollisions, 1000 / 60);
+    IntervalHub.startInterval(this.checkEndbossBottleCollision, 1000 / 60);
   }
 
   checkThrowObjects = () => {
@@ -65,6 +66,22 @@ class World {
           setTimeout(() => {
             enemy.dead = true;
           }, 1000);
+          bottle.startSplash();
+        }
+      });
+    });
+  };
+
+  checkEndbossBottleCollision = () => {
+    this.throwabelObjects.forEach((bottle) => {
+      this.level.endboss.forEach((boss) => {
+        if (boss.dead || bottle.targetHit) return;
+
+        if (bottle.isColliding(boss)) {
+          boss.isDying = true;
+          setTimeout(() => {
+            boss.dead = true;
+          }, 1500);
           bottle.startSplash();
         }
       });
@@ -143,7 +160,9 @@ class World {
     this.addToMap(this.statusbarCoin);
     this.ctx.translate(this.camera_x, 0);
 
-    this.addObjectsToMap(this.level.endboss);
+    if (!this.dead) {
+      this.addObjectsToMap(this.level.endboss.filter((boss) => !boss.dead));
+    }
 
     if (!this.collected) {
       this.addObjectsToMap(this.level.bottles);
@@ -156,6 +175,7 @@ class World {
     if (!this.dead) {
       this.addObjectsToMap(this.level.enemies.filter((enemy) => !enemy.dead));
     }
+
     this.addToMap(this.character);
 
     this.ctx.translate(-this.camera_x, 0);

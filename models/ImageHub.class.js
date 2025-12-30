@@ -43,11 +43,6 @@ class ImageHub {
       "img_pollo_locco/img/2_character_pepe/3_jump/J-38.png",
       "img_pollo_locco/img/2_character_pepe/3_jump/J-39.png",
     ],
-    hurt: [
-      "img_pollo_locco/img/2_character_pepe/4_hurt/H-41.png",
-      "img_pollo_locco/img/2_character_pepe/4_hurt/H-42.png",
-      "img_pollo_locco/img/2_character_pepe/4_hurt/H-43.png",
-    ],
     dead: [
       "img_pollo_locco/img/2_character_pepe/5_dead/D-51.png",
       "img_pollo_locco/img/2_character_pepe/5_dead/D-52.png",
@@ -56,6 +51,11 @@ class ImageHub {
       "img_pollo_locco/img/2_character_pepe/5_dead/D-55.png",
       "img_pollo_locco/img/2_character_pepe/5_dead/D-56.png",
       "img_pollo_locco/img/2_character_pepe/5_dead/D-57.png",
+    ],
+    hurt: [
+      "img_pollo_locco/img/2_character_pepe/4_hurt/H-41.png",
+      "img_pollo_locco/img/2_character_pepe/4_hurt/H-42.png",
+      "img_pollo_locco/img/2_character_pepe/4_hurt/H-43.png",
     ],
   };
   static chicken = {

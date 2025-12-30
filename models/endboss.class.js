@@ -12,6 +12,7 @@ class Endboss extends MovableObject {
   constructor() {
     super().loadImg("img_pollo_locco/img/4_enemie_boss_chicken/1_walk/G1.png");
     this.loadImages(this.imagesWalking);
+    this.loadImages(this.imagesDead);
     this.x = 2000;
     this.speed = 0.15 + Math.random() * 0.5;
     this.dead = false;
