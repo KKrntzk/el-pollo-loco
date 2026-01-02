@@ -29,6 +29,14 @@ class Endboss extends MovableObject {
     this.animate();
   }
 
+  startEndbossSound() {
+    if (!this.endbossSoundPlaying) {
+      AudioHub.endbossSound.loop = true;
+      AudioHub.playOne(AudioHub.endbossSound);
+      this.endbossSoundPlaying = true;
+    }
+  }
+
   animate() {
     setInterval(() => {
       if (this.isActive && !this.dead && !this.isDying && !this.isHurt) {
@@ -48,8 +56,11 @@ class Endboss extends MovableObject {
         return;
       }
 
+      this.startEndbossSound();
+
       if (this.dead || this.isDying) {
         this.playAnimation(this.imagesDead);
+        AudioHub.stopOne(AudioHub.endbossSound);
         return;
       }
 
