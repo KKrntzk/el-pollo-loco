@@ -9,6 +9,9 @@ class Character extends MovableObject {
   imagesSleep = ImageHub.character.sleep;
   world;
   speed = 10;
+  currentSound = null;
+
+  isRunningSoundPlaying = false;
 
   offset = {
     top: 130,
@@ -36,6 +39,18 @@ class Character extends MovableObject {
   }
 
   checkMovement = () => {
+    const isRunningKey = this.world.keyboard.RIGHT || this.world.keyboard.LEFT;
+
+    if (isRunningKey && !this.isRunningSoundPlaying) {
+      AudioHub.playOne(AudioHub.characterRun);
+      this.isRunningSoundPlaying = true;
+    }
+
+    if (!isRunningKey && this.isRunningSoundPlaying) {
+      AudioHub.stopOne(AudioHub.characterRun);
+      this.isRunningSoundPlaying = false;
+    }
+
     if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
       this.moveRight();
       this.otherDirection = false;
@@ -48,6 +63,7 @@ class Character extends MovableObject {
 
     if (this.world.keyboard.SPACE && !this.isAboveGround()) {
       this.jump();
+      AudioHub.playOne(AudioHub.characterJump);
     }
 
     this.world.camera_x = -this.x + 100;
@@ -56,12 +72,14 @@ class Character extends MovableObject {
   animateMovement = () => {
     if (this.isDead()) {
       this.playAnimation(this.imagesDead);
+      this.playSoundOnce(AudioHub.characterDead);
     } else if (this.isHurt()) {
       this.playAnimation(this.imagesHurt);
     } else if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
       this.playAnimation(this.imagesWalking);
     } else if (this.isSleeping()) {
       this.playAnimation(this.imagesSleep);
+      this.playSoundOnce(AudioHub.characterSnoring);
     } else {
       this.playAnimation(this.imagesIdle);
     }
@@ -77,5 +95,15 @@ class Character extends MovableObject {
     this.bottleCount--;
     this.world.statusbarBottle.setPercentage(this.bottleCount * 10);
     this.lastMove = Date.now();
+  }
+
+  playSoundOnce(sound) {
+    if (this.currentSound !== sound) {
+      if (this.currentSound) {
+        AudioHub.stopOne(this.currentSound);
+      }
+      AudioHub.playOne(sound);
+      this.currentSound = sound;
+    }
   }
 }
