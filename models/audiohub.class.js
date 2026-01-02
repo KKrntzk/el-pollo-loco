@@ -34,6 +34,15 @@ class AudioHub {
     AudioHub.characterJump,
     AudioHub.characterRun,
     AudioHub.characterSnoring,
+    AudioHub.chickenDead,
+    AudioHub.chickenDead2,
+    AudioHub.bottleCollectSound,
+    AudioHub.coinCollectSound,
+    AudioHub.bottleBreak,
+    AudioHub.endbossSound,
+    AudioHub.endbossDeath,
+    AudioHub.endbossIdle,
+    AudioHub.gameStart,
   ];
 
   // Spielt eine einzelne Audiodatei ab
@@ -69,16 +78,12 @@ class AudioHub {
   static mute() {
     AudioHub.allSounds.forEach((sound) => {
       sound.volume = 0.0;
-      const instrumentImages = document.querySelectorAll(".sound_img"); // nur wichtig für die Visualisierung
-      instrumentImages.forEach((img) => img.classList.remove("active")); // nur wichtig für die Visualisierung
     });
   }
 
   static unmute() {
     AudioHub.allSounds.forEach((sound) => {
       sound.volume = 0.2;
-      const instrumentImages = document.querySelectorAll(".sound_img"); // nur wichtig für die Visualisierung
-      instrumentImages.forEach((img) => img.classList.add("active")); // nur wichtig für die Visualisierung
     });
   }
 }
