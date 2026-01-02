@@ -73,15 +73,18 @@ class Character extends MovableObject {
     if (this.isDead()) {
       this.playAnimation(this.imagesDead);
       this.playSoundOnce(AudioHub.characterDead);
+      this.stopSnoring();
     } else if (this.isHurt()) {
       this.playAnimation(this.imagesHurt);
+      this.stopSnoring();
     } else if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
       this.playAnimation(this.imagesWalking);
     } else if (this.isSleeping()) {
       this.playAnimation(this.imagesSleep);
-      this.playSoundOnce(AudioHub.characterSnoring);
+      this.startSnoring();
     } else {
       this.playAnimation(this.imagesIdle);
+      this.stopSnoring();
     }
   };
 
@@ -95,6 +98,21 @@ class Character extends MovableObject {
     this.bottleCount--;
     this.world.statusbarBottle.setPercentage(this.bottleCount * 10);
     this.lastMove = Date.now();
+  }
+
+  startSnoring() {
+    if (!this.isSnoring) {
+      AudioHub.characterSnoring.loop = true;
+      AudioHub.playOne(AudioHub.characterSnoring);
+      this.isSnoring = true;
+    }
+  }
+
+  stopSnoring() {
+    if (this.isSnoring) {
+      AudioHub.stopOne(AudioHub.characterSnoring);
+      this.isSnoring = false;
+    }
   }
 
   playSoundOnce(sound) {
