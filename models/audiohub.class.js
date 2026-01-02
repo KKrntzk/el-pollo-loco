@@ -1,4 +1,8 @@
 class AudioHub {
+  static backgroundMusic = new Audio(
+    "./sounds/backgroundmusic/acoustic-mexican-guitar-218610.mp3"
+  );
+
   static characterDamage = new Audio("./sounds/character/characterDamage.mp3");
   static characterDead = new Audio("./sounds/character/characterDead.wav");
   static characterJump = new Audio("./sounds/character/characterJump.wav");
@@ -18,6 +22,8 @@ class AudioHub {
   static bottleBreak = new Audio("./sounds/throwable/bottleBreak.mp3");
 
   static endbossSound = new Audio("./sounds/endboss/endbossApproach.wav");
+  static endbossIdle = new Audio("./sounds/endboss/chickenIdle.mp3");
+  static endbossDeath = new Audio("./sounds/endboss/endbossDeath.mp3");
 
   static gameStart = new Audio("./sounds/game/gameStart.mp3");
 

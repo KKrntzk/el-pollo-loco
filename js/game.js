@@ -5,6 +5,17 @@ let keyboard = new Keyboard();
 function init() {
   canvas = document.getElementById("canvas");
   world = new World(canvas, keyboard);
+  // Hintergrundmusik vorbereiten
+  AudioHub.backgroundMusic.loop = true;
+  AudioHub.backgroundMusic.volume = 0.1;
+
+  canvas.addEventListener(
+    "click",
+    () => {
+      AudioHub.backgroundMusic.play();
+    },
+    {once: true}
+  );
 }
 
 window.addEventListener("keydown", (e) => {
