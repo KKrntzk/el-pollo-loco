@@ -18,8 +18,8 @@ class Endboss extends MovableObject {
     this.loadImages(this.imagesAttack);
     this.x = 2000;
     this.speed = 0.15 + Math.random() * 0.5;
-    this.attackSpeed = this.speed * 2;
-    this.enrageSpeed = this.speed * 5;
+    this.attackSpeed = this.speed * 3;
+    this.enrageSpeed = this.speed * 7;
     this.dead = false;
     this.isDying = false;
     this.isHurt = false;
@@ -27,6 +27,24 @@ class Endboss extends MovableObject {
     this.activationX = 1700;
     this.isAttacking = false;
     this.animate();
+    this.deathSoundPlayed = false;
+  }
+
+  playIdleSound() {
+    if (!this.idleSoundPlaying) {
+      AudioHub.endbossIdle.loop = true;
+      AudioHub.playOne(AudioHub.endbossIdle);
+      this.idleSoundPlaying = true;
+    }
+  }
+
+  stopIdleSound() {
+    AudioHub.stopOne(AudioHub.endbossIdle);
+    this.idleSoundPlaying = false;
+  }
+
+  playDeathSound() {
+    AudioHub.playOne(AudioHub.endbossDeath);
   }
 
   startEndbossSound() {
@@ -53,6 +71,7 @@ class Endboss extends MovableObject {
     setInterval(() => {
       if (!this.isActive) {
         this.playAnimation(this.imagesAlert);
+        this.stopIdleSound();
         return;
       }
 
@@ -61,20 +80,28 @@ class Endboss extends MovableObject {
       if (this.dead || this.isDying) {
         this.playAnimation(this.imagesDead);
         AudioHub.stopOne(AudioHub.endbossSound);
+        this.stopIdleSound();
+        if (!this.deathSoundPlayed) {
+          this.playDeathSound();
+          this.deathSoundPlayed = true;
+        }
         return;
       }
 
       if (this.isHurt) {
         this.playAnimation(this.imagesHurt);
+        this.stopIdleSound();
         return;
       }
 
       if (this.isAttacking) {
         this.playAnimation(this.imagesAttack);
+        this.stopIdleSound();
         return;
       }
 
       this.playAnimation(this.imagesWalking);
+      this.playIdleSound();
     }, 170);
   }
 
