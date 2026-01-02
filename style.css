@@ -12,10 +12,6 @@ body {
   font-family: "riogrande", Arial, Helvetica, sans-serif;
 }
 
-canvas {
-  background-color: black;
-}
-
 @font-face {
   font-family: "riogrande";
   src: url("fonts/riogrande.ttf");
@@ -25,4 +21,64 @@ h1 {
   font-size: 120px;
   letter-spacing: 3px;
   text-shadow: 8px, 8px, 8px rgba(0, 0, 0, 0.5);
+}
+
+.menu {
+  display: flex;
+  gap: 10px;
+}
+.btn {
+  padding: 15px 30px;
+  font-family: "riogrande";
+  font-size: 24px;
+  cursor: pointer;
+  z-index: 2;
+  background-color: #f0ebc1;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+.btn:hover {
+  background-color: #f0ebc1;
+  transform: scale(1.1);
+  color: #9c5328;
+}
+
+.game-title {
+  margin: 20px 0;
+}
+
+.canvas-container {
+  position: relative;
+  display: inline-block;
+}
+
+.game-canvas {
+  background-color: black;
+  background-image: url("./img_pollo_locco/img/canvas_overlay/overlay.png");
+  display: block;
+}
+
+.start-btn {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 15px 30px;
+  font-family: "riogrande";
+  font-size: 24px;
+  cursor: pointer;
+  z-index: 10;
+  background-color: #f0ebc1;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.start-btn:hover {
+  background-color: #f0ebc1;
+  transform: translate(-50%, -50%) scale(1.1);
+  color: #9c5328;
 }

@@ -1,20 +1,32 @@
 let canvas;
 let world;
 let keyboard = new Keyboard();
+let startImage = new Image();
+startImage.src = "img_pollo_locco/img/canvas_overlay/overlay.png";
 
-function init() {
-  canvas = document.getElementById("canvas");
-  world = new World(canvas, keyboard);
+window.onload = function () {
+  canvas = document.getElementById("gameCanvas");
+  ctx = canvas.getContext("2d");
+
+  startImage.onload = function () {
+    ctx.drawImage(startImage, 0, 0, canvas.width, canvas.height);
+  };
+};
+
+function startGame() {
+  const btn = document.getElementById("startBtn");
+  btn.style.display = "none";
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  init();
+
   AudioHub.backgroundMusic.loop = true;
   AudioHub.backgroundMusic.volume = 0.1;
+  AudioHub.backgroundMusic.play();
+}
 
-  canvas.addEventListener(
-    "click",
-    () => {
-      AudioHub.backgroundMusic.play();
-    },
-    {once: true}
-  );
+function init() {
+  world = new World(canvas, keyboard);
 }
 
 window.addEventListener("keydown", (e) => {
