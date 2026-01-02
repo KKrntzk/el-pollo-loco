@@ -66,11 +66,7 @@ class World {
         if (enemy.dead || bottle.targetHit) return;
 
         if (bottle.isColliding(enemy)) {
-          enemy.isDying = true;
-
-          setTimeout(() => {
-            enemy.dead = true;
-          }, 1000);
+          enemy.die();
           bottle.startSplash();
         }
       });
@@ -115,13 +111,7 @@ class World {
       if (enemy.dead || enemy.isDying) return;
       if (this.character.isColliding(enemy)) {
         if (this.character.isAboveGround() && this.character.speedY < 0) {
-          if (!enemy.isDying && !enemy.dead) {
-            enemy.isDying = true;
-
-            setTimeout(() => {
-              enemy.dead = true;
-            }, 1000);
-          }
+          enemy.die();
         } else {
           this.character.hit();
           this.statusbar.setPercentage(this.character.energy);

@@ -60,6 +60,7 @@ class ThrowableObject extends MovableObject {
 
   startSplash() {
     this.targetHit = true;
+    AudioHub.playOne(AudioHub.bottleBreak);
     const splashDuration = (this.imagesSplash.length * 1000) / 20;
     setTimeout(() => {
       this.splashed = true;

@@ -7,6 +7,20 @@ class AudioHub {
     "./sounds/character/characterSnoring.mp3"
   );
 
+  static chickenDead = new Audio("./sounds/chicken/chickenDead.mp3");
+  static chickenDead2 = new Audio("./sounds/chicken/chickenDead2.mp3");
+
+  static bottleCollectSound = new Audio(
+    "./sounds/collectibles/bottleCollectSound.wav"
+  );
+  static coinCollectSound = new Audio("./sounds/collectibles/collectSound.wav");
+
+  static bottleBreak = new Audio("./sounds/throwable/bottleBreak.mp3");
+
+  static endbossSound = new Audio("./sounds/endboss/endbossApproach.wav");
+
+  static gameStart = new Audio("./sounds/game/gameStart.mp3");
+
   // Array, das alle definierten Audio-Dateien enthält
   static allSounds = [
     AudioHub.characterDamage,

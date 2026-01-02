@@ -60,6 +60,7 @@ class MovableObject extends DrawableObject {
   }
 
   collect() {
+    AudioHub.playOne(AudioHub.bottleCollectSound);
     this.bottleCount++;
     if (this.bottleCount >= 10) {
       this.bottleCount = 10;
@@ -67,6 +68,7 @@ class MovableObject extends DrawableObject {
   }
 
   collectCoin() {
+    AudioHub.playOne(AudioHub.coinCollectSound);
     this.coinCount++;
     if (this.coinCount >= 10) {
       this.coinCount = 10;
@@ -100,5 +102,19 @@ class MovableObject extends DrawableObject {
   jump() {
     this.speedY = 30;
     this.lastMove = Date.now();
+  }
+
+  die() {
+    if (this.dead || this.isDying) return;
+
+    this.isDying = true;
+
+    const sound =
+      Math.random() < 0.5 ? AudioHub.chickenDead : AudioHub.chickenDead2;
+    AudioHub.playOne(sound);
+
+    setTimeout(() => {
+      this.dead = true;
+    }, 1000);
   }
 }
