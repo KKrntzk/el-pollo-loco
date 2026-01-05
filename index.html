@@ -33,25 +33,6 @@
   <body>
     <h1>( El Pollo Loco )</h1>
 
-    <div class="menu">
-      <button class="btn">impressum</button>
-      <button class="btn" onclick="openDialog()">instructions</button>
-    </div>
-
-    <dialog>
-      <header><button onclick="closeDialog()">x</button></header>
-      <p>
-        <img src="" alt="" /> / <img src="" alt="" /> : move left/ move right
-      </p>
-      <p><img src="" alt="" /> : jump</p>
-      <p><img src="" alt="" /> : throw bottle</p>
-      <p>
-        Care not to get overrun by the crazy chickens, defeat them by jumping on
-        their heads. Try to gather as many hot sauce bottles as you can... you
-        will need it for el pollo loco!!!
-      </p>
-    </dialog>
-
     <div
       class="canvas-container"
       style="position: relative; display: inline-block"
@@ -66,5 +47,142 @@
         play
       </button>
     </div>
+
+    <div class="menu">
+      <button class="btn" onclick="openImpressum()">impressum</button>
+      <button class="btn" onclick="openDialog()">instructions</button>
+    </div>
+
+    <dialog id="impressumDialog" class="impressum-dialog">
+      <header class="dialog-header">
+        <button class="btn-dialog" onclick="closeDialogImpressum()">x</button>
+      </header>
+      <h2>Impressum</h2>
+
+      <p>Angaben gemäß § 5 DDG</p>
+
+      <address>
+        <p>
+          Kelly Kornetzki<br />
+          In der Hut 10a<br />
+          91083 Baiersdorf
+        </p>
+      </address>
+
+      <p>
+        <strong>Vertreten durch:</strong>
+        Kelly Kornetzki
+      </p>
+
+      <p>
+        <strong>Kontakt: </strong>
+        Telefon: 0170-7250598 E-Mail:
+        <a href="mailto:sophie.kornetzki@gmail.com">
+          sophie.kornetzki@gmail.com
+        </a>
+      </p>
+
+      <p>
+        <strong>Verbraucherstreitbeilegung / Universalschlichtungsstelle</strong
+        ><br />
+        Wir nehmen nicht an Streitbeilegungsverfahren vor einer
+        Verbraucherschlichtungsstelle teil und sind dazu auch nicht
+        verpflichtet.
+      </p>
+
+      <p>
+        Impressum von
+        <a href="https://impressum-generator.de" rel="dofollow">
+          Impressum-Generator.de </a
+        >. Powered by
+        <a href="https://www.kanzlei-hasselbach.de/" rel="nofollow">
+          Franziska Hasselbach, Bonn </a
+        >.
+      </p>
+
+      <hr />
+
+      <p>
+        Music by
+        <a href="https://pixabay.com/de/users/drippeados-44473605/">
+          Kevin Llanes
+        </a>
+        from
+        <a href="https://pixabay.com/"> Pixabay </a>
+      </p>
+
+      <p>
+        Sound Effect by
+        <a href="https://pixabay.com/de/users/alex_jauk-16800354/">
+          Alexander Jauk
+        </a>
+        from
+        <a href="https://pixabay.com/sound-effects/"> Pixabay </a>
+      </p>
+
+      <p>
+        Sound Effect by
+        <a href="https://pixabay.com/de/users/nematoki-32544028/">
+          Darina Evstafeva
+        </a>
+        from
+        <a href="https://pixabay.com/"> Pixabay </a>
+      </p>
+
+      <p>
+        <a
+          href="https://www.flaticon.com/free-icons/keyboard-command"
+          title="keyboard command icons"
+        >
+          Keyboard command icons
+        </a>
+        created by shohanur.rahman13 – Flaticon
+      </p>
+    </dialog>
+
+    <dialog id="instructionDialog">
+      <header class="dialog-header">
+        <button class="btn-dialog" onclick="closeDialog()">x</button>
+      </header>
+      <div class="key-instruction-panel">
+        <p>
+          <img
+            class="img-dialog"
+            src="./img_pollo_locco/img/instruction_dialog/arrow-back.png"
+            alt=""
+          />
+          /
+          <img
+            class="img-dialog"
+            src="./img_pollo_locco/img/instruction_dialog/arrow-right.png"
+            alt=""
+          />
+          : move left/ move right
+        </p>
+
+        <p>
+          <img
+            class="img-dialog"
+            src="./img_pollo_locco/img/instruction_dialog/space.png"
+            alt=""
+          />
+          : jump
+        </p>
+        <p>
+          <img
+            class="img-dialog"
+            src="./img_pollo_locco/img/instruction_dialog/letter-d.png"
+            alt=""
+          />
+          : throw bottle
+        </p>
+      </div>
+      <p>
+        Care not to get overrun by the crazy chickens<br />
+        defeat them by jumping on their heads <br />
+        Try to gather as many hot sauce bottles as you can ... you will need
+        them for el pollo loco!!!
+      </p>
+    </dialog>
   </body>
 </html>

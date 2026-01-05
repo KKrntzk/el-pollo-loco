@@ -29,6 +29,26 @@ function init() {
   world = new World(canvas, keyboard);
 }
 
+function openDialog() {
+  const dialogRef = document.getElementById("instructionDialog");
+  dialogRef.showModal();
+}
+
+function closeDialog() {
+  const dialogRef = document.getElementById("instructionDialog");
+  dialogRef.close();
+}
+
+function openImpressum() {
+  const dialogRef = document.getElementById("impressumDialog");
+  dialogRef.showModal();
+}
+
+function closeDialogImpressum() {
+  const dialogRef = document.getElementById("impressumDialog");
+  dialogRef.close();
+}
+
 window.addEventListener("keydown", (e) => {
   if (e.keyCode == 39) {
     keyboard.RIGHT = true;

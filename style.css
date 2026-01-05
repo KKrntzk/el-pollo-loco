@@ -1,3 +1,15 @@
+* {
+  position: relative;
+  padding: 0;
+  margin: 0;
+  text-decoration: none;
+  list-style: none;
+  box-sizing: border-box;
+  scroll-behavior: smooth;
+  font-size: inherit;
+  /* color: inherit; */
+}
+
 body {
   display: flex;
   flex-direction: column;
@@ -82,4 +94,65 @@ h1 {
   background-color: #f0ebc1;
   transform: translate(-50%, -50%) scale(1.1);
   color: #9c5328;
+}
+
+.img-dialog {
+  height: 50px;
+  width: 50px;
+}
+
+.key-instruction-panel {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+p {
+  display: flex;
+  align-items: center;
+}
+
+.btn-dialog {
+  padding: 5px 10px;
+  font-family: "riogrande";
+  font-size: 24px;
+  cursor: pointer;
+  z-index: 2;
+  background-color: #9c5328;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.btn-dialog:hover {
+  background-color: #f0ebc1;
+  transform: scale(1.1);
+  color: #9c5328;
+}
+
+.dialog-header {
+  width: 100%;
+  display: flex;
+  justify-content: end;
+}
+
+.impressum-dialog {
+  font-family: "Courier New", Courier, monospace;
+}
+
+dialog {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  border: 3px solid #9c5328;
+  border-radius: 12px;
+  padding: 20px;
+  background-color: #f1efd8;
+}
+
+dialog::backdrop {
+  background: rgba(0, 0, 0, 0.445);
 }
