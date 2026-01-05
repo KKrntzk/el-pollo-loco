@@ -31,45 +31,88 @@ class ThrowableObject extends MovableObject {
   runThrow() {
     this.speedY = 25;
     this.applyGravity();
+    this.throwGroundY = 390;
 
-    const groundY = 390;
+    IntervalHub.startInterval(this.updateThrowState, 1000 / 60);
+  }
 
-    IntervalHub.startInterval(() => {
-      if (!this.targetHit) {
-        this.x += 10;
-      }
-      if (this.y >= groundY && !this.targetHit) {
-        this.y = groundY;
-        this.startSplash();
-      }
-    }, 1000 / 60);
+  updateThrowState = () => {
+    this.updateThrowPosition();
+    this.checkGroundCollision(this.throwGroundY);
+  };
+
+  updateThrowPosition() {
+    if (!this.targetHit) {
+      this.x += 10;
+    }
+  }
+
+  checkGroundCollision(groundY) {
+    if (this.y >= groundY && !this.targetHit) {
+      this.y = groundY;
+      this.startSplash();
+    }
   }
 
   runAnimation() {
-    IntervalHub.startInterval(() => {
-      if (this.targetHit && !this.splashed) {
-        this.playAnimation(this.imagesSplash);
-        return;
-      }
+    IntervalHub.startInterval(this.updateAnimation, 1000 / 10);
+  }
 
-      if (!this.targetHit) {
-        this.playAnimation(this.imagesRotation);
-      }
-    }, 1000 / 10);
+  updateAnimation = () => {
+    if (this.shouldPlaySplash()) {
+      this.playSplashAnimation();
+      return;
+    }
+
+    if (this.shouldPlayRotation()) {
+      this.playRotationAnimation();
+    }
+  };
+
+  shouldPlaySplash() {
+    return this.targetHit && !this.splashed;
+  }
+
+  playSplashAnimation() {
+    this.playAnimation(this.imagesSplash);
+  }
+
+  shouldPlayRotation() {
+    return !this.targetHit;
+  }
+
+  playRotationAnimation() {
+    this.playAnimation(this.imagesRotation);
   }
 
   startSplash() {
+    this.markTargetHit();
+    this.playSplashSound();
+    this.scheduleSplashComplete();
+  }
+
+  markTargetHit() {
     this.targetHit = true;
+  }
+
+  playSplashSound() {
     AudioHub.playOne(AudioHub.bottleBreak);
+  }
+
+  scheduleSplashComplete() {
     const splashDuration = (this.imagesSplash.length * 1000) / 20;
+
     setTimeout(() => {
       this.splashed = true;
-
-      if (this.world) {
-        this.world.throwabelObjects = this.world.throwabelObjects.filter(
-          (b) => b !== this
-        );
-      }
+      this.removeFromWorld();
     }, splashDuration);
+  }
+
+  removeFromWorld() {
+    if (this.world) {
+      this.world.throwabelObjects = this.world.throwabelObjects.filter(
+        (b) => b !== this
+      );
+    }
   }
 }

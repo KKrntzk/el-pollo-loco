@@ -39,9 +39,7 @@ class Endboss extends MovableObject {
 
     this.animate();
   }
-  /* =======================
-   SOUND
-======================= */
+  /* SOUND */
   playIdleSound() {
     if (!this.idleSoundPlaying) {
       AudioHub.endbossIdle.loop = true;
@@ -74,17 +72,13 @@ class Endboss extends MovableObject {
     }
   }
 
-  /* =======================
-   ANIMATION / INTERVALS
-======================= */
+  /* ANIMATION / INTERVALS */
   animate() {
     IntervalHub.startInterval(this.animateMovement, 1000 / 60);
     IntervalHub.startInterval(this.animateState, 170);
   }
 
-  /* =======================
-   MOVEMENT
-======================= */
+  /* MOVEMENT */
   animateMovement = () => {
     if (!this.canMove()) return;
 
@@ -113,9 +107,7 @@ class Endboss extends MovableObject {
     this.moveLeft();
   }
 
-  /* =======================
-   STATES
-======================= */
+  /* STATES */
   animateState = () => {
     if (!this.isActive) {
       this.handleAlertState();
@@ -170,9 +162,7 @@ class Endboss extends MovableObject {
     this.stopIdleSound();
   }
 
-  /* =======================
-   ATTACK LOGIC
-======================= */
+  /* ATTACK LOGIC */
   checkAttackState() {
     if (!this.isAttacking && this.energy < 50 && this.isActive && !this.dead) {
       this.isAttacking = true;
