@@ -35,8 +35,22 @@
 
     <div class="menu">
       <button class="btn">impressum</button>
-      <button class="btn">instructions</button>
+      <button class="btn" onclick="openDialog()">instructions</button>
     </div>
+
+    <dialog>
+      <header><button onclick="closeDialog()">x</button></header>
+      <p>
+        <img src="" alt="" /> / <img src="" alt="" /> : move left/ move right
+      </p>
+      <p><img src="" alt="" /> : jump</p>
+      <p><img src="" alt="" /> : throw bottle</p>
+      <p>
+        Care not to get overrun by the crazy chickens, defeat them by jumping on
+        their heads. Try to gather as many hot sauce bottles as you can... you
+        will need it for el pollo loco!!!
+      </p>
+    </dialog>
 
     <div
       class="canvas-container"
