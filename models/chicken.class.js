@@ -15,43 +15,26 @@ class Chicken extends MovableObject {
     this.speed = 0.15 + Math.random() * 0.5;
     this.dead = false;
     this.isDying = false;
-    // this.runIntervals();
     this.animate();
   }
 
-  // runIntervals() {
-  //   IntervalHub.startInterval(this.animateChickenmovement, 1000 / 60);
-  //   IntervalHub.startInterval(this.animateChickenDeath, 170);
-  // }
-
   animate() {
-    setInterval(() => {
-      if (!this.dead && !this.isDying) {
-        this.moveLeft();
-      }
-    }, 1000 / 60);
-    setInterval(() => {
-      if (this.dead) return;
-
-      if (this.isDying) {
-        this.playAnimation(this.imagesDead);
-      } else {
-        this.playAnimation(this.imagesWalking);
-      }
-    }, 170);
+    IntervalHub.startInterval(this.animateChickenmovement, 1000 / 60);
+    IntervalHub.startInterval(this.animateChickenDeath, 170);
   }
 
-  // animateChickenmovement = () => {
-  //   if (!this.dead && !this.isDying) {
-  //     this.moveLeft();
-  //   }
-  // };
-  // animateChickenDeath = () => {
-  //   if (this.dead) return;
-  //   if (this.isDying) {
-  //     this.playAnimation(this.imagesDead);
-  //   } else {
-  //     this.playAnimation(this.imagesWalking);
-  //   }
-  // };
+  animateChickenmovement = () => {
+    if (!this.dead && !this.isDying) {
+      this.moveLeft();
+    }
+  };
+
+  animateChickenDeath = () => {
+    if (this.dead) return;
+    if (this.isDying) {
+      this.playAnimation(this.imagesDead);
+    } else {
+      this.playAnimation(this.imagesWalking);
+    }
+  };
 }

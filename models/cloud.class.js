@@ -17,10 +17,12 @@ class Cloud extends MovableObject {
   }
 
   animate() {
-    setInterval(() => {
-      this.moveLeft();
-    }, 1000 / 60);
+    IntervalHub.startInterval(this.animateClouds, 1000 / 60);
   }
+
+  animateClouds = () => {
+    this.moveLeft();
+  };
 
   getRandomImg() {
     this.randomImg = Math.floor(Math.random() * 2);

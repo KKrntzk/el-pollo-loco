@@ -26,20 +26,22 @@ class Chicks extends MovableObject {
   }
 
   animate() {
-    setInterval(() => {
-      if (!this.dead && !this.isDying) {
-        this.moveLeft();
-      }
-    }, 1000 / 60);
-
-    setInterval(() => {
-      if (this.dead) return;
-
-      if (this.isDying) {
-        this.playAnimation(this.imagesDead);
-      } else {
-        this.playAnimation(this.imagesWalking);
-      }
-    }, 200);
+    IntervalHub.startInterval(this.animateChicksmovement, 1000 / 60);
+    IntervalHub.startInterval(this.animateChicksDeath, 200);
   }
+
+  animateChicksmovement = () => {
+    if (!this.dead && !this.isDying) {
+      this.moveLeft();
+    }
+  };
+
+  animateChicksDeath = () => {
+    if (this.dead) return;
+    if (this.isDying) {
+      this.playAnimation(this.imagesDead);
+    } else {
+      this.playAnimation(this.imagesWalking);
+    }
+  };
 }

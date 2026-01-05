@@ -16,15 +16,17 @@ class Coins extends DrawableObject {
     this.x = 200 + Math.random() * 1500;
     this.y = 150 + Math.random() * 100;
     this.collected = false;
-    this.animateCoin();
+    this.animate();
   }
 
-  animateCoin() {
-    setInterval(() => {
-      let i = this.currentImage % this.images.length;
-      let path = this.images[i];
-      this.img = this.imageCache[path];
-      this.currentImage++;
-    }, 300);
+  animate() {
+    IntervalHub.startInterval(this.animateCoin, 300);
   }
+
+  animateCoin = () => {
+    let i = this.currentImage % this.images.length;
+    let path = this.images[i];
+    this.img = this.imageCache[path];
+    this.currentImage++;
+  };
 }
