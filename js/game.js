@@ -24,6 +24,9 @@ function startGame() {
   AudioHub.backgroundMusic.loop = true;
   AudioHub.backgroundMusic.volume = 0.1;
   AudioHub.backgroundMusic.play();
+
+  const muteBtn = document.getElementById("muteBtn");
+  muteBtn.classList.remove("d-none");
 }
 
 function init() {

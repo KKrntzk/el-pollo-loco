@@ -169,3 +169,7 @@ dialog::backdrop {
   color: white;
   cursor: pointer;
 }
+
+.d-none {
+  display: none;
+}
