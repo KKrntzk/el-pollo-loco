@@ -3,6 +3,7 @@ let world;
 let keyboard = new Keyboard();
 let startImage = new Image();
 const lvl1 = level1;
+
 startImage.src = "img_pollo_locco/img/canvas_overlay/overlay.png";
 
 window.onload = function () {
@@ -27,6 +28,10 @@ function startGame() {
 
   const muteBtn = document.getElementById("muteBtn");
   muteBtn.classList.remove("d-none");
+  const restartBtn = document.getElementById("restartBtn");
+  restartBtn.classList.remove("d-none");
+  const homeBtn = document.getElementById("homeBtn");
+  homeBtn.classList.remove("d-none");
 }
 
 function init() {

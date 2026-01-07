@@ -157,17 +157,30 @@ dialog::backdrop {
   background: rgba(0, 0, 0, 0.445);
 }
 
-.mute-btn {
+.mute-btn,
+.restart-btn,
+.home-btn {
   position: absolute;
-  top: 0;
-  right: 0;
+  top: 0px;
   z-index: 2;
   background: none;
   border: none;
-  padding: 6px 6px;
+  padding: 6px;
   font-size: 20px;
   color: white;
   cursor: pointer;
+}
+
+.mute-btn {
+  right: 0px;
+}
+
+.restart-btn {
+  right: 30px;
+}
+
+.home-btn {
+  right: 60px;
 }
 
 .d-none {
