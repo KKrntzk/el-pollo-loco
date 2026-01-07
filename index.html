@@ -32,7 +32,7 @@
     <script src="./models/throwable-object.class.js"></script>
 
     <script src="./js/game.js"></script>
-    <title>Document</title>
+    <title>El Pollo Loco</title>
   </head>
   <body>
     <h1>( El Pollo Loco )</h1>
@@ -48,11 +48,16 @@
         height="480"
       ></canvas>
 
-      <div>
+      <div id="loosingScreen" class="loosing-screen d-none">
         <img
-          id="loosingScreen"
-          class="loosing-screen d-none"
           src="./img_pollo_locco/img/You won, you lost/Game over A.png"
+          alt=""
+        />
+      </div>
+
+      <div id="winningScreen" class="winning-screen d-none">
+        <img
+          src="./img_pollo_locco/img/You won, you lost/You Win A.png"
           alt=""
         />
       </div>
@@ -75,7 +80,14 @@
       </button>
 
       <button id="homeBtn" class="home-btn d-none" onclick="goHome()">
-        🏠
+        🛖
+      </button>
+      <button
+        id="fullScreenBtn"
+        class="fullscreen-btn d-none"
+        onclick="goFullscreen()"
+      >
+        📺
       </button>
       <button
         id="startBtn"

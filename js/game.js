@@ -10,8 +10,7 @@ let isMuted = false;
 
 const lvl1 = level1;
 
-// Set the start image source
-startImage.src = "img_pollo_locco/img/canvas_overlay/overlay.png";
+let isFullscreen = false;
 
 // =======================
 // WINDOW ONLOAD
@@ -24,6 +23,20 @@ window.onload = function () {
     ctx.drawImage(startImage, 0, 0, canvas.width, canvas.height);
   };
 };
+
+document.addEventListener("fullscreenchange", handleFullscreenChange);
+document.addEventListener("webkitfullscreenchange", handleFullscreenChange);
+
+function handleFullscreenChange() {
+  const btn = document.getElementById("fullScreenBtn");
+  if (document.fullscreenElement) {
+    isFullscreen = true;
+    btn.textContent = "❌";
+  } else {
+    isFullscreen = false;
+    btn.textContent = "📺";
+  }
+}
 
 // =======================
 // GAME INITIALIZATION
@@ -62,6 +75,7 @@ function startGame() {
 
   document.getElementById("restartBtn").classList.remove("d-none");
   document.getElementById("homeBtn").classList.remove("d-none");
+  document.getElementById("fullScreenBtn").classList.remove("d-none");
 }
 
 // =======================
@@ -146,4 +160,25 @@ function showLosingScreen() {
 function hideLosingScreen() {
   const losingScreen = document.getElementById("loosingScreen");
   losingScreen.classList.add("d-none");
+}
+function showWinningScreen() {
+  const winningScreen = document.getElementById("winningScreen");
+  winningScreen.classList.remove("d-none");
+}
+
+function hideWinningScreen() {
+  const winningScreen = document.getElementById("winningScreen");
+  winningScreen.classList.add("d-none");
+}
+
+function goFullscreen() {
+  const container = document.querySelector(".canvas-container");
+  const gameState = document.getElementById("loosingScreen");
+  if (!document.fullscreenElement) {
+    container.requestFullscreen();
+    gameState.classList.add("loosing-screen-fullscreen");
+  } else {
+    document.exitFullscreen();
+    gameState.classList.remove("loosing-screen-fullscreen");
+  }
 }

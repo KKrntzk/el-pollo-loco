@@ -129,6 +129,7 @@ class Endboss extends MovableObject {
       AudioHub.stopOne(AudioHub.endbossSound);
       this.stopIdleSound();
       this.playDeathSoundOnce();
+      showWinningScreen();
       return true;
     }
     return false;

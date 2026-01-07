@@ -74,6 +74,7 @@ class Character extends MovableObject {
       this.playAnimation(this.imagesDead);
       this.playSoundOnce(AudioHub.characterDead);
       this.stopSnoring();
+      showLosingScreen();
     } else if (this.isHurt()) {
       this.playAnimation(this.imagesHurt);
       this.stopSnoring();

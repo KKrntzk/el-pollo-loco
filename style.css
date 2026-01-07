@@ -67,9 +67,20 @@ h1 {
   display: inline-block;
 }
 
+.canvas-container:fullscreen {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: black;
+}
+
 .game-canvas {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
   background-color: black;
-  background-image: url("./img_pollo_locco/img/canvas_overlay/overlay.png");
   display: block;
 }
 
@@ -159,7 +170,8 @@ dialog::backdrop {
 
 .mute-btn,
 .restart-btn,
-.home-btn {
+.home-btn,
+.fullscreen-btn {
   position: absolute;
   top: 0px;
   z-index: 2;
@@ -183,15 +195,46 @@ dialog::backdrop {
   right: 60px;
 }
 
-.d-none {
-  display: none;
+.fullscreen-btn {
+  right: 90px;
 }
 
 .loosing-screen {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   position: absolute;
   top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 5;
+  width: 720px;
+  height: 480px;
+}
+
+.loosing-screen-fullscreen {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.winning-screen {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 0;
+  width: 720px;
+  height: 480px;
+}
+
+.winning-screen-fullscreen {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.d-none {
+  display: none;
 }
