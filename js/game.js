@@ -161,6 +161,7 @@ function hideLosingScreen() {
   const losingScreen = document.getElementById("loosingScreen");
   losingScreen.classList.add("d-none");
 }
+
 function showWinningScreen() {
   const winningScreen = document.getElementById("winningScreen");
   winningScreen.classList.remove("d-none");
@@ -172,13 +173,18 @@ function hideWinningScreen() {
 }
 
 function goFullscreen() {
+  const fullScreenBtn = document.getElementById("fullScreenBtn");
   const container = document.querySelector(".canvas-container");
   const gameState = document.getElementById("loosingScreen");
+  const winningState = document.getElementById("winningScreen");
   if (!document.fullscreenElement) {
     container.requestFullscreen();
     gameState.classList.add("loosing-screen-fullscreen");
+    winningState.classList.add("winning-screen-fullscreen");
   } else {
     document.exitFullscreen();
     gameState.classList.remove("loosing-screen-fullscreen");
+    winningState.classList.remove("winning-screen-fullscreen");
   }
+  fullScreenBtn.blur();
 }
