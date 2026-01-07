@@ -47,7 +47,20 @@
         width="720"
         height="480"
       ></canvas>
-      <button id="startBtn" class="start-btn" onclick="startGame()">
+      <button
+        id="muteBtn"
+        class="mute-btn"
+        onclick="toggleMute()"
+        aria-label="Sound an/aus"
+      >
+        🔊
+      </button>
+      <button
+        id="startBtn"
+        class="start-btn"
+        type="button"
+        onclick="startGame()"
+      >
         play
       </button>
     </div>

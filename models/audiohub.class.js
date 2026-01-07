@@ -1,4 +1,5 @@
 class AudioHub {
+  static isMuted = false;
   static backgroundMusic = new Audio(
     "./sounds/backgroundmusic/acoustic-mexican-guitar-218610.mp3"
   );
@@ -42,12 +43,15 @@ class AudioHub {
     AudioHub.endbossDeath,
     AudioHub.endbossIdle,
     AudioHub.gameStart,
+    AudioHub.backgroundMusic,
   ];
 
   static playOne(sound) {
-    sound.volume = 0.2;
-    sound.currentTime = 0;
-    sound.play();
+    if (!AudioHub.isMuted) {
+      sound.volume = 0.2;
+      sound.currentTime = 0;
+      sound.play();
+    }
   }
 
   static stopAll() {
@@ -61,12 +65,14 @@ class AudioHub {
   }
 
   static mute() {
+    AudioHub.isMuted = true;
     AudioHub.allSounds.forEach((sound) => {
       sound.volume = 0.0;
     });
   }
 
   static unmute() {
+    AudioHub.isMuted = false;
     AudioHub.allSounds.forEach((sound) => {
       sound.volume = 0.2;
     });

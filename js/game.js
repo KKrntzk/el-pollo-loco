@@ -91,3 +91,20 @@ window.addEventListener("keyup", (e) => {
     keyboard.D = false;
   }
 });
+
+let isMuted = false;
+
+function toggleMute() {
+  const muteBtn = document.getElementById("muteBtn");
+  isMuted = !isMuted;
+
+  if (isMuted) {
+    AudioHub.mute();
+    muteBtn.textContent = "🔇";
+  } else {
+    AudioHub.unmute();
+    muteBtn.textContent = "🔊";
+  }
+
+  muteBtn.blur();
+}
