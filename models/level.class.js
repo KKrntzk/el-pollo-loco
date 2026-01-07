@@ -15,4 +15,10 @@ class Level {
     this.coins = coins;
     this.bottles = bottles;
   }
+
+  startLevel() {
+    this.enemies.forEach((enemies) => {
+      enemies.startEnemiesRun();
+    });
+  }
 }

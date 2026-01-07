@@ -10,6 +10,10 @@ class MovableObject extends DrawableObject {
   coinCount = 0;
   lastMove = Date.now();
 
+  startEnemiesRun() {
+    this.animate();
+  }
+
   playAnimation(images) {
     let i = this.currentImage % images.length;
     let path = images[i];

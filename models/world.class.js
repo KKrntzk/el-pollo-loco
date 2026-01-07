@@ -4,7 +4,7 @@ class World {
   keyboard;
   camera_x = 0;
   character = new Character();
-  level = level1;
+  level = null;
   throwObject = false;
 
   throwabelObjects = [];
@@ -15,13 +15,15 @@ class World {
   coins = [];
   bottles = [];
 
-  constructor(canvas, keyboard) {
+  constructor(canvas, keyboard, _level) {
+    this.level = _level;
     this.ctx = canvas.getContext("2d");
     this.canvas = canvas;
     this.keyboard = keyboard;
     this.draw();
     this.setWorld();
     this.run();
+    this.level.startLevel();
   }
 
   setWorld() {

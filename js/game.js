@@ -2,6 +2,7 @@ let canvas;
 let world;
 let keyboard = new Keyboard();
 let startImage = new Image();
+const lvl1 = level1;
 startImage.src = "img_pollo_locco/img/canvas_overlay/overlay.png";
 
 window.onload = function () {
@@ -26,7 +27,7 @@ function startGame() {
 }
 
 function init() {
-  world = new World(canvas, keyboard);
+  world = new World(canvas, keyboard, lvl1);
 }
 
 function openDialog() {

@@ -22,7 +22,6 @@ class Chicks extends MovableObject {
     this.speed = 0.35 + Math.random() * 0.9;
     this.dead = false;
     this.isDying = false;
-    this.animate();
   }
 
   animate() {
