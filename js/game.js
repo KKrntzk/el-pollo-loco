@@ -33,23 +33,33 @@ function init() {
 }
 
 function startGame() {
-  // Hide start button
   const btn = document.getElementById("startBtn");
-  btn.style.display = "none";
-
-  // Clear canvas
+  btn.classList.add("d-none");
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-  // Initialize the game world
   init();
 
-  // Play background music
   AudioHub.backgroundMusic.loop = true;
   AudioHub.backgroundMusic.volume = 0.1;
   AudioHub.backgroundMusic.play();
 
-  // Show UI buttons
   document.getElementById("muteBtn").classList.remove("d-none");
+  const savedMute = getBoolean("isMuted");
+  if (savedMute !== null) {
+    isMuted = savedMute;
+  } else {
+    isMuted = false; // Standardwert
+  }
+
+  // Mute anwenden
+  if (isMuted) {
+    AudioHub.mute();
+    muteBtn.textContent = "🔇";
+  } else {
+    AudioHub.unmute();
+    muteBtn.textContent = "🔊";
+  }
+
   document.getElementById("restartBtn").classList.remove("d-none");
   document.getElementById("homeBtn").classList.remove("d-none");
 }
@@ -108,6 +118,32 @@ function toggleMute() {
     AudioHub.unmute();
     muteBtn.textContent = "🔊";
   }
+  saveBoolean("isMuted", isMuted);
 
   muteBtn.blur();
+}
+
+// =======================
+// LOCAL STORAGE
+// =======================
+
+function saveBoolean(key, value) {
+  if (typeof value !== "boolean") return;
+  localStorage.setItem(key, JSON.stringify(value));
+}
+
+function getBoolean(key) {
+  const raw = localStorage.getItem(key);
+  if (raw === null) return null;
+  return JSON.parse(raw);
+}
+
+function showLosingScreen() {
+  const losingScreen = document.getElementById("loosingScreen");
+  losingScreen.classList.remove("d-none");
+}
+
+function hideLosingScreen() {
+  const losingScreen = document.getElementById("loosingScreen");
+  losingScreen.classList.add("d-none");
 }
