@@ -152,6 +152,10 @@ function getBoolean(key) {
   return JSON.parse(raw);
 }
 
+function goHome() {
+  window.location.href = "index.html";
+}
+
 function showLosingScreen() {
   const losingScreen = document.getElementById("loosingScreen");
   losingScreen.classList.remove("d-none");
