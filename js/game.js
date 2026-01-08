@@ -1,20 +1,149 @@
-// =======================
-// GLOBAL VARIABLES
-// =======================
+//#region GLOBAL VARIABLES
 let canvas;
 let ctx;
 let world;
 let keyboard = new Keyboard();
 let startImage = new Image();
 let isMuted = false;
-
-const lvl1 = level1;
-
 let isFullscreen = false;
 
-// =======================
-// WINDOW ONLOAD
-// =======================
+const lvl1 = level1;
+//#endregion
+
+//#region LEVEL CREATION
+function createLevel1() {
+  return new Level(
+    [
+      new Chicken(),
+      new Chicken(),
+      new Chicken(),
+      new Chicken(),
+      new Chicks(),
+      new Chicks(),
+      new Chicks(),
+      new Chicks(),
+      new Chicks(),
+    ],
+    [new Endboss()],
+    [
+      new Cloud(),
+      new Cloud(),
+      new Cloud(),
+      new Cloud(),
+      new Cloud(),
+      new Cloud(),
+    ],
+    [
+      new BackgroundObject(
+        "img_pollo_locco/img/5_background/layers/air.png",
+        -719
+      ),
+      new BackgroundObject(
+        "img_pollo_locco/img/5_background/layers/3_third_layer/2.png",
+        -719
+      ),
+      new BackgroundObject(
+        "img_pollo_locco/img/5_background/layers/2_second_layer/2.png",
+        -719
+      ),
+      new BackgroundObject(
+        "img_pollo_locco/img/5_background/layers/1_first_layer/2.png",
+        -719
+      ),
+      new BackgroundObject(
+        "img_pollo_locco/img/5_background/layers/air.png",
+        0
+      ),
+      new BackgroundObject(
+        "img_pollo_locco/img/5_background/layers/3_third_layer/1.png",
+        0
+      ),
+      new BackgroundObject(
+        "img_pollo_locco/img/5_background/layers/2_second_layer/1.png",
+        0
+      ),
+      new BackgroundObject(
+        "img_pollo_locco/img/5_background/layers/1_first_layer/1.png",
+        0
+      ),
+      new BackgroundObject(
+        "img_pollo_locco/img/5_background/layers/air.png",
+        719
+      ),
+      new BackgroundObject(
+        "img_pollo_locco/img/5_background/layers/3_third_layer/2.png",
+        719
+      ),
+      new BackgroundObject(
+        "img_pollo_locco/img/5_background/layers/2_second_layer/2.png",
+        719
+      ),
+      new BackgroundObject(
+        "img_pollo_locco/img/5_background/layers/1_first_layer/2.png",
+        719
+      ),
+      new BackgroundObject(
+        "img_pollo_locco/img/5_background/layers/air.png",
+        719 * 2
+      ),
+      new BackgroundObject(
+        "img_pollo_locco/img/5_background/layers/3_third_layer/1.png",
+        719 * 2
+      ),
+      new BackgroundObject(
+        "img_pollo_locco/img/5_background/layers/2_second_layer/1.png",
+        719 * 2
+      ),
+      new BackgroundObject(
+        "img_pollo_locco/img/5_background/layers/1_first_layer/1.png",
+        719 * 2
+      ),
+      new BackgroundObject(
+        "img_pollo_locco/img/5_background/layers/air.png",
+        719 * 3
+      ),
+      new BackgroundObject(
+        "img_pollo_locco/img/5_background/layers/3_third_layer/2.png",
+        719 * 3
+      ),
+      new BackgroundObject(
+        "img_pollo_locco/img/5_background/layers/2_second_layer/2.png",
+        719 * 3
+      ),
+      new BackgroundObject(
+        "img_pollo_locco/img/5_background/layers/1_first_layer/2.png",
+        719 * 3
+      ),
+    ],
+    [
+      new Coins(),
+      new Coins(),
+      new Coins(),
+      new Coins(),
+      new Coins(),
+      new Coins(),
+      new Coins(),
+      new Coins(),
+      new Coins(),
+      new Coins(),
+    ],
+    [
+      new Bottles(),
+      new Bottles(),
+      new Bottles(),
+      new Bottles(),
+      new Bottles(),
+      new Bottles(),
+      new Bottles(),
+      new Bottles(),
+      new Bottles(),
+      new Bottles(),
+    ]
+  );
+}
+//#endregion
+
+//#region WINDOW & CANVAS SETUP
 window.onload = function () {
   canvas = document.getElementById("gameCanvas");
   ctx = canvas.getContext("2d");
@@ -37,36 +166,41 @@ function handleFullscreenChange() {
     btn.textContent = "📺";
   }
 }
+//#endregion
 
-// =======================
-// GAME INITIALIZATION
-// =======================
+//#region GAME INITIALIZATION
 function init() {
-  world = new World(canvas, keyboard, lvl1);
+  const level = createLevel1();
+  world = new World(canvas, keyboard, level);
+}
+//#endregion
+
+//#region START GAME HELPERS
+function hideStartButton() {
+  document.getElementById("startBtn")?.classList.add("d-none");
 }
 
-function startGame() {
-  const btn = document.getElementById("startBtn");
-  const muteBtn = document.getElementById("muteBtn");
+function showGameControls() {
+  document.getElementById("muteBtn").classList.remove("d-none");
+  document.getElementById("restartBtn").classList.remove("d-none");
+  document.getElementById("homeBtn").classList.remove("d-none");
+  document.getElementById("fullScreenBtn").classList.remove("d-none");
+}
 
-  startBtn?.classList.add("d-none");
-
-  btn.classList.add("d-none");
+function clearCanvas() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
+}
 
-  init();
-
+function startBackgroundMusic() {
   AudioHub.backgroundMusic.loop = true;
   AudioHub.backgroundMusic.volume = 0.1;
   AudioHub.backgroundMusic.play();
+}
 
-  document.getElementById("muteBtn").classList.remove("d-none");
+function initializeMuteButton() {
+  const muteBtn = document.getElementById("muteBtn");
   const savedMute = getBoolean("isMuted");
-  if (savedMute !== null) {
-    isMuted = savedMute;
-  } else {
-    isMuted = false;
-  }
+  isMuted = savedMute !== null ? savedMute : false;
 
   if (isMuted) {
     AudioHub.mute();
@@ -75,34 +209,54 @@ function startGame() {
     AudioHub.unmute();
     muteBtn.textContent = "🔊";
   }
+}
+//#endregion
 
-  document.getElementById("restartBtn").classList.remove("d-none");
-  document.getElementById("homeBtn").classList.remove("d-none");
-  document.getElementById("fullScreenBtn").classList.remove("d-none");
+//#region START / RESTART GAME
+function startGame() {
+  hideStartButton();
+  clearCanvas();
+  init();
+  startBackgroundMusic();
+  showGameControls();
+  initializeMuteButton();
 }
 
-// =======================
-// DIALOG FUNCTIONS
-// =======================
+function restartGame() {
+  const restartBtn = document.getElementById("restartBtn");
+  hideLosingScreen();
+  hideWinningScreen();
+
+  IntervalHub.stopAllIntervals();
+  AudioHub.stopAll();
+
+  keyboard = new Keyboard();
+  clearCanvas();
+
+  world = null;
+  init();
+
+  if (!isMuted) AudioHub.backgroundMusic.play();
+  restartBtn.blur();
+}
+//#endregion
+
+//#region DIALOG FUNCTIONS
 function openDialog() {
   document.getElementById("instructionDialog").showModal();
 }
-
 function closeDialog() {
   document.getElementById("instructionDialog").close();
 }
-
 function openImpressum() {
   document.getElementById("impressumDialog").showModal();
 }
-
 function closeDialogImpressum() {
   document.getElementById("impressumDialog").close();
 }
+//#endregion
 
-// =======================
-// KEYBOARD EVENT LISTENERS
-// =======================
+//#region KEYBOARD EVENTS
 window.addEventListener("keydown", (e) => {
   if (e.keyCode == 39) keyboard.RIGHT = true;
   if (e.keyCode == 37) keyboard.LEFT = true;
@@ -120,12 +274,12 @@ window.addEventListener("keyup", (e) => {
   if (e.keyCode == 32) keyboard.SPACE = false;
   if (e.keyCode == 68) keyboard.D = false;
 });
+//#endregion
 
-// =======================
-// AUDIO CONTROLS
-// =======================
+//#region AUDIO CONTROLS
 function toggleMute() {
   isMuted = !isMuted;
+  const muteBtn = document.getElementById("muteBtn");
 
   if (isMuted) {
     AudioHub.mute();
@@ -135,14 +289,11 @@ function toggleMute() {
     muteBtn.textContent = "🔊";
   }
   saveBoolean("isMuted", isMuted);
-
   muteBtn.blur();
 }
+//#endregion
 
-// =======================
-// LOCAL STORAGE
-// =======================
-
+//#region LOCAL STORAGE
 function saveBoolean(key, value) {
   if (typeof value !== "boolean") return;
   localStorage.setItem(key, JSON.stringify(value));
@@ -153,32 +304,17 @@ function getBoolean(key) {
   if (raw === null) return null;
   return JSON.parse(raw);
 }
+//#endregion
 
+//#region NAVIGATION
 function goHome() {
   window.location.href = "index.html";
 }
+//#endregion
 
-function restartGame() {
-  const restartBtn = document.getElementById("restartBtn");
-  hideLosingScreen();
-  hideWinningScreen();
-
-  IntervalHub.stopAllIntervals();
-  AudioHub.stopAll();
-
-  keyboard = new Keyboard();
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-  world = null;
-  init();
-
-  if (!isMuted) AudioHub.backgroundMusic.play();
-  restartBtn.blur();
-}
-
+//#region SCREENS
 function showLosingScreen() {
-  const losingScreen = document.getElementById("loosingScreen");
-  losingScreen.classList.remove("d-none");
+  document.getElementById("loosingScreen").classList.remove("d-none");
 }
 
 function hideLosingScreen() {
@@ -189,8 +325,7 @@ function hideLosingScreen() {
 }
 
 function showWinningScreen() {
-  const winningScreen = document.getElementById("winningScreen");
-  winningScreen.classList.remove("d-none");
+  document.getElementById("winningScreen").classList.remove("d-none");
   IntervalHub.stopAllIntervals();
 }
 
@@ -199,7 +334,9 @@ function hideWinningScreen() {
   winningScreen.classList.add("d-none");
   IntervalHub.stopAllIntervals();
 }
+//#endregion
 
+//#region FULLSCREEN
 function goFullscreen() {
   const fullScreenBtn = document.getElementById("fullScreenBtn");
   const container = document.querySelector(".canvas-container");
@@ -216,3 +353,4 @@ function goFullscreen() {
   }
   fullScreenBtn.blur();
 }
+//#endregion
