@@ -47,6 +47,10 @@ function init() {
 
 function startGame() {
   const btn = document.getElementById("startBtn");
+  const muteBtn = document.getElementById("muteBtn");
+
+  startBtn?.classList.add("d-none");
+
   btn.classList.add("d-none");
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -61,10 +65,9 @@ function startGame() {
   if (savedMute !== null) {
     isMuted = savedMute;
   } else {
-    isMuted = false; // Standardwert
+    isMuted = false;
   }
 
-  // Mute anwenden
   if (isMuted) {
     AudioHub.mute();
     muteBtn.textContent = "🔇";
@@ -122,7 +125,6 @@ window.addEventListener("keyup", (e) => {
 // AUDIO CONTROLS
 // =======================
 function toggleMute() {
-  const muteBtn = document.getElementById("muteBtn");
   isMuted = !isMuted;
 
   if (isMuted) {
@@ -156,6 +158,24 @@ function goHome() {
   window.location.href = "index.html";
 }
 
+function restartGame() {
+  const restartBtn = document.getElementById("restartBtn");
+  hideLosingScreen();
+  hideWinningScreen();
+
+  IntervalHub.stopAllIntervals();
+  AudioHub.stopAll();
+
+  keyboard = new Keyboard();
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  world = null;
+  init();
+
+  if (!isMuted) AudioHub.backgroundMusic.play();
+  restartBtn.blur();
+}
+
 function showLosingScreen() {
   const losingScreen = document.getElementById("loosingScreen");
   losingScreen.classList.remove("d-none");
@@ -164,16 +184,20 @@ function showLosingScreen() {
 function hideLosingScreen() {
   const losingScreen = document.getElementById("loosingScreen");
   losingScreen.classList.add("d-none");
+  IntervalHub.stopAllIntervals();
+  AudioHub.stopAll();
 }
 
 function showWinningScreen() {
   const winningScreen = document.getElementById("winningScreen");
   winningScreen.classList.remove("d-none");
+  IntervalHub.stopAllIntervals();
 }
 
 function hideWinningScreen() {
   const winningScreen = document.getElementById("winningScreen");
   winningScreen.classList.add("d-none");
+  IntervalHub.stopAllIntervals();
 }
 
 function goFullscreen() {
