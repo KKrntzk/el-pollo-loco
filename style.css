@@ -30,30 +30,34 @@ body {
 }
 
 h1 {
-  color: #4d2814;
-  font-size: 120px;
+  color: #9c5328;
+  font-size: clamp(50px, 5vw, 120px);
   letter-spacing: 3px;
   text-shadow: 8px, 8px, 8px rgba(0, 0, 0, 0.5);
 }
 
 .menu {
   display: flex;
+  justify-content: center;
   gap: 10px;
+  margin-top: 8px;
 }
+
 .btn {
   padding: 15px 30px;
   font-family: "riogrande";
   font-size: 24px;
   cursor: pointer;
   z-index: 2;
-  background-color: #f0ebc1;
-  color: white;
+  background-color: #9c5328;
+  color: #f2eac0;
   border: none;
   border-radius: 8px;
   transition: all 0.3s ease;
 }
+
 .btn:hover {
-  background-color: #f0ebc1;
+  background-color: #f2eac0;
   transform: scale(1.1);
   color: #9c5328;
 }
@@ -82,6 +86,7 @@ h1 {
   object-fit: contain;
   background-color: black;
   display: block;
+  border-radius: 15px;
 }
 
 .start-btn {
@@ -233,6 +238,19 @@ dialog::backdrop {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.rotate-hint {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 24px;
+  color: red;
+  background: rgba(0, 0, 0, 0.5);
+  padding: 20px;
+  border-radius: 12px;
+  z-index: 2000;
 }
 
 .d-none {

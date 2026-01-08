@@ -315,13 +315,12 @@ function goHome() {
 //#region SCREENS
 function showLosingScreen() {
   document.getElementById("loosingScreen").classList.remove("d-none");
+  IntervalHub.stopAllIntervals();
 }
 
 function hideLosingScreen() {
   const losingScreen = document.getElementById("loosingScreen");
   losingScreen.classList.add("d-none");
-  IntervalHub.stopAllIntervals();
-  AudioHub.stopAll();
 }
 
 function showWinningScreen() {
@@ -337,6 +336,7 @@ function hideWinningScreen() {
 //#endregion
 
 //#region FULLSCREEN
+
 function goFullscreen() {
   const fullScreenBtn = document.getElementById("fullScreenBtn");
   const container = document.querySelector(".canvas-container");

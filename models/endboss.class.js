@@ -15,7 +15,7 @@ class Endboss extends MovableObject {
   isActive = false;
   isAttacking = false;
 
-  activationX = 1700;
+  activationX = 1500;
   deathSoundPlayed = false;
   idleSoundPlaying = false;
   endbossSoundPlaying = false;
