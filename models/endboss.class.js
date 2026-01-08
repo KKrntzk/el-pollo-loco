@@ -1,7 +1,9 @@
 class Endboss extends MovableObject {
+  //#region Properties / Attributes
   height = 400;
   width = 250;
   y = 60;
+  x = 2000;
 
   imagesWalking = ImageHub.endboss.walking;
   imagesAlert = ImageHub.endboss.alert;
@@ -20,10 +22,12 @@ class Endboss extends MovableObject {
   idleSoundPlaying = false;
   endbossSoundPlaying = false;
 
+  speed = 0;
   attackSpeed = 0;
   enrageSpeed = 0;
-  x = 2000;
+  //#endregion
 
+  //#region Constructor
   constructor() {
     super().loadImg("img_pollo_locco/img/4_enemie_boss_chicken/1_walk/G1.png");
 
@@ -39,46 +43,16 @@ class Endboss extends MovableObject {
 
     this.animate();
   }
-  /* SOUND */
-  playIdleSound() {
-    if (!this.idleSoundPlaying) {
-      AudioHub.endbossIdle.loop = true;
-      AudioHub.playOne(AudioHub.endbossIdle);
-      this.idleSoundPlaying = true;
-    }
-  }
+  //#endregion
 
-  stopIdleSound() {
-    AudioHub.stopOne(AudioHub.endbossIdle);
-    this.idleSoundPlaying = false;
-  }
-
-  playDeathSound() {
-    AudioHub.playOne(AudioHub.endbossDeath);
-  }
-
-  playDeathSoundOnce() {
-    if (!this.deathSoundPlayed) {
-      this.playDeathSound();
-      this.deathSoundPlayed = true;
-    }
-  }
-
-  startEndbossSound() {
-    if (!this.endbossSoundPlaying) {
-      AudioHub.endbossSound.loop = true;
-      AudioHub.playOne(AudioHub.endbossSound);
-      this.endbossSoundPlaying = true;
-    }
-  }
-
-  /* ANIMATION / INTERVALS */
+  //#region Animation & Interval Setup
   animate() {
     IntervalHub.startInterval(this.animateMovement, 1000 / 60);
     IntervalHub.startInterval(this.animateState, 170);
   }
+  //#endregion
 
-  /* MOVEMENT */
+  //#region Movement
   animateMovement = () => {
     if (!this.canMove()) return;
 
@@ -89,6 +63,7 @@ class Endboss extends MovableObject {
     } else {
       this.normalMove();
     }
+    this.checkIfOutOfWorld();
   };
 
   canMove() {
@@ -106,8 +81,9 @@ class Endboss extends MovableObject {
   normalMove() {
     this.moveLeft();
   }
+  //#endregion
 
-  /* STATES */
+  //#region States
   animateState = () => {
     if (!this.isActive) {
       this.handleAlertState();
@@ -162,11 +138,58 @@ class Endboss extends MovableObject {
     this.playAnimation(this.imagesAlert);
     this.stopIdleSound();
   }
+  //#endregion
 
-  /* ATTACK LOGIC */
+  //#region Sound Control
+  playIdleSound() {
+    if (!this.idleSoundPlaying) {
+      AudioHub.endbossIdle.loop = true;
+      AudioHub.playOne(AudioHub.endbossIdle);
+      this.idleSoundPlaying = true;
+    }
+  }
+
+  stopIdleSound() {
+    AudioHub.stopOne(AudioHub.endbossIdle);
+    this.idleSoundPlaying = false;
+  }
+
+  playDeathSound() {
+    AudioHub.playOne(AudioHub.endbossDeath);
+  }
+
+  playDeathSoundOnce() {
+    if (!this.deathSoundPlayed) {
+      this.playDeathSound();
+      this.deathSoundPlayed = true;
+    }
+  }
+
+  startEndbossSound() {
+    if (!this.endbossSoundPlaying) {
+      AudioHub.endbossSound.loop = true;
+      AudioHub.playOne(AudioHub.endbossSound);
+      this.endbossSoundPlaying = true;
+    }
+  }
+  //#endregion
+
+  //#region Attack Logic
   checkAttackState() {
     if (!this.isAttacking && this.energy < 50 && this.isActive && !this.dead) {
       this.isAttacking = true;
     }
   }
+  //#endregion
+
+  //#region World Boundary Check
+  checkIfOutOfWorld() {
+    const worldStart = 0;
+    if (this.x + this.width < worldStart) {
+      console.log("Endboss links raus!");
+      showLosingScreen();
+    }
+  }
+
+  //#endregion
 }
