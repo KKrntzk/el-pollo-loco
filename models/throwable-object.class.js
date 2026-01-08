@@ -14,7 +14,7 @@ class ThrowableObject extends MovableObject {
   //#endregion
 
   //#region Constructor
-  constructor(x, y) {
+  constructor(x, y, direction) {
     super().loadImg(
       "img_pollo_locco/img/6_salsa_bottle/bottle_rotation/1_bottle_rotation.png"
     );
@@ -24,6 +24,9 @@ class ThrowableObject extends MovableObject {
     this.y = y;
     this.height = 60;
     this.width = 40;
+
+    this.direction = direction;
+    this.otherDirection = direction === -1;
 
     this.runThrow();
     this.runAnimation();
@@ -43,7 +46,10 @@ class ThrowableObject extends MovableObject {
   };
 
   updateThrowPosition() {
-    if (!this.targetHit) this.x += 10;
+    if (!this.targetHit) {
+      this.x += 10 * this.direction;
+    }
+    // if (!this.targetHit) this.x += 10;
   }
 
   checkGroundCollision(groundY) {

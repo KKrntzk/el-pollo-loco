@@ -64,13 +64,25 @@ class World {
   };
 
   throwBottle = () => {
+    const direction = this.character.otherDirection ? -1 : 1;
+    const offsetX = direction === 1 ? 100 : -40;
+
     const bottle = new ThrowableObject(
-      this.character.x + 100,
-      this.character.y + 100
+      this.character.x + offsetX,
+      this.character.y + 100,
+      direction
     );
+
     this.throwObject = true;
     this.throwabelObjects.push(bottle);
     this.character.useBottle();
+    // const bottle = new ThrowableObject(
+    //   this.character.x + 100,
+    //   this.character.y + 100
+    // );
+    // this.throwObject = true;
+    // this.throwabelObjects.push(bottle);
+    // this.character.useBottle();
   };
 
   resetThrow = () => {

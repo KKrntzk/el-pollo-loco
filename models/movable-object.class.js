@@ -1,4 +1,5 @@
 class MovableObject extends DrawableObject {
+  //#region Properties
   currentImage = 0;
   speed = 0.15;
   otherDirection = false;
@@ -9,7 +10,9 @@ class MovableObject extends DrawableObject {
   bottleCount = 0;
   coinCount = 0;
   lastMove = Date.now();
+  //#endregion
 
+  //#region Animation
   startEnemiesRun() {
     this.animate();
   }
@@ -20,7 +23,9 @@ class MovableObject extends DrawableObject {
     this.img = this.imageCache[path];
     this.currentImage++;
   }
+  //#endregion
 
+  //#region Physics / Gravity
   applyGravity() {
     setInterval(() => {
       if (this.splashed || this.targetHit) {
@@ -39,7 +44,9 @@ class MovableObject extends DrawableObject {
     }
     return this.y < 130;
   }
+  //#endregion
 
+  //#region Damage / Health
   hit() {
     this.energy -= 0.5;
     if (this.energy < 0) {
@@ -63,6 +70,18 @@ class MovableObject extends DrawableObject {
     }, 400);
   }
 
+  isHurt() {
+    let timePassed = new Date().getTime() - this.lastHit;
+    timePassed = timePassed / 1000;
+    return timePassed < 1;
+  }
+
+  isDead() {
+    return this.energy == 0;
+  }
+  //#endregion
+
+  //#region Collectables
   collect() {
     AudioHub.playOne(AudioHub.bottleCollectSound);
     this.bottleCount++;
@@ -78,21 +97,9 @@ class MovableObject extends DrawableObject {
       this.coinCount = 10;
     }
   }
+  //#endregion
 
-  isSleeping() {
-    return Date.now() - this.lastMove > 10000;
-  }
-
-  isHurt() {
-    let timePassed = new Date().getTime() - this.lastHit;
-    timePassed = timePassed / 1000;
-    return timePassed < 1;
-  }
-
-  isDead() {
-    return this.energy == 0;
-  }
-
+  //#region Movement
   moveRight() {
     this.x += this.speed;
     this.lastMove = Date.now();
@@ -108,6 +115,12 @@ class MovableObject extends DrawableObject {
     this.lastMove = Date.now();
   }
 
+  isSleeping() {
+    return Date.now() - this.lastMove > 10000;
+  }
+  //#endregion
+
+  //#region Death
   die() {
     if (this.dead || this.isDying) return;
 
@@ -121,4 +134,5 @@ class MovableObject extends DrawableObject {
       this.dead = true;
     }, 1000);
   }
+  //#endregion
 }
