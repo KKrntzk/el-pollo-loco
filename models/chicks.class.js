@@ -18,7 +18,7 @@ class Chicks extends MovableObject {
     );
     this.loadImages(this.imagesWalking);
     this.loadImages(this.imagesDead);
-    this.x = 200 + Math.random() * 500;
+    this.x = 400 + Math.random() * 700;
     this.speed = 0.35 + Math.random() * 0.9;
     this.dead = false;
     this.isDying = false;
