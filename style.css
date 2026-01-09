@@ -176,7 +176,8 @@ dialog::backdrop {
 .mute-btn,
 .restart-btn,
 .home-btn,
-.fullscreen-btn {
+.fullscreen-btn,
+.cntrl-btn {
   position: absolute;
   top: 0px;
   z-index: 2;
@@ -186,6 +187,14 @@ dialog::backdrop {
   font-size: 20px;
   color: white;
   cursor: pointer;
+}
+
+.mute-btn:hover,
+.restart-btn:hover,
+.home-btn:hover,
+.fullscreen-btn:hover,
+.cntrl-btn:hover {
+  transform: scale(1.1);
 }
 
 .mute-btn {
@@ -202,6 +211,10 @@ dialog::backdrop {
 
 .fullscreen-btn {
   right: 90px;
+}
+
+.cntrl-btn {
+  right: 120px;
 }
 
 .loosing-screen {
@@ -255,6 +268,41 @@ dialog::backdrop {
   padding: 20px;
   border-radius: 12px;
   z-index: 2000;
+}
+
+.mobile-controls {
+  position: absolute;
+  bottom: 20px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 20px;
+  pointer-events: auto;
+  z-index: 1000;
+  touch-action: none;
+}
+
+.left-controls,
+.right-controls {
+  display: flex;
+  gap: 10px;
+}
+
+.mobile-btn {
+  width: 40px;
+  height: 40px;
+  font-size: 26px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(0, 0, 0, 0.6);
+  color: white;
+  user-select: none;
+  touch-action: none;
+}
+
+.mobile-btn.active {
+  transform: scale(0.9);
+  opacity: 0.7;
 }
 
 .d-none {

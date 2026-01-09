@@ -42,10 +42,7 @@
   <body>
     <h1>( El Pollo Loco )</h1>
 
-    <div
-      class="canvas-container"
-      style="position: relative; display: inline-block"
-    >
+    <div class="canvas-container">
       <canvas
         id="gameCanvas"
         class="game-canvas"
@@ -57,27 +54,18 @@
         <img
           class="win-loose-img"
           src="./img_pollo_locco/img/You won, you lost/Game over A.png"
-          alt=""
         />
       </div>
-
       <div id="winningScreen" class="winning-screen d-none">
         <img
           class="win-loose-img"
           src="./img_pollo_locco/img/You won, you lost/You Win A.png"
-          alt=""
         />
       </div>
 
-      <button
-        id="muteBtn"
-        class="mute-btn d-none"
-        onclick="toggleMute()"
-        aria-label="Sound an/aus"
-      >
+      <button id="muteBtn" class="mute-btn d-none" onclick="toggleMute()">
         🔊
       </button>
-
       <button
         id="restartBtn"
         class="d-none restart-btn"
@@ -85,11 +73,9 @@
       >
         🔄
       </button>
-
       <button id="homeBtn" class="d-none home-btn" onclick="goHome()">
         🛖
       </button>
-
       <button
         id="fullScreenBtn"
         class="d-none fullscreen-btn"
@@ -97,15 +83,27 @@
       >
         📺
       </button>
-
-      <button
-        id="startBtn"
-        class="start-btn"
-        type="button"
-        onclick="startGame()"
-      >
+      <button id="startBtn" class="start-btn" onclick="startGame()">
         play
       </button>
+      <button
+        id="toggleControlsBtn"
+        class="cntrl-btn d-none"
+        onclick="toggleMobileControls()"
+      >
+        🎮
+      </button>
+
+      <div class="mobile-controls d-none">
+        <div class="left-controls">
+          <button id="btnLeft" class="mobile-btn">◀</button>
+          <button id="btnRight" class="mobile-btn">▶</button>
+        </div>
+        <div class="right-controls">
+          <button id="btnJump" class="mobile-btn">▲</button>
+          <button id="btnThrow" class="mobile-btn">💣</button>
+        </div>
+      </div>
     </div>
 
     <div class="menu">

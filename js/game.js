@@ -185,6 +185,7 @@ function showGameControls() {
   document.getElementById("restartBtn").classList.remove("d-none");
   document.getElementById("homeBtn").classList.remove("d-none");
   document.getElementById("fullScreenBtn").classList.remove("d-none");
+  document.getElementById("toggleControlsBtn").classList.remove("d-none");
 }
 
 function clearCanvas() {
@@ -257,7 +258,11 @@ function closeDialogImpressum() {
 //#endregion
 
 //#region KEYBOARD EVENTS
+let buttonsActive = false;
+
 window.addEventListener("keydown", (e) => {
+  if (buttonsActive) return;
+
   if (e.keyCode == 39) keyboard.RIGHT = true;
   if (e.keyCode == 37) keyboard.LEFT = true;
   if (e.keyCode == 38) keyboard.UP = true;
@@ -267,6 +272,8 @@ window.addEventListener("keydown", (e) => {
 });
 
 window.addEventListener("keyup", (e) => {
+  if (buttonsActive) return;
+
   if (e.keyCode == 39) keyboard.RIGHT = false;
   if (e.keyCode == 37) keyboard.LEFT = false;
   if (e.keyCode == 38) keyboard.UP = false;
@@ -274,6 +281,81 @@ window.addEventListener("keyup", (e) => {
   if (e.keyCode == 32) keyboard.SPACE = false;
   if (e.keyCode == 68) keyboard.D = false;
 });
+
+function bindMobileControls() {
+  const map = {
+    btnRight: "RIGHT",
+    btnLeft: "LEFT",
+    btnJump: "SPACE",
+    btnThrow: "D",
+  };
+
+  Object.entries(map).forEach(([id, key]) => {
+    const btn = document.getElementById(id);
+    if (!btn) return;
+
+    btn.addEventListener("touchstart", (e) => {
+      if (e.cancelable) e.preventDefault();
+      keyboard[key] = true;
+      btn.classList.add("active");
+    });
+
+    btn.addEventListener("touchend", (e) => {
+      if (e.cancelable) e.preventDefault();
+      keyboard[key] = false;
+      btn.classList.remove("active");
+    });
+
+    btn.addEventListener("touchcancel", () => {
+      keyboard[key] = false;
+      btn.classList.remove("active");
+    });
+  });
+}
+
+window.addEventListener("DOMContentLoaded", () => {
+  bindMobileControls();
+
+  const controls = document.querySelector(".mobile-controls");
+
+  if (isMobileDevice()) {
+    controls.classList.remove("d-none");
+    buttonsActive = true;
+  } else {
+    const saved = JSON.parse(localStorage.getItem("showControls"));
+    if (saved !== null) {
+      if (saved) {
+        controls.classList.remove("d-none");
+        buttonsActive = true;
+      } else {
+        controls.classList.add("d-none");
+        buttonsActive = false;
+      }
+    } else {
+      controls.classList.add("d-none");
+      buttonsActive = false;
+    }
+  }
+});
+
+function toggleMobileControls() {
+  const contrlBtn = document.getElementById("toggleControlsBtn");
+  const controls = document.querySelector(".mobile-controls");
+  controls.classList.toggle("d-none");
+
+  buttonsActive = !controls.classList.contains("d-none");
+
+  if (!isMobileDevice()) {
+    localStorage.setItem("showControls", JSON.stringify(buttonsActive));
+  }
+
+  contrlBtn.blur();
+}
+
+function isMobileDevice() {
+  return window.matchMedia("(pointer: coarse)").matches;
+}
+
 //#endregion
 
 //#region AUDIO CONTROLS
