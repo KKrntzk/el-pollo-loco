@@ -6,7 +6,6 @@ let keyboard = new Keyboard();
 let startImage = new Image();
 let isMuted = false;
 let isFullscreen = false;
-
 const lvl1 = level1;
 //#endregion
 
@@ -141,13 +140,13 @@ function createLevel1() {
     ]
   );
 }
+
 //#endregion
 
 //#region WINDOW & CANVAS SETUP
 window.onload = function () {
   canvas = document.getElementById("gameCanvas");
   ctx = canvas.getContext("2d");
-
   startImage.onload = function () {
     ctx.drawImage(startImage, 0, 0, canvas.width, canvas.height);
   };
@@ -166,6 +165,7 @@ function handleFullscreenChange() {
     btn.textContent = "📺";
   }
 }
+
 //#endregion
 
 //#region GAME INITIALIZATION
@@ -173,6 +173,7 @@ function init() {
   const level = createLevel1();
   world = new World(canvas, keyboard, level);
 }
+
 //#endregion
 
 //#region START GAME HELPERS
@@ -181,11 +182,38 @@ function hideStartButton() {
 }
 
 function showGameControls() {
+  showDesktopButtons();
+  updateMobileControlsVisibility();
+}
+
+function showDesktopButtons() {
   document.getElementById("muteBtn").classList.remove("d-none");
   document.getElementById("restartBtn").classList.remove("d-none");
   document.getElementById("homeBtn").classList.remove("d-none");
   document.getElementById("fullScreenBtn").classList.remove("d-none");
   document.getElementById("toggleControlsBtn").classList.remove("d-none");
+}
+
+function updateMobileControlsVisibility() {
+  const controls = document.querySelector(".mobile-controls");
+  const saved = getBoolean("showControls");
+  if (isMobileDevice()) {
+    if (saved) {
+      controls.classList.remove("d-none");
+      buttonsActive = true;
+    } else {
+      controls.classList.add("d-none");
+      buttonsActive = false;
+    }
+  } else {
+    if (saved) {
+      controls.classList.remove("d-none");
+      buttonsActive = true;
+    } else {
+      controls.classList.add("d-none");
+      buttonsActive = false;
+    }
+  }
 }
 
 function clearCanvas() {
@@ -202,7 +230,6 @@ function initializeMuteButton() {
   const muteBtn = document.getElementById("muteBtn");
   const savedMute = getBoolean("isMuted");
   isMuted = savedMute !== null ? savedMute : false;
-
   if (isMuted) {
     AudioHub.mute();
     muteBtn.textContent = "🔇";
@@ -211,6 +238,7 @@ function initializeMuteButton() {
     muteBtn.textContent = "🔊";
   }
 }
+
 //#endregion
 
 //#region START / RESTART GAME
@@ -227,34 +255,35 @@ function restartGame() {
   const restartBtn = document.getElementById("restartBtn");
   hideLosingScreen();
   hideWinningScreen();
-
   IntervalHub.stopAllIntervals();
   AudioHub.stopAll();
-
   keyboard = new Keyboard();
   clearCanvas();
-
   world = null;
   init();
-
   if (!isMuted) AudioHub.backgroundMusic.play();
   restartBtn.blur();
 }
+
 //#endregion
 
 //#region DIALOG FUNCTIONS
 function openDialog() {
   document.getElementById("instructionDialog").showModal();
 }
+
 function closeDialog() {
   document.getElementById("instructionDialog").close();
 }
+
 function openImpressum() {
   document.getElementById("impressumDialog").showModal();
 }
+
 function closeDialogImpressum() {
   document.getElementById("impressumDialog").close();
 }
+
 //#endregion
 
 //#region KEYBOARD EVENTS
@@ -262,7 +291,6 @@ let buttonsActive = false;
 
 window.addEventListener("keydown", (e) => {
   if (buttonsActive) return;
-
   if (e.keyCode == 39) keyboard.RIGHT = true;
   if (e.keyCode == 37) keyboard.LEFT = true;
   if (e.keyCode == 38) keyboard.UP = true;
@@ -273,7 +301,6 @@ window.addEventListener("keydown", (e) => {
 
 window.addEventListener("keyup", (e) => {
   if (buttonsActive) return;
-
   if (e.keyCode == 39) keyboard.RIGHT = false;
   if (e.keyCode == 37) keyboard.LEFT = false;
   if (e.keyCode == 38) keyboard.UP = false;
@@ -289,66 +316,40 @@ function bindMobileControls() {
     btnJump: "SPACE",
     btnThrow: "D",
   };
-
-  Object.entries(map).forEach(([id, key]) => {
-    const btn = document.getElementById(id);
-    if (!btn) return;
-
-    btn.addEventListener("touchstart", (e) => {
-      if (e.cancelable) e.preventDefault();
-      keyboard[key] = true;
-      btn.classList.add("active");
-    });
-
-    btn.addEventListener("touchend", (e) => {
-      if (e.cancelable) e.preventDefault();
-      keyboard[key] = false;
-      btn.classList.remove("active");
-    });
-
-    btn.addEventListener("touchcancel", () => {
-      keyboard[key] = false;
-      btn.classList.remove("active");
-    });
-  });
+  Object.entries(map).forEach(([id, key]) => bindButton(id, key));
 }
 
+function bindButton(id, key) {
+  const btn = document.getElementById(id);
+  if (!btn) return;
+  const startHandler = (e) => {
+    if (e.cancelable) e.preventDefault();
+    keyboard[key] = true;
+    btn.classList.add("active");
+  };
+  const endHandler = (e) => {
+    if (e.cancelable) e.preventDefault();
+    keyboard[key] = false;
+    btn.classList.remove("active");
+  };
+  btn.addEventListener("touchstart", startHandler);
+  btn.addEventListener("mousedown", startHandler);
+  btn.addEventListener("touchend", endHandler);
+  btn.addEventListener("mouseup", endHandler);
+  btn.addEventListener("touchcancel", endHandler);
+  btn.addEventListener("mouseleave", endHandler);
+}
 window.addEventListener("DOMContentLoaded", () => {
   bindMobileControls();
-
-  const controls = document.querySelector(".mobile-controls");
-
-  if (isMobileDevice()) {
-    controls.classList.remove("d-none");
-    buttonsActive = true;
-  } else {
-    const saved = JSON.parse(localStorage.getItem("showControls"));
-    if (saved !== null) {
-      if (saved) {
-        controls.classList.remove("d-none");
-        buttonsActive = true;
-      } else {
-        controls.classList.add("d-none");
-        buttonsActive = false;
-      }
-    } else {
-      controls.classList.add("d-none");
-      buttonsActive = false;
-    }
-  }
+  buttonsActive = false;
 });
 
 function toggleMobileControls() {
   const contrlBtn = document.getElementById("toggleControlsBtn");
   const controls = document.querySelector(".mobile-controls");
   controls.classList.toggle("d-none");
-
   buttonsActive = !controls.classList.contains("d-none");
-
-  if (!isMobileDevice()) {
-    localStorage.setItem("showControls", JSON.stringify(buttonsActive));
-  }
-
+  if (!isMobileDevice()) saveBoolean("showControls", buttonsActive);
   contrlBtn.blur();
 }
 
@@ -356,13 +357,34 @@ function isMobileDevice() {
   return window.matchMedia("(pointer: coarse)").matches;
 }
 
+function checkDeviceOrientation() {
+  const lock = document.querySelector(".device-lock");
+  if (!lock) return;
+  const mobileControls = document.querySelector(".mobile-controls");
+  if (isMobileDevice() && window.innerHeight > window.innerWidth) {
+    lock.classList.add("show");
+    buttonsActive = false;
+    keyboard = new Keyboard();
+    if (mobileControls) mobileControls.classList.add("d-none");
+  } else {
+    lock.classList.remove("show");
+    if (mobileControls && getBoolean("showControls")) {
+      mobileControls.classList.remove("d-none");
+      buttonsActive = true;
+    } else buttonsActive = false;
+  }
+}
+
+window.addEventListener("resize", checkDeviceOrientation);
+window.addEventListener("orientationchange", checkDeviceOrientation);
+window.addEventListener("DOMContentLoaded", checkDeviceOrientation);
+
 //#endregion
 
 //#region AUDIO CONTROLS
 function toggleMute() {
   isMuted = !isMuted;
   const muteBtn = document.getElementById("muteBtn");
-
   if (isMuted) {
     AudioHub.mute();
     muteBtn.textContent = "🔇";
@@ -373,25 +395,27 @@ function toggleMute() {
   saveBoolean("isMuted", isMuted);
   muteBtn.blur();
 }
+
 //#endregion
 
 //#region LOCAL STORAGE
 function saveBoolean(key, value) {
-  if (typeof value !== "boolean") return;
-  localStorage.setItem(key, JSON.stringify(value));
+  if (typeof value === "boolean")
+    localStorage.setItem(key, JSON.stringify(value));
 }
 
 function getBoolean(key) {
   const raw = localStorage.getItem(key);
-  if (raw === null) return null;
-  return JSON.parse(raw);
+  return raw === null ? null : JSON.parse(raw);
 }
+
 //#endregion
 
 //#region NAVIGATION
 function goHome() {
   window.location.href = "index.html";
 }
+
 //#endregion
 
 //#region SCREENS
@@ -403,8 +427,7 @@ function showLosingScreen() {
 }
 
 function hideLosingScreen() {
-  const losingScreen = document.getElementById("loosingScreen");
-  losingScreen.classList.add("d-none");
+  document.getElementById("loosingScreen").classList.add("d-none");
 }
 
 function showWinningScreen() {
@@ -415,14 +438,13 @@ function showWinningScreen() {
 }
 
 function hideWinningScreen() {
-  const winningScreen = document.getElementById("winningScreen");
-  winningScreen.classList.add("d-none");
+  document.getElementById("winningScreen").classList.add("d-none");
   IntervalHub.stopAllIntervals();
 }
+
 //#endregion
 
 //#region FULLSCREEN
-
 function goFullscreen() {
   const fullScreenBtn = document.getElementById("fullScreenBtn");
   const container = document.querySelector(".canvas-container");
@@ -439,4 +461,5 @@ function goFullscreen() {
   }
   fullScreenBtn.blur();
 }
+
 //#endregion
