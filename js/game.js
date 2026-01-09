@@ -325,10 +325,6 @@ function closeDialogImpressum() {
 
 let buttonsActive = false;
 
-/**
- * Handles keydown events for controlling the keyboard.
- * @param {KeyboardEvent} e - The keydown event object.
- */
 window.addEventListener("keydown", (e) => {
   if (buttonsActive) return;
   if (e.keyCode == 39) keyboard.RIGHT = true;
@@ -338,11 +334,6 @@ window.addEventListener("keydown", (e) => {
   if (e.keyCode == 32) keyboard.SPACE = true;
   if (e.keyCode == 68) keyboard.D = true;
 });
-
-/**
- * Handles keyup events for controlling the keyboard.
- * @param {KeyboardEvent} e - The keyup event object.
- */
 window.addEventListener("keyup", (e) => {
   if (buttonsActive) return;
   if (e.keyCode == 39) keyboard.RIGHT = false;
@@ -368,9 +359,6 @@ function bindMobileControls() {
 
 /**
  * Adds start and end event listeners to a button.
- * @param {HTMLElement} btn - The button element.
- * @param {Function} startHandler - Function to run on start events (touchstart, mousedown).
- * @param {Function} endHandler - Function to run on end events (touchend, mouseup, touchcancel, mouseleave).
  */
 function addButtonListeners(btn, startHandler, endHandler) {
   ["touchstart", "mousedown"].forEach((evt) =>
@@ -383,8 +371,6 @@ function addButtonListeners(btn, startHandler, endHandler) {
 
 /**
  * Binds a button element to a keyboard key for mobile controls.
- * @param {string} id - The button element ID.
- * @param {string} key - The keyboard key to bind (e.g., "RIGHT", "SPACE").
  */
 function bindButton(id, key) {
   const btn = document.getElementById(id);
@@ -508,8 +494,6 @@ function toggleMute() {
 
 /**
  * Saves a boolean value in localStorage.
- * @param {string} key - The key to store the value under.
- * @param {boolean} value - The boolean value to save.
  */
 function saveBoolean(key, value) {
   if (typeof value === "boolean")
@@ -518,8 +502,6 @@ function saveBoolean(key, value) {
 
 /**
  * Retrieves a boolean value from localStorage.
- * @param {string} key - The key to retrieve the value from.
- * @returns {boolean|null} The stored boolean value, or null if not found.
  */
 function getBoolean(key) {
   const raw = localStorage.getItem(key);
@@ -576,7 +558,6 @@ function goFullscreen() {
   const container = document.querySelector(".canvas-container");
   const gameState = document.getElementById("loosingScreen");
   const winningState = document.getElementById("winningScreen");
-
   if (!document.fullscreenElement) {
     container.requestFullscreen();
     gameState.classList.add("loosing-screen-fullscreen");

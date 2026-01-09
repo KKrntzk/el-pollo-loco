@@ -36,7 +36,10 @@
 
     <script src="./models/throwable-object.class.js"></script>
 
-    <script src="./js/game.js" defer></script>
+    <script src="js/game.js"></script>
+    <script src="js/controls.js"></script>
+    <script src="js/ui.js"></script>
+
     <title>El Pollo Loco</title>
   </head>
   <body>
@@ -212,6 +215,20 @@
       <header class="dialog-header">
         <button class="btn-dialog" onclick="closeDialog()">x</button>
       </header>
+      <p>
+        Care not to get overrun by the crazy chickens<br />
+        defeat them by jumping on their heads <br />
+        Try to gather as many hot sauce bottles as you can ... you will need
+        them for el pollo loco!!!
+      </p>
+      <br />
+      <p>
+        if you want to mute the sounds press 🔊 <br />
+        if you want to play without the keyboard press 🎮 <br />
+        if you want to play on fullscreen press 📺 <br />
+        if you want to restart the game press 🔄
+      </p>
+      <br />
       <div class="key-instruction-panel">
         <p>
           <img
@@ -245,12 +262,6 @@
           : throw bottle
         </p>
       </div>
-      <p>
-        Care not to get overrun by the crazy chickens<br />
-        defeat them by jumping on their heads <br />
-        Try to gather as many hot sauce bottles as you can ... you will need
-        them for el pollo loco!!!
-      </p>
     </dialog>
   </body>
 </html>
