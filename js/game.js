@@ -315,7 +315,9 @@ function goHome() {
 //#region SCREENS
 function showLosingScreen() {
   document.getElementById("loosingScreen").classList.remove("d-none");
-  IntervalHub.stopAllIntervals();
+  setTimeout(() => {
+    IntervalHub.stopAllIntervals();
+  }, 1000);
 }
 
 function hideLosingScreen() {
@@ -325,7 +327,9 @@ function hideLosingScreen() {
 
 function showWinningScreen() {
   document.getElementById("winningScreen").classList.remove("d-none");
-  IntervalHub.stopAllIntervals();
+  setTimeout(() => {
+    IntervalHub.stopAllIntervals();
+  }, 1000);
 }
 
 function hideWinningScreen() {

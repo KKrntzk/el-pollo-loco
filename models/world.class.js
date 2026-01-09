@@ -76,13 +76,6 @@ class World {
     this.throwObject = true;
     this.throwabelObjects.push(bottle);
     this.character.useBottle();
-    // const bottle = new ThrowableObject(
-    //   this.character.x + 100,
-    //   this.character.y + 100
-    // );
-    // this.throwObject = true;
-    // this.throwabelObjects.push(bottle);
-    // this.character.useBottle();
   };
 
   resetThrow = () => {

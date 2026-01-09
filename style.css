@@ -240,6 +240,10 @@ dialog::backdrop {
   align-items: center;
 }
 
+.win-loose-img {
+  width: 450px;
+}
+
 .rotate-hint {
   position: fixed;
   top: 50%;
