@@ -315,9 +315,16 @@ dialog::backdrop {
   gap: 10px;
 }
 
+.btn-img {
+  width: 30px;
+}
+
 .mobile-btn {
-  width: 40px;
-  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 45px;
+  height: 45px;
   font-size: 26px;
   border-radius: 50%;
   border: none;
@@ -330,6 +337,29 @@ dialog::backdrop {
 .mobile-btn.active {
   transform: scale(0.9);
   opacity: 0.7;
+}
+
+@media (max-width: 1000px) {
+  .game-screen {
+    width: clamp(100%, 100%, 720px);
+    display: flex;
+    justify-content: center;
+  }
+  h1 {
+    display: none;
+  }
+  canvas {
+    border-radius: 0;
+  }
+  .btn {
+    display: none;
+  }
+}
+
+@media (max-width: 800px) {
+  .game-screen {
+    width: clamp(100%, 100%, 720px);
+  }
 }
 
 .d-none {

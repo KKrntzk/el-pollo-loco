@@ -344,7 +344,10 @@ function bindButton(id, key) {
   btn.addEventListener("touchcancel", endHandler);
   btn.addEventListener("mouseleave", endHandler);
 }
+
 window.addEventListener("DOMContentLoaded", () => {
+  const controls = document.querySelector(".mobile-controls");
+  if (controls) controls.classList.add("d-none"); // Immer verstecken
   bindMobileControls();
   buttonsActive = false;
 });
@@ -366,6 +369,11 @@ function checkDeviceOrientation() {
   const lock = document.querySelector(".device-lock");
   if (!lock) return;
   const mobileControls = document.querySelector(".mobile-controls");
+  if (!world) {
+    if (mobileControls) mobileControls.classList.add("d-none");
+    buttonsActive = false;
+    return;
+  }
   if (isMobileDevice() && window.innerHeight > window.innerWidth) {
     lock.classList.add("show");
     buttonsActive = false;

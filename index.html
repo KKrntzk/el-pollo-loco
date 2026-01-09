@@ -42,70 +42,78 @@
   <body>
     <h1>( El Pollo Loco )</h1>
 
-    <div class="canvas-container">
-      <canvas
-        id="gameCanvas"
-        class="game-canvas"
-        width="720"
-        height="480"
-      ></canvas>
+    <div class="game-screen">
+      <div class="canvas-container">
+        <canvas
+          id="gameCanvas"
+          class="game-canvas"
+          width="720"
+          height="480"
+        ></canvas>
 
-      <div id="loosingScreen" class="loosing-screen d-none">
-        <img
-          class="win-loose-img"
-          src="./img_pollo_locco/img/You won, you lost/Game over A.png"
-        />
-      </div>
-      <div id="winningScreen" class="winning-screen d-none">
-        <img
-          class="win-loose-img"
-          src="./img_pollo_locco/img/You won, you lost/You Win A.png"
-        />
-      </div>
-
-      <button id="muteBtn" class="mute-btn d-none" onclick="toggleMute()">
-        🔊
-      </button>
-      <button
-        id="restartBtn"
-        class="d-none restart-btn"
-        onclick="restartGame()"
-      >
-        🔄
-      </button>
-      <button id="homeBtn" class="d-none home-btn" onclick="goHome()">
-        🛖
-      </button>
-      <button
-        id="fullScreenBtn"
-        class="d-none fullscreen-btn"
-        onclick="goFullscreen()"
-      >
-        📺
-      </button>
-      <button id="startBtn" class="start-btn" onclick="startGame()">
-        play
-      </button>
-      <button
-        id="toggleControlsBtn"
-        class="cntrl-btn d-none"
-        onclick="toggleMobileControls()"
-      >
-        🎮
-      </button>
-
-      <div class="mobile-controls d-none">
-        <div class="left-controls">
-          <button id="btnLeft" class="mobile-btn">◀</button>
-          <button id="btnRight" class="mobile-btn">▶</button>
+        <div id="loosingScreen" class="loosing-screen d-none">
+          <img
+            class="win-loose-img"
+            src="./img_pollo_locco/img/You won, you lost/Game over A.png"
+          />
         </div>
-        <div class="right-controls">
-          <button id="btnJump" class="mobile-btn">▲</button>
-          <button id="btnThrow" class="mobile-btn">💣</button>
+        <div id="winningScreen" class="winning-screen d-none">
+          <img
+            class="win-loose-img"
+            src="./img_pollo_locco/img/You won, you lost/You Win A.png"
+          />
         </div>
-      </div>
 
-      <div class="device-lock">Please turn your device</div>
+        <button id="muteBtn" class="mute-btn d-none" onclick="toggleMute()">
+          🔊
+        </button>
+        <button
+          id="restartBtn"
+          class="d-none restart-btn"
+          onclick="restartGame()"
+        >
+          🔄
+        </button>
+        <button id="homeBtn" class="d-none home-btn" onclick="goHome()">
+          🛖
+        </button>
+        <button
+          id="fullScreenBtn"
+          class="d-none fullscreen-btn"
+          onclick="goFullscreen()"
+        >
+          📺
+        </button>
+        <button id="startBtn" class="start-btn" onclick="startGame()">
+          play
+        </button>
+        <button
+          id="toggleControlsBtn"
+          class="cntrl-btn d-none"
+          onclick="toggleMobileControls()"
+        >
+          🎮
+        </button>
+
+        <div class="mobile-controls d-none">
+          <div class="left-controls">
+            <button id="btnLeft" class="mobile-btn">◀</button>
+            <button id="btnRight" class="mobile-btn">▶</button>
+          </div>
+          <div class="right-controls">
+            <button id="btnJump" class="mobile-btn">▲</button>
+            <button id="btnThrow" class="mobile-btn">
+              <img
+                class="btn-img"
+                src="./img_pollo_locco/img/6_salsa_bottle/salsa_bottle.png"
+                alt=""
+              />
+            </button>
+          </div>
+        </div>
+
+        <div class="device-lock">Please turn your device</div>
+      </div>
     </div>
 
     <div class="menu">
