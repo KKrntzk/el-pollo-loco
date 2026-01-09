@@ -19,10 +19,12 @@ class Coins extends DrawableObject {
     this.animate();
   }
 
+  /** Starts interval to animate the coin frames. */
   animate() {
     IntervalHub.startInterval(this.animateCoin, 300);
   }
 
+  /** Updates the coin image to the next frame in the animation. */
   animateCoin = () => {
     let i = this.currentImage % this.images.length;
     let path = this.images[i];

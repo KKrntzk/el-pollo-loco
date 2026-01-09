@@ -24,17 +24,20 @@ class Chicks extends MovableObject {
     this.isDying = false;
   }
 
+  /** Starts intervals for chicks movement and death animations. */
   animate() {
     IntervalHub.startInterval(this.animateChicksmovement, 1000 / 60);
     IntervalHub.startInterval(this.animateChicksDeath, 200);
   }
 
+  /** Moves the chicks to the left if they are alive and not dying. */
   animateChicksmovement = () => {
     if (!this.dead && !this.isDying) {
       this.moveLeft();
     }
   };
 
+  /** Handles chicks death animation or continues walking animation. */
   animateChicksDeath = () => {
     if (this.dead) return;
     if (this.isDying) {

@@ -17,17 +17,20 @@ class Chicken extends MovableObject {
     this.isDying = false;
   }
 
+  /** Starts intervals for chicken movement and death animations. */
   animate() {
     IntervalHub.startInterval(this.animateChickenmovement, 1000 / 60);
     IntervalHub.startInterval(this.animateChickenDeath, 170);
   }
 
+  /** Moves the chicken to the left if it is alive and not dying. */
   animateChickenmovement = () => {
     if (!this.dead && !this.isDying) {
       this.moveLeft();
     }
   };
 
+  /** Handles chicken death animation or continues walking animation. */
   animateChickenDeath = () => {
     if (this.dead) return;
     if (this.isDying) {

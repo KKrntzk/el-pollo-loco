@@ -1,15 +1,17 @@
 class IntervalHub {
-  // Speichert alle registrierten Interval-IDs
   static allIntervals = [];
 
-  // Startet ein neues Intervall und
-  // fügt es dem Array allIntervals hinzu
+  /**
+   * Starts a new interval and stores it in the internal list.
+   * @param {Function} func - The function to execute repeatedly.
+   * @param {number} timer - Interval time in milliseconds.
+   */
   static startInterval(func, timer) {
     const newInterval = setInterval(func, timer);
     IntervalHub.allIntervals.push(newInterval);
   }
 
-  //Stoppt alle registrierten Intervalle und leert die Registry.
+  /** Stops all intervals that have been started and clears the internal list. */
   static stopAllIntervals() {
     IntervalHub.allIntervals.forEach(clearInterval);
     IntervalHub.allIntervals = [];

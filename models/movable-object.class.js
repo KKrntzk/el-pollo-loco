@@ -1,5 +1,4 @@
 class MovableObject extends DrawableObject {
-  //#region Properties
   currentImage = 0;
   speed = 0.15;
   otherDirection = false;
@@ -10,22 +9,24 @@ class MovableObject extends DrawableObject {
   bottleCount = 0;
   coinCount = 0;
   lastMove = Date.now();
-  //#endregion
 
-  //#region Animation
+  /** Starts animation for enemies. */
   startEnemiesRun() {
     this.animate();
   }
 
+  /**
+   * Plays animation by cycling through an array of images.
+   * @param {string[]} images - Array of image paths.
+   */
   playAnimation(images) {
     let i = this.currentImage % images.length;
     let path = images[i];
     this.img = this.imageCache[path];
     this.currentImage++;
   }
-  //#endregion
 
-  //#region Physics / Gravity
+  /** Applies gravity to the object over time. */
   applyGravity() {
     setInterval(() => {
       if (this.splashed || this.targetHit) {
@@ -38,15 +39,15 @@ class MovableObject extends DrawableObject {
     }, 1000 / 25);
   }
 
+  /** Determines if the object is above ground. */
   isAboveGround() {
     if (this instanceof ThrowableObject) {
       return true;
     }
     return this.y < 130;
   }
-  //#endregion
 
-  //#region Damage / Health
+  /** Reduces energy when hit and plays damage sound. */
   hit() {
     this.energy -= 0.5;
     if (this.energy < 0) {
@@ -57,6 +58,7 @@ class MovableObject extends DrawableObject {
     AudioHub.playOne(AudioHub.characterDamage);
   }
 
+  /** Reduces boss energy when hit and temporarily sets isHurt. */
   hitBoss() {
     if (this.isHurt || this.dead) return;
 
@@ -70,18 +72,19 @@ class MovableObject extends DrawableObject {
     }, 400);
   }
 
+  /** Returns true if the object was hit within the last second. */
   isHurt() {
     let timePassed = new Date().getTime() - this.lastHit;
     timePassed = timePassed / 1000;
     return timePassed < 1;
   }
 
+  /** Returns true if the object is dead (energy is 0). */
   isDead() {
     return this.energy == 0;
   }
-  //#endregion
 
-  //#region Collectables
+  /** Collects a bottle and plays collection sound. */
   collect() {
     AudioHub.playOne(AudioHub.bottleCollectSound);
     this.bottleCount++;
@@ -90,6 +93,7 @@ class MovableObject extends DrawableObject {
     }
   }
 
+  /** Collects a coin and plays collection sound. */
   collectCoin() {
     AudioHub.playOne(AudioHub.coinCollectSound);
     this.coinCount++;
@@ -97,30 +101,31 @@ class MovableObject extends DrawableObject {
       this.coinCount = 10;
     }
   }
-  //#endregion
 
-  //#region Movement
+  /** Moves the object to the right. */
   moveRight() {
     this.x += this.speed;
     this.lastMove = Date.now();
   }
 
+  /** Moves the object to the left. */
   moveLeft() {
     this.x -= this.speed;
     this.lastMove = Date.now();
   }
 
+  /** Makes the object jump by setting vertical speed. */
   jump() {
     this.speedY = 30;
     this.lastMove = Date.now();
   }
 
+  /** Returns true if the object has been idle for more than 10 seconds. */
   isSleeping() {
     return Date.now() - this.lastMove > 10000;
   }
-  //#endregion
 
-  //#region Death
+  /** Handles object death and plays random death sound. */
   die() {
     if (this.dead || this.isDying) return;
 
@@ -134,5 +139,4 @@ class MovableObject extends DrawableObject {
       this.dead = true;
     }, 1000);
   }
-  //#endregion
 }

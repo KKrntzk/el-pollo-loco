@@ -1,5 +1,4 @@
 class Endboss extends MovableObject {
-  //#region Properties / Attributes
   height = 400;
   width = 250;
   y = 60;
@@ -25,9 +24,7 @@ class Endboss extends MovableObject {
   speed = 0;
   attackSpeed = 0;
   enrageSpeed = 0;
-  //#endregion
 
-  //#region Constructor
   constructor() {
     super().loadImg("img_pollo_locco/img/4_enemie_boss_chicken/1_walk/G1.png");
 
@@ -43,16 +40,14 @@ class Endboss extends MovableObject {
 
     this.animate();
   }
-  //#endregion
 
-  //#region Animation & Interval Setup
+  /** Starts intervals for movement and state animations. */
   animate() {
     IntervalHub.startInterval(this.animateMovement, 1000 / 60);
     IntervalHub.startInterval(this.animateState, 170);
   }
-  //#endregion
 
-  //#region Movement
+  /** Handles movement based on boss state (normal, attack, enraged). */
   animateMovement = () => {
     if (!this.canMove()) return;
 
@@ -66,24 +61,27 @@ class Endboss extends MovableObject {
     this.checkIfOutOfWorld();
   };
 
+  /** Determines if the boss can currently move. */
   canMove() {
     return this.isActive && !this.dead && !this.isDying && !this.isHurt;
   }
 
+  /** Moves the boss with enrage speed. */
   enragedMove() {
     this.x -= this.enrageSpeed;
   }
 
+  /** Moves the boss with attack speed. */
   attackMove() {
     this.x -= this.attackSpeed;
   }
 
+  /** Moves the boss normally to the left. */
   normalMove() {
     this.moveLeft();
   }
-  //#endregion
 
-  //#region States
+  /** Updates the animation state of the boss depending on its condition. */
   animateState = () => {
     if (!this.isActive) {
       this.handleAlertState();
@@ -99,6 +97,7 @@ class Endboss extends MovableObject {
     this.handleWalkingState();
   };
 
+  /** Handles dead state animations and triggers winning screen. */
   handleDeadState() {
     if (this.dead || this.isDying) {
       this.playAnimation(this.imagesDead);
@@ -111,6 +110,7 @@ class Endboss extends MovableObject {
     return false;
   }
 
+  /** Handles hurt state animations and plays hurt sounds. */
   handleHurtState() {
     if (this.isHurt) {
       this.playAnimation(this.imagesHurt);
@@ -123,6 +123,7 @@ class Endboss extends MovableObject {
     return false;
   }
 
+  /** Handles attack state animation. */
   handleAttackState() {
     if (this.isAttacking) {
       this.playAnimation(this.imagesAttack);
@@ -132,18 +133,19 @@ class Endboss extends MovableObject {
     return false;
   }
 
+  /** Handles walking animation and plays idle sound. */
   handleWalkingState() {
     this.playAnimation(this.imagesWalking);
     this.playIdleSound();
   }
 
+  /** Handles alert animation when boss is not yet active. */
   handleAlertState() {
     this.playAnimation(this.imagesAlert);
     this.stopIdleSound();
   }
-  //#endregion
 
-  //#region Sound Control
+  /** Plays looping idle sound if not already playing. */
   playIdleSound() {
     if (!this.idleSoundPlaying) {
       AudioHub.endbossIdle.loop = true;
@@ -152,15 +154,18 @@ class Endboss extends MovableObject {
     }
   }
 
+  /** Stops the idle sound. */
   stopIdleSound() {
     AudioHub.stopOne(AudioHub.endbossIdle);
     this.idleSoundPlaying = false;
   }
 
+  /** Plays the endboss death sound. */
   playDeathSound() {
     AudioHub.playOne(AudioHub.endbossDeath);
   }
 
+  /** Plays the death sound only once. */
   playDeathSoundOnce() {
     if (!this.deathSoundPlayed) {
       this.playDeathSound();
@@ -168,6 +173,7 @@ class Endboss extends MovableObject {
     }
   }
 
+  /** Starts looping the endboss approach sound if not already playing. */
   startEndbossSound() {
     if (!this.endbossSoundPlaying) {
       AudioHub.endbossSound.loop = true;
@@ -175,17 +181,15 @@ class Endboss extends MovableObject {
       this.endbossSoundPlaying = true;
     }
   }
-  //#endregion
 
-  //#region Attack Logic
+  /** Checks if the boss should start attacking. */
   checkAttackState() {
     if (!this.isAttacking && this.energy < 50 && this.isActive && !this.dead) {
       this.isAttacking = true;
     }
   }
-  //#endregion
 
-  //#region World Boundary Check
+  /** Checks if the boss has moved out of the world boundary. */
   checkIfOutOfWorld() {
     const worldStart = 0;
     if (this.x + this.width < worldStart) {
@@ -193,6 +197,4 @@ class Endboss extends MovableObject {
       showLosingScreen();
     }
   }
-
-  //#endregion
 }

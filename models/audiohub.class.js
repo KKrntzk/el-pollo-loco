@@ -46,6 +46,11 @@ class AudioHub {
     AudioHub.backgroundMusic,
   ];
 
+  /**
+   * Plays a single audio sound if the system is not muted.
+   * Resets the sound to the beginning and sets volume to 0.2.
+   * @param {HTMLAudioElement} sound - The audio element to play.
+   */
   static playOne(sound) {
     if (!AudioHub.isMuted) {
       sound.volume = 0.2;
@@ -54,6 +59,9 @@ class AudioHub {
     }
   }
 
+  /**
+   * Stops and resets all audio sounds.
+   */
   static stopAll() {
     AudioHub.allSounds.forEach((sound) => {
       sound.pause();
@@ -61,10 +69,17 @@ class AudioHub {
     });
   }
 
+  /**
+   * Stops a single audio sound.
+   * @param {HTMLAudioElement} sound - The audio element to stop.
+   */
   static stopOne(sound) {
     sound.pause();
   }
 
+  /**
+   * Mutes all sounds and sets the volume of every audio element to 0.
+   */
   static mute() {
     AudioHub.isMuted = true;
     AudioHub.allSounds.forEach((sound) => {
@@ -72,6 +87,9 @@ class AudioHub {
     });
   }
 
+  /**
+   * Unmutes all sounds and sets the volume of every audio element to 0.2.
+   */
   static unmute() {
     AudioHub.isMuted = false;
     AudioHub.allSounds.forEach((sound) => {

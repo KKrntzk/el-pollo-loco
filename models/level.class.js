@@ -16,9 +16,10 @@ class Level {
     this.bottles = bottles;
   }
 
+  /** Starts the level by triggering all enemies to begin running. */
   startLevel() {
-    this.enemies.forEach((enemies) => {
-      enemies.startEnemiesRun();
+    this.enemies.forEach((enemy) => {
+      enemy.startEnemiesRun();
     });
   }
 }

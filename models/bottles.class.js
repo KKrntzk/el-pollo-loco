@@ -28,6 +28,10 @@ class Bottles extends DrawableObject {
     this.collected = false;
   }
 
+  /**
+   * Randomly selects an image index for the bottle.
+   * Sets `this.randomImg` to either 0 or 1.
+   */
   getRandomImg() {
     this.randomImg = Math.floor(Math.random() * 2);
   }
