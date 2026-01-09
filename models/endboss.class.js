@@ -115,6 +115,9 @@ class Endboss extends MovableObject {
     if (this.isHurt) {
       this.playAnimation(this.imagesHurt);
       this.stopIdleSound();
+      const sound =
+        Math.random() < 0.5 ? AudioHub.chickenDead : AudioHub.chickenDead2;
+      AudioHub.playOne(sound);
       return true;
     }
     return false;
