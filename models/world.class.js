@@ -182,13 +182,16 @@ class World {
   /** Main drawing function called each frame. */
   draw = () => {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+
     this.ctx.translate(this.camera_x, 0);
 
     this.drawBackground();
+    this.ctx.translate(-this.camera_x, 0);
+    this.drawUI();
+    this.ctx.translate(this.camera_x, 0);
     this.drawGameObjects();
 
     this.ctx.translate(-this.camera_x, 0);
-    this.drawUI();
 
     requestAnimationFrame(() => this.draw());
   };

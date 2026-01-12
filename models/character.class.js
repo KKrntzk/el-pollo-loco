@@ -6,6 +6,8 @@ class Character extends MovableObject {
   currentSound = null;
   isRunningSoundPlaying = false;
   isSnoring = false;
+  isJumping = false;
+  isFalling = false;
 
   bottleCount = 0;
   lastMove = Date.now();
@@ -42,7 +44,7 @@ class Character extends MovableObject {
   animate() {
     IntervalHub.startInterval(this.checkMovement, 1000 / 60);
     IntervalHub.startInterval(this.animateMovement, 200);
-    IntervalHub.startInterval(this.animateJump, 200);
+    IntervalHub.startInterval(this.animateJump, 10);
   }
 
   /**
@@ -90,10 +92,53 @@ class Character extends MovableObject {
     this.stopSnoring();
   }
 
+  // isAboveGround() {
+  //   super.isAboveGround();
+  //   console.log("ja");
+  // }
+
+  playJumpAnimation(images) {
+    let i = this.currentJump % images.length;
+    let path;
+    if (this.isAboveGround()) {
+      this.currentJump++;
+    } else {
+      this.currentJump = 0;
+    }
+
+    if (this.isAboveGround() && this.speedY > 0) {
+      path = this.isCharacterJumping(i);
+    } else {
+      path = this.isCharacterFalling(i);
+    }
+    this.img = this.imageCache[path];
+  }
+
+  isCharacterJumping(i) {
+    this.isFalling = false;
+    if (this.speedY > 0 && i < 4 && !this.isJumping) {
+      return this.imagesJumping[i];
+    } else {
+      this.isFalling = false;
+      this.isJumping = true;
+      return this.imagesJumping[3];
+    }
+  }
+
+  isCharacterFalling(i) {
+    if (this.speedY < 0 && i < 7 && !this.isFalling) {
+      return this.imagesJumping[i];
+    } else {
+      this.isFalling = true;
+      this.isJumping = false;
+      return this.imagesJumping[6];
+    }
+  }
+
   /** Plays jump animation if character is above ground and not dead. */
   animateJump = () => {
     if (this.isAboveGround() && !this.isDead()) {
-      this.playAnimation(this.imagesJumping);
+      this.playJumpAnimation(this.imagesJumping);
     }
   };
 

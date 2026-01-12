@@ -10,6 +10,8 @@ class MovableObject extends DrawableObject {
   coinCount = 0;
   lastMove = Date.now();
 
+  currentJump = 0;
+
   /** Starts animation for enemies. */
   startEnemiesRun() {
     this.animate();
@@ -44,6 +46,7 @@ class MovableObject extends DrawableObject {
     if (this instanceof ThrowableObject) {
       return true;
     }
+
     return this.y < 130;
   }
 
