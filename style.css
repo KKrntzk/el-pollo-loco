@@ -139,6 +139,8 @@ h1 {
   height: 100%;
   object-fit: contain;
   background-color: black;
+  background-image: url(./img_pollo_locco/img/9_intro_outro_screens/start/startscreen_1.png);
+  background-size: cover;
   display: block;
   border-radius: 15px;
 }
