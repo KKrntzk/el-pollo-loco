@@ -183,6 +183,7 @@ dialog::backdrop {
 .home-btn,
 .fullscreen-btn,
 .cntrl-btn {
+  cursor: pointer;
   position: absolute;
   top: 0px;
   z-index: 20;
