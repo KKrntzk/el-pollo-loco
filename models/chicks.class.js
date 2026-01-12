@@ -1,3 +1,7 @@
+/**
+ * class Chicks
+ * extends MovableObject
+ */
 class Chicks extends MovableObject {
   y = 390;
   height = 30;

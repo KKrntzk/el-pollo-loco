@@ -1,3 +1,7 @@
+/**
+ * class Bottles
+ * extends DrawableObject
+ */
 class Bottles extends DrawableObject {
   height = 70;
   width = 70;

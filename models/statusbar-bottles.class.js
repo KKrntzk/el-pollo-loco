@@ -1,3 +1,7 @@
+/**
+ * class StatusbarBottle
+ * extends DrawableObject
+ */
 class StatusbarBottle extends DrawableObject {
   images = ImageHub.statusbar.bottle;
   percentage = 100;

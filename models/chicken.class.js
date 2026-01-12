@@ -1,3 +1,7 @@
+/**
+ * class Chicken
+ * extends MovableObject
+ */
 class Chicken extends MovableObject {
   y = 360;
   height = 60;

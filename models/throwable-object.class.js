@@ -1,3 +1,7 @@
+/**
+ * class ThrowableObject
+ * extends MovableObject
+ */
 class ThrowableObject extends MovableObject {
   imagesRotation = ImageHub.bottle.rotation;
   imagesSplash = ImageHub.bottle.splash;

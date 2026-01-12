@@ -1,3 +1,6 @@
+/**
+ * class IntervalHub
+ */
 class IntervalHub {
   static allIntervals = [];
 

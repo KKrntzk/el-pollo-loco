@@ -1,3 +1,7 @@
+/**
+ * class Coins
+ * extends DrawableObject
+ */
 class Coins extends DrawableObject {
   height = 100;
   width = 100;

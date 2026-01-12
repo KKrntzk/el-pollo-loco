@@ -1,3 +1,7 @@
+/**
+ * class StatusbarCoin
+ * extends DrawableObject
+ */
 class StatusbarCoin extends DrawableObject {
   images = ImageHub.statusbar.coin;
   percentage = 100;

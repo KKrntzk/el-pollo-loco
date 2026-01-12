@@ -1,3 +1,7 @@
+/**
+ * class Audiohub
+ */
+
 class AudioHub {
   static isMuted = false;
   static backgroundMusic = new Audio(

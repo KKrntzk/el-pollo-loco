@@ -1,3 +1,8 @@
+/**
+ * class Character
+ * extends MovableObject
+ */
+
 class Character extends MovableObject {
   height = 300;
   y = 25;

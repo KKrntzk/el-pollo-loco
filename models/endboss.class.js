@@ -1,3 +1,7 @@
+/**
+ * class Endboss
+ * extends MovableObject
+ */
 class Endboss extends MovableObject {
   height = 400;
   width = 250;

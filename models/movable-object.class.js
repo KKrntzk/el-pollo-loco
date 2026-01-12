@@ -1,3 +1,7 @@
+/**
+ * class MovableObject
+ * extends DrawableObject
+ */
 class MovableObject extends DrawableObject {
   currentImage = 0;
   speed = 0.15;

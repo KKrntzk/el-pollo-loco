@@ -1,3 +1,7 @@
+/**
+ * class Statusbar
+ * extends DrawableObject
+ */
 class StatusbarBoss extends DrawableObject {
   images = ImageHub.statusbar.endboss;
   percentage = 100;
