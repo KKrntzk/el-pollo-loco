@@ -92,11 +92,13 @@ class Character extends MovableObject {
     this.stopSnoring();
   }
 
-  // isAboveGround() {
-  //   super.isAboveGround();
-  //   console.log("ja");
-  // }
-
+  /**
+   * Animates the character's jump by selecting the correct image based on the character's vertical speed
+   * and whether they are above the ground.
+   *
+   * @param {string[]} images - Array of image paths representing the jump animation frames.
+   * @returns {void}
+   */
   playJumpAnimation(images) {
     let i = this.currentJump % images.length;
     let path;
@@ -105,7 +107,6 @@ class Character extends MovableObject {
     } else {
       this.currentJump = 0;
     }
-
     if (this.isAboveGround() && this.speedY > 0) {
       path = this.isCharacterJumping(i);
     } else {
@@ -114,6 +115,12 @@ class Character extends MovableObject {
     this.img = this.imageCache[path];
   }
 
+  /**
+   * Determines which image to use when the character is jumping.
+   *
+   * @param {number} i - The current frame index for the jump animation.
+   * @returns {string} - Path to the appropriate jumping image.
+   */
   isCharacterJumping(i) {
     this.isFalling = false;
     if (this.speedY > 0 && i < 4 && !this.isJumping) {
@@ -125,6 +132,12 @@ class Character extends MovableObject {
     }
   }
 
+  /**
+   * Determines which image to use when the character is falling.
+   *
+   * @param {number} i - The current frame index for the jump/fall animation.
+   * @returns {string} - Path to the appropriate falling image.
+   */
   isCharacterFalling(i) {
     if (this.speedY < 0 && i < 7 && !this.isFalling) {
       return this.imagesJumping[i];
