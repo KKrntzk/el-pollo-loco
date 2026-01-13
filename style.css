@@ -85,7 +85,7 @@ h1 {
   font-size: 24px;
   z-index: 10;
   background-color: #f0ebc1;
-  color: white;
+  color: #9c5328;
 }
 
 .start-btn:hover {
@@ -159,6 +159,8 @@ dialog {
   border-radius: 12px;
   padding: 20px;
   background-color: #f1efd8;
+  font-size: 20px;
+  letter-spacing: 1px;
 }
 
 dialog::backdrop {
