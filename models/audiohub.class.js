@@ -99,5 +99,9 @@ class AudioHub {
     AudioHub.allSounds.forEach((sound) => {
       sound.volume = 0.2;
     });
+    if (AudioHub.backgroundMusic.paused) {
+    AudioHub.backgroundMusic.loop = true;
+    AudioHub.backgroundMusic.play().catch(e => console.warn("Autoplay blockiert"));
+    }
   }
 }

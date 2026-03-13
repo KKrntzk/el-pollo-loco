@@ -38,7 +38,10 @@ function restartGame() {
   clearCanvas();
   world = null;
   init();
-  if (!isMuted) AudioHub.backgroundMusic.play();
+  if (!AudioHub.isMuted) {
+    AudioHub.backgroundMusic.loop = true;
+    AudioHub.backgroundMusic.play();
+  }
   restartBtn.blur();
 }
 
