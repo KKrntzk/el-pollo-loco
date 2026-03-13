@@ -54,17 +54,28 @@
         ></canvas>
 
         <div id="loosingScreen" class="loosing-screen d-none">
+       
           <img
             class="win-loose-img"
             src="./img_pollo_locco/img/You won, you lost/Game over A.png"
           />
+         
+          <div class="btn-container">
+          <button class="game-btn" onclick="restartGame()">Restart</button>
+          <button class="game-btn" onclick="goHome()">Home</button>
+          </div>
         </div>
         <div id="winningScreen" class="winning-screen d-none">
           <img
             class="win-loose-img"
             src="./img_pollo_locco/img/You won, you lost/You Win A.png"
           />
+          <div class="btn-container">
+          <button class="game-btn" onclick="restartGame()">Restart</button>
+          <button class="game-btn" onclick="goHome()">Home</button>
+          </div>
         </div>
+
 
         <button id="muteBtn" class="mute-btn d-none" onclick="toggleMute()">
           🔊

@@ -54,7 +54,7 @@ h1 {
 .btn,
 .btn-dialog,
 .start-btn,
-.mobile-btn {
+.mobile-btn, .game-btn {
   font-family: "riogrande";
   cursor: pointer;
   border: none;
@@ -107,6 +107,27 @@ h1 {
   transform: scale(1.1);
 }
 
+.game-btn{
+  padding: 15px 30px;
+  font-size: 24px;
+  z-index: 10;
+  background-color: #f0ebc1;
+  color: #9c5328;
+
+  &:hover{
+    transform: scale(1.1);
+    color: #9c5328;
+  }
+}
+
+.btn-container{
+  display: flex;
+  gap: 20px;  
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 20px;
+  }
+
 /* ==============================
    Menu
 ============================== */
@@ -123,6 +144,7 @@ h1 {
 .canvas-container {
   position: relative;
   display: inline-block;
+  max-width: 100%;
 }
 
 .canvas-container:fullscreen {
@@ -145,6 +167,7 @@ h1 {
   background-position: center;
   display: block;
   border-radius: 15px;
+  max-height: 80vh;
 }
 
 /* ==============================
@@ -230,7 +253,10 @@ dialog::backdrop {
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 10;
+  z-index: 100;
+  flex-direction: column;
+  gap: 20px;
+  background-color: rgba(0, 0, 0, 0.8);
 }
 
 .loosing-screen-fullscreen,
