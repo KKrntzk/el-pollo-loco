@@ -59,8 +59,11 @@ class World {
 
   /** Returns true if a bottle can be thrown. */
   canThrow = () => {
+    const now = Date.now();
+    const timeSinceLastThrow = now - this.character.lastMove; 
+    const cooldown = 500;
     return (
-      this.keyboard.D && !this.throwObject && this.character.bottleCount >= 1
+      this.keyboard.D && !this.throwObject && this.character.bottleCount >= 1 && timeSinceLastThrow > cooldown
     );
   };
 
