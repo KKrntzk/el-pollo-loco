@@ -27,8 +27,9 @@
     <section>
         <article>
             <pre class="prettyprint source linenums"><code>/**
- * class Endboss
- * extends MovableObject
+ * Represents the final boss in the game.
+ * Handles specialized movement, attack patterns like dashing, and state-based animations.
+ * @extends MovableObject
  */
 class Endboss extends MovableObject {
   height = 400;
@@ -47,6 +48,10 @@ class Endboss extends MovableObject {
   isHurt = false;
   isActive = false;
   isAttacking = false;
+
+  dashThresholds = [80, 50, 20];
+  isBaiting = false;
+  isDashing = false;
 
   activationX = 1500;
   deathSoundPlayed = false;
@@ -73,164 +78,250 @@ class Endboss extends MovableObject {
     this.animate();
   }
 
-  /** Starts intervals for movement and state animations. */
-  animate() {
-    IntervalHub.startInterval(this.animateMovement, 1000 / 60);
-    IntervalHub.startInterval(this.animateState, 170);
-  }
-
-  /** Handles movement based on boss state (normal, attack, enraged). */
-  animateMovement = () => {
-    if (!this.canMove()) return;
-
-    if (this.energy &lt; 40) {
-      this.enragedMove();
-    } else if (this.isAttacking) {
-      this.attackMove();
-    } else {
-      this.normalMove();
-    }
-    this.checkIfOutOfWorld();
-  };
-
-  /** Determines if the boss can currently move. */
-  canMove() {
-    return this.isActive &amp;&amp; !this.dead &amp;&amp; !this.isDying &amp;&amp; !this.isHurt;
-  }
-
-  /** Moves the boss with enrage speed. */
-  enragedMove() {
-    this.x -= this.enrageSpeed;
-  }
-
-  /** Moves the boss with attack speed. */
-  attackMove() {
-    this.x -= this.attackSpeed;
-  }
-
-  /** Moves the boss normally to the left. */
-  normalMove() {
-    this.moveLeft();
-  }
-
-  /** Updates the animation state of the boss depending on its condition. */
-  animateState = () => {
-    if (!this.isActive) {
-      this.handleAlertState();
-      return;
+  /**
+   * Starts intervals for movement and state animations.
+   */
+    animate() {
+      IntervalHub.startInterval(this.animateMovement, 1000 / 60);
+      IntervalHub.startInterval(this.animateState, 170);
     }
 
-    this.startEndbossSound();
+  /**
+   * Main movement logic. Decides which movement pattern to apply.
+   */
+    animateMovement = () => {
+      if (!this.canMove()) return;
 
-    if (this.handleDeadState()) return;
-    if (this.handleHurtState()) return;
-    if (this.handleAttackState()) return;
+      this.checkEnergyForDash();
+      this.checkAttackState();
+      this.applyCurrentMovement();
+      this.checkIfOutOfWorld();
+    };
 
-    this.handleWalkingState();
-  };
+  /**
+   * Executes the movement pattern based on the priority of states.
+   */
+    applyCurrentMovement() {
+      if (this.isBaiting) {
+        this.moveBackwards();
+      } else if (this.isDashing) {
+        this.executeDash();
+      } else if (this.energy &lt; 40) {
+        this.enragedMove();
+      } else if (this.isAttacking) {
+        this.attackMove();
+      } else {
+        this.normalMove();
+      }
+    }
 
-  /** Handles dead state animations and triggers winning screen. */
-  handleDeadState() {
-    if (this.dead || this.isDying) {
-      this.playAnimation(this.imagesDead);
-      AudioHub.stopOne(AudioHub.endbossSound);
+  /**
+   * Checks if the boss energy has dropped below a certain threshold.
+   */
+    checkEnergyForDash() {
+      if (
+        this.dashThresholds.length > 0 &amp;&amp;
+        this.energy &lt;= this.dashThresholds[0] &amp;&amp;
+        !this.isDashing &amp;&amp;
+        !this.isBaiting
+      ) {
+        this.dashThresholds.shift();
+        this.startSequence();
+      }
+    }
+
+  /**
+   * Manages the timing of the dash attack (Baiting -> Dashing).
+   */
+    startSequence() {
+      this.isBaiting = true;
+      let waitTime = this.energy * 8;
+
+      setTimeout(() => {
+        this.isBaiting = false;
+        this.isDashing = true;
+
+        setTimeout(() => {
+          this.isDashing = false;
+        }, 300);
+      }, waitTime);
+    }
+
+  /**
+   * Moves the boss slowly backwards to signal an upcoming attack.
+   */
+    moveBackwards() {
+      this.x += 2;
+    }
+
+  /**
+   * Performs the high-speed dash attack.
+   */
+    executeDash() {
+      let dashSpeed = 30 - this.energy / 4;
+      this.x -= dashSpeed;
+    }
+
+  /**
+   * Determines if the boss can currently move.
+   */
+    canMove() {
+      return this.isActive &amp;&amp; !this.dead &amp;&amp; !this.isDying &amp;&amp; !this.isHurt;
+    }
+
+  /**
+   * Moves the boss with enrage speed.
+   */
+    enragedMove() {
+      this.x -= this.enrageSpeed;
+    }
+
+  /**
+   * Moves the boss with attack speed.
+   */
+    attackMove() {
+      this.x -= this.attackSpeed;
+    }
+
+  /**
+   * Moves the boss normally to the left.
+   */
+    normalMove() {
+      this.moveLeft();
+    }
+
+  /**
+   * Updates the animation state of the boss depending on its condition.
+   */
+    animateState = () => {
+      if (!this.isActive) {
+        this.handleAlertState();
+        return;
+      }
+
+      this.startEndbossSound();
+
+      if (this.handleDeadState()) return;
+      if (this.handleHurtState()) return;
+      if (this.isDashing || this.isBaiting || this.isAttacking) {
+        this.playAnimation(this.imagesAttack);
+        return;
+      }
+
+      this.handleWalkingState();
+    };
+
+  /**
+   * Handles dead state animations and triggers winning screen.
+   */
+    handleDeadState() {
+      if (this.dead || this.isDying) {
+        this.playAnimation(this.imagesDead);
+        AudioHub.stopOne(AudioHub.endbossSound);
+        this.stopIdleSound();
+        this.playDeathSoundOnce();
+        showWinningScreen();
+        return true;
+      }
+      return false;
+    }
+
+  /**
+   * Handles hurt state animations and plays hurt sounds.
+   */
+    handleHurtState() {
+      if (this.isHurt) {
+        this.playAnimation(this.imagesHurt);
+        this.stopIdleSound();
+        const sound = Math.random() &lt; 0.5 ? AudioHub.chickenDead : AudioHub.chickenDead2;
+        AudioHub.playOne(sound);
+        return true;
+      }
+      return false;
+    }
+
+  /**
+   * Handles walking animation and plays idle sound.
+   */
+    handleWalkingState() {
+      this.playAnimation(this.imagesWalking);
+      this.playIdleSound();
+    }
+
+  /**
+   * Handles alert animation when boss is not yet active.
+   */
+    handleAlertState() {
+      this.playAnimation(this.imagesAlert);
       this.stopIdleSound();
-      this.playDeathSoundOnce();
-      showWinningScreen();
-      return true;
     }
-    return false;
-  }
 
-  /** Handles hurt state animations and plays hurt sounds. */
-  handleHurtState() {
-    if (this.isHurt) {
-      this.playAnimation(this.imagesHurt);
-      this.stopIdleSound();
-      const sound =
-        Math.random() &lt; 0.5 ? AudioHub.chickenDead : AudioHub.chickenDead2;
-      AudioHub.playOne(sound);
-      return true;
+  /**
+   * Plays looping idle sound if not already playing.
+   */
+    playIdleSound() {
+      if (!this.idleSoundPlaying) {
+        AudioHub.endbossIdle.loop = true;
+        AudioHub.playOne(AudioHub.endbossIdle);
+        this.idleSoundPlaying = true;
+      }
     }
-    return false;
-  }
 
-  /** Handles attack state animation. */
-  handleAttackState() {
-    if (this.isAttacking) {
-      this.playAnimation(this.imagesAttack);
-      this.stopIdleSound();
-      return true;
+  /**
+   * Stops the idle sound.
+   */
+    stopIdleSound() {
+      AudioHub.stopOne(AudioHub.endbossIdle);
+      this.idleSoundPlaying = false;
     }
-    return false;
-  }
 
-  /** Handles walking animation and plays idle sound. */
-  handleWalkingState() {
-    this.playAnimation(this.imagesWalking);
-    this.playIdleSound();
-  }
-
-  /** Handles alert animation when boss is not yet active. */
-  handleAlertState() {
-    this.playAnimation(this.imagesAlert);
-    this.stopIdleSound();
-  }
-
-  /** Plays looping idle sound if not already playing. */
-  playIdleSound() {
-    if (!this.idleSoundPlaying) {
-      AudioHub.endbossIdle.loop = true;
-      AudioHub.playOne(AudioHub.endbossIdle);
-      this.idleSoundPlaying = true;
+  /**
+   * Plays the endboss death sound.
+   */
+    playDeathSound() {
+      AudioHub.playOne(AudioHub.endbossDeath);
     }
-  }
 
-  /** Stops the idle sound. */
-  stopIdleSound() {
-    AudioHub.stopOne(AudioHub.endbossIdle);
-    this.idleSoundPlaying = false;
-  }
-
-  /** Plays the endboss death sound. */
-  playDeathSound() {
-    AudioHub.playOne(AudioHub.endbossDeath);
-  }
-
-  /** Plays the death sound only once. */
-  playDeathSoundOnce() {
-    if (!this.deathSoundPlayed) {
-      this.playDeathSound();
-      this.deathSoundPlayed = true;
+  /**
+   * Plays the death sound only once.
+   */
+    playDeathSoundOnce() {
+      if (!this.deathSoundPlayed) {
+        this.playDeathSound();
+        this.deathSoundPlayed = true;
+      }
     }
-  }
 
-  /** Starts looping the endboss approach sound if not already playing. */
-  startEndbossSound() {
-    if (!this.endbossSoundPlaying) {
-      AudioHub.endbossSound.loop = true;
-      AudioHub.playOne(AudioHub.endbossSound);
-      this.endbossSoundPlaying = true;
+  /**
+   * Starts looping the endboss approach sound if not already playing.
+   */
+    startEndbossSound() {
+      if (!this.endbossSoundPlaying) {
+        AudioHub.endbossSound.loop = true;
+        AudioHub.playOne(AudioHub.endbossSound);
+        this.endbossSoundPlaying = true;
+      }
     }
-  }
 
-  /** Checks if the boss should start attacking. */
-  checkAttackState() {
-    if (!this.isAttacking &amp;&amp; this.energy &lt; 50 &amp;&amp; this.isActive &amp;&amp; !this.dead) {
-      this.isAttacking = true;
+  /**
+   * Checks if the boss should start attacking normally.
+   */
+    checkAttackState() {
+      if (!this.isAttacking &amp;&amp; this.energy &lt; 50 &amp;&amp; this.isActive &amp;&amp; !this.dead) {
+        this.isAttacking = true;
+      }
     }
-  }
 
-  /** Checks if the boss has moved out of the world boundary. */
-  checkIfOutOfWorld() {
-    const worldStart = 0;
-    if (this.x + this.width &lt; worldStart) {
-      console.log("Endboss links raus!");
-      showLosingScreen();
+  /**
+   * Checks if the boss has moved out of the world boundary.
+   */
+    checkIfOutOfWorld() {
+      const worldStart = 0;
+      if (this.x + this.width &lt; worldStart) {
+        showLosingScreen();
+      }
     }
-  }
-}
-</code></pre>
+}</code></pre>
         </article>
     </section>
 
@@ -240,13 +331,13 @@ class Endboss extends MovableObject {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="AudioHub.html">AudioHub</a></li><li><a href="BackgroundObject.html">BackgroundObject</a></li><li><a href="Bottles.html">Bottles</a></li><li><a href="Character.html">Character</a></li><li><a href="Chicken.html">Chicken</a></li><li><a href="Chicks.html">Chicks</a></li><li><a href="Cloud.html">Cloud</a></li><li><a href="Coins.html">Coins</a></li><li><a href="DrawableObject.html">DrawableObject</a></li><li><a href="Endboss.html">Endboss</a></li><li><a href="IntervalHub.html">IntervalHub</a></li><li><a href="Keyboard.html">Keyboard</a></li><li><a href="Level.html">Level</a></li><li><a href="MovableObject.html">MovableObject</a></li><li><a href="Statusbar.html">Statusbar</a></li><li><a href="StatusbarBoss.html">StatusbarBoss</a></li><li><a href="StatusbarBottle.html">StatusbarBottle</a></li><li><a href="StatusbarCoin.html">StatusbarCoin</a></li><li><a href="ThrowableObject.html">ThrowableObject</a></li><li><a href="World.html">World</a></li></ul><h3>Global</h3><ul><li><a href="global.html#addButtonListeners">addButtonListeners</a></li><li><a href="global.html#bindButton">bindButton</a></li><li><a href="global.html#bindMobileControls">bindMobileControls</a></li><li><a href="global.html#checkDeviceOrientation">checkDeviceOrientation</a></li><li><a href="global.html#clearCanvas">clearCanvas</a></li><li><a href="global.html#closeDialog">closeDialog</a></li><li><a href="global.html#closeDialogImpressum">closeDialogImpressum</a></li><li><a href="global.html#createLevel1">createLevel1</a></li><li><a href="global.html#getBoolean">getBoolean</a></li><li><a href="global.html#goFullscreen">goFullscreen</a></li><li><a href="global.html#goHome">goHome</a></li><li><a href="global.html#handleFullscreenChange">handleFullscreenChange</a></li><li><a href="global.html#hideLosingScreen">hideLosingScreen</a></li><li><a href="global.html#hideMobileControls">hideMobileControls</a></li><li><a href="global.html#hideStartButton">hideStartButton</a></li><li><a href="global.html#hideWinningScreen">hideWinningScreen</a></li><li><a href="global.html#init">init</a></li><li><a href="global.html#initializeMuteButton">initializeMuteButton</a></li><li><a href="global.html#isMobileDevice">isMobileDevice</a></li><li><a href="global.html#openDialog">openDialog</a></li><li><a href="global.html#openImpressum">openImpressum</a></li><li><a href="global.html#restartGame">restartGame</a></li><li><a href="global.html#saveBoolean">saveBoolean</a></li><li><a href="global.html#showDesktopButtons">showDesktopButtons</a></li><li><a href="global.html#showGameControls">showGameControls</a></li><li><a href="global.html#showLockScreen">showLockScreen</a></li><li><a href="global.html#showLosingScreen">showLosingScreen</a></li><li><a href="global.html#showMobileControlsIfNeeded">showMobileControlsIfNeeded</a></li><li><a href="global.html#showWinningScreen">showWinningScreen</a></li><li><a href="global.html#startBackgroundMusic">startBackgroundMusic</a></li><li><a href="global.html#startGame">startGame</a></li><li><a href="global.html#toggleMobileControls">toggleMobileControls</a></li><li><a href="global.html#toggleMute">toggleMute</a></li><li><a href="global.html#updateMobileControlsVisibility">updateMobileControlsVisibility</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="AudioHub.html">AudioHub</a></li><li><a href="BackgroundObject.html">BackgroundObject</a></li><li><a href="Bottles.html">Bottles</a></li><li><a href="Character.html">Character</a></li><li><a href="Chicken.html">Chicken</a></li><li><a href="Chicks.html">Chicks</a></li><li><a href="Cloud.html">Cloud</a></li><li><a href="Coins.html">Coins</a></li><li><a href="DrawableObject.html">DrawableObject</a></li><li><a href="Endboss.html">Endboss</a></li><li><a href="IntervalHub.html">IntervalHub</a></li><li><a href="Keyboard.html">Keyboard</a></li><li><a href="Level.html">Level</a></li><li><a href="MovableObject.html">MovableObject</a></li><li><a href="Statusbar.html">Statusbar</a></li><li><a href="StatusbarBoss.html">StatusbarBoss</a></li><li><a href="StatusbarBottle.html">StatusbarBottle</a></li><li><a href="StatusbarCoin.html">StatusbarCoin</a></li><li><a href="ThrowableObject.html">ThrowableObject</a></li><li><a href="World.html">World</a></li></ul><h3>Global</h3><ul><li><a href="global.html#addButtonListeners">addButtonListeners</a></li><li><a href="global.html#bindButton">bindButton</a></li><li><a href="global.html#bindMobileControls">bindMobileControls</a></li><li><a href="global.html#checkAssetsAndEnableButton">checkAssetsAndEnableButton</a></li><li><a href="global.html#checkDeviceOrientation">checkDeviceOrientation</a></li><li><a href="global.html#clearCanvas">clearCanvas</a></li><li><a href="global.html#closeDialog">closeDialog</a></li><li><a href="global.html#closeDialogImpressum">closeDialogImpressum</a></li><li><a href="global.html#createLevel1">createLevel1</a></li><li><a href="global.html#getBoolean">getBoolean</a></li><li><a href="global.html#goFullscreen">goFullscreen</a></li><li><a href="global.html#goHome">goHome</a></li><li><a href="global.html#handleFullscreenChange">handleFullscreenChange</a></li><li><a href="global.html#handleLandscapeMode">handleLandscapeMode</a></li><li><a href="global.html#handlePortraitMode">handlePortraitMode</a></li><li><a href="global.html#hideLosingScreen">hideLosingScreen</a></li><li><a href="global.html#hideMobileControls">hideMobileControls</a></li><li><a href="global.html#hideStartButton">hideStartButton</a></li><li><a href="global.html#hideWinningScreen">hideWinningScreen</a></li><li><a href="global.html#init">init</a></li><li><a href="global.html#initializeMuteButton">initializeMuteButton</a></li><li><a href="global.html#isMobileDevice">isMobileDevice</a></li><li><a href="global.html#openDialog">openDialog</a></li><li><a href="global.html#openImpressum">openImpressum</a></li><li><a href="global.html#restartGame">restartGame</a></li><li><a href="global.html#saveBoolean">saveBoolean</a></li><li><a href="global.html#showDesktopButtons">showDesktopButtons</a></li><li><a href="global.html#showGameControls">showGameControls</a></li><li><a href="global.html#showLockScreen">showLockScreen</a></li><li><a href="global.html#showLosingScreen">showLosingScreen</a></li><li><a href="global.html#showMobileControlsIfNeeded">showMobileControlsIfNeeded</a></li><li><a href="global.html#showWinningScreen">showWinningScreen</a></li><li><a href="global.html#startBackgroundMusic">startBackgroundMusic</a></li><li><a href="global.html#startGame">startGame</a></li><li><a href="global.html#toggleMobileControls">toggleMobileControls</a></li><li><a href="global.html#toggleMute">toggleMute</a></li><li><a href="global.html#updateMobileControlsVisibility">updateMobileControlsVisibility</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Mon Jan 12 2026 17:11:35 GMT+0100 (Mitteleuropäische Normalzeit)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Tue Mar 17 2026 11:59:27 GMT+0100 (Mitteleuropäische Normalzeit)
 </footer>
 
 <script> prettyPrint(); </script>
