@@ -6,6 +6,7 @@ let startImage = new Image();
 let isMuted = false;
 let isFullscreen = false;
 const lvl1 = level1;
+let isReadyToStart = false;
 
 /**
  * Creates Level 1 with all enemies, objects, backgrounds, coins, and bottles.
@@ -156,7 +157,27 @@ const lvl1 = level1;
   startImage.onload = function () {
     ctx.drawImage(startImage, 0, 0, canvas.width, canvas.height);
   };
+  checkAssetsAndEnableButton();
 };
+
+/**
+ * Periodically checks if Hubs and Level data are available.
+ */
+function checkAssetsAndEnableButton() {
+  const checkInterval = setInterval(() => {
+    if (typeof ImageHub !== 'undefined' && typeof AudioHub !== 'undefined' && typeof level1 !== 'undefined') {
+      const btn = document.getElementById("startBtn");
+      if (btn) {
+        btn.disabled = false;
+        btn.style.opacity = "1";
+        btn.style.cursor = "pointer";
+        btn.innerText = "play";
+        isReadyToStart = true;
+        clearInterval(checkInterval); 
+      }
+    }
+  }, 200); 
+}
 
 document.addEventListener("fullscreenchange", handleFullscreenChange);
 document.addEventListener("webkitfullscreenchange", handleFullscreenChange);
@@ -229,6 +250,7 @@ document.addEventListener("webkitfullscreenchange", handleFullscreenChange);
  * Starts the game: hides start button, clears canvas, initializes world and music.
  */
  function startGame() {
+  if (!isReadyToStart) return;
   hideStartButton();
   clearCanvas();
   init();
