@@ -214,9 +214,11 @@ dialog::backdrop {
   z-index: 20;
   background: none;
   border: none;
-  padding: 6px;
+  font-size: 24px;
+  padding: 10px ;
   font-size: 20px;
   color: white;
+ 
 }
 
 .mute-btn {
@@ -235,6 +237,38 @@ dialog::backdrop {
   right: 120px;
 }
 
+@media (max-height: 550px) {
+  .mute-btn,
+  .restart-btn,
+  .home-btn,
+  .fullscreen-btn,
+  .cntrl-btn {
+    font-size: 14px; 
+    padding: 0;
+    top: 5px;
+  }
+  .mute-btn { right: 5px; }
+  .restart-btn { right: 25px; }
+  .home-btn { right: 45px; }
+  .fullscreen-btn { right: 65px; }
+  .cntrl-btn { right: 85px; }
+}
+
+@media (max-height: 350px) {
+  .mute-btn,
+  .restart-btn,
+  .home-btn,
+  .fullscreen-btn,
+  .cntrl-btn {
+    font-size: 12px; 
+  }
+  .mute-btn { right: 3px; }
+  .restart-btn { right: 22px; }
+  .home-btn { right: 42px; }
+  .fullscreen-btn { right: 62px; }
+  .cntrl-btn { right: 82px; }
+}
+
 .mute-btn:hover,
 .restart-btn:hover,
 .home-btn:hover,
@@ -242,6 +276,7 @@ dialog::backdrop {
 .cntrl-btn:hover {
   transform: scale(1.1);
 }
+
 
 /* ==============================
    Screens (Win / Lose)
