@@ -11,7 +11,7 @@ const lvl1 = level1;
  * Creates Level 1 with all enemies, objects, backgrounds, coins, and bottles.
  * @returns {Level} The created level object.
  */
-function createLevel1() {
+ function createLevel1() {
   return new Level(
     [
       new Chicken(),
@@ -150,7 +150,7 @@ function createLevel1() {
 /**
  * Initializes the canvas and draws the start image.
  */
-window.onload = function () {
+ window.onload = function () {
   canvas = document.getElementById("gameCanvas");
   ctx = canvas.getContext("2d");
   startImage.onload = function () {
@@ -164,7 +164,7 @@ document.addEventListener("webkitfullscreenchange", handleFullscreenChange);
 /**
  * Handles the transition to and from fullscreen mode.
  */
-function handleFullscreenChange() {
+ function handleFullscreenChange() {
   const btn = document.getElementById("fullScreenBtn");
   if (document.fullscreenElement) {
     isFullscreen = true;
@@ -178,7 +178,7 @@ function handleFullscreenChange() {
 /**
  * Initializes the game by creating the level and world.
  */
-function init() {
+ function init() {
   const level = createLevel1();
   world = new World(canvas, keyboard, level);
 }
@@ -186,14 +186,14 @@ function init() {
 /**
  * Hides the start button.
  */
-function hideStartButton() {
+ function hideStartButton() {
   document.getElementById("startBtn")?.classList.add("d-none");
 }
 
 /**
  * Shows all game controls.
  */
-function showGameControls() {
+ function showGameControls() {
   showDesktopButtons();
   updateMobileControlsVisibility();
 }
@@ -201,7 +201,7 @@ function showGameControls() {
 /**
  * Shows desktop control buttons.
  */
-function showDesktopButtons() {
+ function showDesktopButtons() {
   document.getElementById("muteBtn").classList.remove("d-none");
   document.getElementById("restartBtn").classList.remove("d-none");
   document.getElementById("homeBtn").classList.remove("d-none");
@@ -212,14 +212,14 @@ function showDesktopButtons() {
 /**
  * Clears the canvas.
  */
-function clearCanvas() {
+ function clearCanvas() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 }
 
 /**
  * Starts the background music.
  */
-function startBackgroundMusic() {
+ function startBackgroundMusic() {
   AudioHub.backgroundMusic.loop = true;
   AudioHub.backgroundMusic.volume = 0.1;
   AudioHub.backgroundMusic.play();
@@ -228,7 +228,7 @@ function startBackgroundMusic() {
 /**
  * Starts the game: hides start button, clears canvas, initializes world and music.
  */
-function startGame() {
+ function startGame() {
   hideStartButton();
   clearCanvas();
   init();
@@ -261,7 +261,7 @@ window.addEventListener("keyup", (e) => {
 /**
  * Adds start and end event listeners to a button.
  */
-function addButtonListeners(btn, startHandler, endHandler) {
+ function addButtonListeners(btn, startHandler, endHandler) {
   ["touchstart", "mousedown"].forEach((evt) =>
     btn.addEventListener(evt, startHandler)
   );
@@ -273,7 +273,7 @@ function addButtonListeners(btn, startHandler, endHandler) {
 /**
  * Shows the losing screen and stops all intervals after a delay.
  */
-function showLosingScreen() {
+ function showLosingScreen() {
   document.getElementById("loosingScreen").classList.remove("d-none");
   setTimeout(() => {
     IntervalHub.stopAllIntervals();
@@ -283,14 +283,14 @@ function showLosingScreen() {
 /**
  * Hides the losing screen.
  */
-function hideLosingScreen() {
+ function hideLosingScreen() {
   document.getElementById("loosingScreen").classList.add("d-none");
 }
 
 /**
  * Shows the winning screen and stops all intervals after a delay.
  */
-function showWinningScreen() {
+ function showWinningScreen() {
   document.getElementById("winningScreen").classList.remove("d-none");
   setTimeout(() => {
     IntervalHub.stopAllIntervals();
@@ -300,7 +300,7 @@ function showWinningScreen() {
 /**
  * Hides the winning screen and stops all intervals.
  */
-function hideWinningScreen() {
+ function hideWinningScreen() {
   document.getElementById("winningScreen").classList.add("d-none");
   IntervalHub.stopAllIntervals();
 }
@@ -308,7 +308,7 @@ function hideWinningScreen() {
 /**
  * Toggles fullscreen mode for the game canvas.
  */
-function goFullscreen() {
+ function goFullscreen() {
   const fullScreenBtn = document.getElementById("fullScreenBtn");
   const container = document.querySelector(".canvas-container");
   const gameState = document.getElementById("loosingScreen");
