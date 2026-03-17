@@ -346,3 +346,4 @@ window.addEventListener("keyup", (e) => {
   }
   fullScreenBtn.blur();
 }
+
