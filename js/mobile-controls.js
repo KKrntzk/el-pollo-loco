@@ -85,31 +85,46 @@
   }
 
 /**
+ * Handles the UI state when the device is in portrait mode.
+ */
+  function handlePortraitMode(lock, mobileControls) {
+    lock.classList.add("show");
+    keyboard = new Keyboard();
+    if (mobileControls) mobileControls.classList.add("d-none");
+    buttonsActive = false;
+  }
+
+/**
+ * Handles the UI state when the device is in landscape mode or desktop.
+ */
+  function handleLandscapeMode(lock, mobileControls) {
+    lock.classList.remove("show");
+    const shouldShow = world && getBoolean("showControls");
+    
+    if (shouldShow) {
+      mobileControls?.classList.remove("d-none");
+      buttonsActive = true;
+    } else {
+      mobileControls?.classList.add("d-none");
+      buttonsActive = false;
+    }
+  }
+
+/**
  * Checks device orientation and adjusts mobile controls and lock screen accordingly.
  */
   function checkDeviceOrientation() {
     const lock = document.querySelector(".device-lock");
     const mobileControls = document.querySelector(".mobile-controls");
+    
     if (!lock) return;
 
-    const isPortraitMobile =
-      isMobileDevice() && window.innerHeight > window.innerWidth;
+    const isPortraitMobile = isMobileDevice() && window.innerHeight > window.innerWidth;
 
     if (isPortraitMobile) {
-      lock.classList.add("show");
-      keyboard = new Keyboard();
-      if (mobileControls) mobileControls.classList.add("d-none");
-      buttonsActive = false;
+      handlePortraitMode(lock, mobileControls);
     } else {
-      lock.classList.remove("show");
-
-      if (world && getBoolean("showControls")) {
-        mobileControls?.classList.remove("d-none");
-        buttonsActive = true;
-      } else {
-        mobileControls?.classList.add("d-none");
-        buttonsActive = false;
-      }
+      handleLandscapeMode(lock, mobileControls);
     }
   }
 
@@ -138,23 +153,15 @@ window.addEventListener("DOMContentLoaded", checkDeviceOrientation);
  */
   function updateMobileControlsVisibility() {
     const controls = document.querySelector(".mobile-controls");
-    const saved = getBoolean("showControls");
-    
-    if (isMobileDevice()) {
-      if (saved) {
-        controls.classList.remove("d-none");
-        buttonsActive = true;
-      } else {
-        controls.classList.add("d-none");
-        buttonsActive = false;
-      }
+    if (!controls) return;
+
+    const shouldShow = getBoolean("showControls");
+
+    if (shouldShow) {
+      controls.classList.remove("d-none");
+      buttonsActive = true;
     } else {
-      if (saved) {
-        controls.classList.remove("d-none");
-        buttonsActive = true;
-      } else {
-        controls.classList.add("d-none");
-        buttonsActive = false;
-      }
+      controls.classList.add("d-none");
+      buttonsActive = false;
     }
   }
