@@ -131,6 +131,39 @@ h1 {
 /* ==============================
    Menu
 ============================== */
+.btn-small {
+  font-family: "riogrande";
+  cursor: pointer;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 15px;
+  font-size: 14px; 
+  background-color: #9c5328;
+  color: #f2eac0;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.btn-small:hover {
+  background-color: #f2eac0;
+  color: #9c5328;
+  transform: scale(1.05);
+}
+
+.canvas-menu-replika {
+  position: absolute;
+  bottom: 18%;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 15px;
+  z-index: 25;
+}
+
+.d-none {
+  display: none; 
+}
+
 .menu {
   display: flex;
   justify-content: center;
@@ -198,6 +231,41 @@ dialog::backdrop {
 
 .impressum-dialog {
   font-family: "Courier New", Courier, monospace;
+  font-size: clamp(14px, 1.2vw + 0.5rem, 18px); 
+  line-height: 1.4; 
+  max-width: 90vw;  
+  max-height: 80vh; 
+  overflow-y: auto;
+}
+
+.impressum-dialog h2 {
+  font-size: clamp(18px, 2vw, 24px);
+  margin-bottom: 10px;
+  color: #9c5328;
+}
+
+.impressum-dialog address p, 
+.impressum-dialog p {
+  margin-bottom: 8px;
+}
+
+.dialog-row {
+  display: flex;
+  flex-wrap: wrap;    
+  column-gap: 8px;    
+  row-gap: 2px;      
+  align-items: baseline;
+  margin-bottom: 8px; 
+}
+
+.dialog-row span:first-child {
+  white-space: nowrap; 
+  font-weight: bold;   
+}
+
+.dialog-row a {
+  word-break: break-all; 
+  overflow-wrap: break-word;
 }
 
 /* ==============================

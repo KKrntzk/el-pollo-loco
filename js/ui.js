@@ -39,6 +39,7 @@
     clearCanvas();
     world = null;
     init();
+    handleResponsiveMenu();
     if (!AudioHub.isMuted) {
       AudioHub.backgroundMusic.loop = true;
       AudioHub.backgroundMusic.play();

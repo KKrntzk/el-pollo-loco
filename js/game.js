@@ -175,12 +175,13 @@ let isReadyToStart = false;
  */
   function startGame() {
     if (!isReadyToStart) return;
-    hideStartButton();
+    hideStartButton(); 
     clearCanvas();
     init();
     startBackgroundMusic();
     showGameControls();
     initializeMuteButton();
+    handleResponsiveMenu();
   }
 
   let buttonsActive = false;
@@ -271,3 +272,20 @@ let isReadyToStart = false;
     }
     fullScreenBtn.blur();
   }
+
+  /**
+ * Checks the window width and toggles the canvas menu buttons.
+ */
+function handleResponsiveMenu() {
+  const canvasMenu = document.getElementById("canvasMenuReplika");
+  if (!canvasMenu) return;
+
+  if (window.innerWidth > 1000 || world) { 
+    canvasMenu.classList.add("d-none");
+  } else {
+    canvasMenu.classList.remove("d-none");
+  }
+}
+
+window.addEventListener("resize", handleResponsiveMenu);
+window.addEventListener("load", handleResponsiveMenu);
