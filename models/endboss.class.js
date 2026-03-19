@@ -170,16 +170,13 @@ class Endboss extends MovableObject {
         this.handleAlertState();
         return;
       }
-
       this.startEndbossSound();
-
       if (this.handleDeadState()) return;
       if (this.handleHurtState()) return;
       if (this.isDashing || this.isBaiting || this.isAttacking) {
         this.playAnimation(this.imagesAttack);
         return;
       }
-
       this.handleWalkingState();
     };
 

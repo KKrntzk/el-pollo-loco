@@ -154,17 +154,14 @@
     checkEndbossBottleCollision = () => {
       this.throwabelObjects.forEach((bottle) => {
         if (bottle.targetHit) return;
-
         this.level.endboss.forEach((boss) => {
           if (boss.dead) return;
-
           if (bottle.isColliding(boss)) {
             bottle.targetHit = true;
             boss.hitBoss();
             this.statusbarBoss.setPercentage(boss.energy);
             bottle.startSplash();
           }
-
           if (boss.isDead()) this.killBossAfterDelay(boss);
         });
       });
@@ -189,17 +186,13 @@
     /** Main drawing function called each frame. */
     draw = () => {
       this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-
       this.ctx.translate(this.camera_x, 0);
-
       this.drawBackground();
       this.ctx.translate(-this.camera_x, 0);
       this.drawUI();
       this.ctx.translate(this.camera_x, 0);
       this.drawGameObjects();
-
       this.ctx.translate(-this.camera_x, 0);
-
       requestAnimationFrame(() => this.draw());
     };
 
