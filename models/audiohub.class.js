@@ -59,7 +59,7 @@
       if (!AudioHub.isMuted) {
         sound.volume = 0.2;
         sound.currentTime = 0;
-        sound.play();
+        sound.play().catch(() => {});
       }
     }
 

@@ -8,6 +8,7 @@ let isFullscreen = false;
 const lvl1 = level1;
 let isReadyToStart = false;
 
+
 /**
  * Creates Level 1 with all enemies, objects, backgrounds, coins, and bottles.
  * @returns {Level} The created level object.
