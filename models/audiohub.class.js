@@ -68,7 +68,9 @@
      */
     static stopAll() {
       AudioHub.allSounds.forEach((sound) => {
+        if (!sound.paused) {
         sound.pause();
+        }
         sound.currentTime = 0;
       });
     }
@@ -78,7 +80,9 @@
      * @param {HTMLAudioElement} sound - The audio element to stop.
      */
     static stopOne(sound) {
+      if (!sound.paused) {
       sound.pause();
+      }
     }
 
     /**
