@@ -60,7 +60,7 @@
         if(sound.readyState == 4){
           sound.volume = 0.2;
           sound.currentTime = 0;
-          sound.play();
+          sound.play().catch(() => {});;
         }    
       }
     }
@@ -107,7 +107,7 @@
       });
       if (AudioHub.backgroundMusic.paused) {
         AudioHub.backgroundMusic.loop = true;
-        AudioHub.backgroundMusic.play().catch(e => console.warn("Autoplay blockiert"));
+        AudioHub.backgroundMusic.play().catch(() => {});
       }
     }
   }

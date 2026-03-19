@@ -45,8 +45,6 @@
       AudioHub.backgroundMusic.play();
     }
     restartBtn.blur();
-
-
   }
 
 /**
