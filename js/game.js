@@ -221,10 +221,8 @@ let isReadyToStart = false;
  * Shows the losing screen and stops all intervals after a delay.
  */
   function showLosingScreen() {
-    document.getElementById("loosingScreen").classList.remove("d-none");
-    setTimeout(() => {
-      IntervalHub.stopAllIntervals();
-    }, 1000);
+    document.getElementById("loosingScreen").classList.remove("d-none");  
+    IntervalHub.stopAllIntervals();
   }
 
 /**
@@ -239,9 +237,7 @@ let isReadyToStart = false;
  */
   function showWinningScreen() {
     document.getElementById("winningScreen").classList.remove("d-none");
-    setTimeout(() => {
-      IntervalHub.stopAllIntervals();
-    }, 1000);
+    IntervalHub.stopAllIntervals();
   }
 
 /**

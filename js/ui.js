@@ -33,7 +33,7 @@
     const restartBtn = document.getElementById("restartBtn");
     hideLosingScreen();
     hideWinningScreen();
-    IntervalHub.stopAllIntervals();
+    IntervalHub.stopAllIntervals();  
     AudioHub.stopAll();
     keyboard = new Keyboard();
     clearCanvas();
@@ -45,6 +45,8 @@
       AudioHub.backgroundMusic.play();
     }
     restartBtn.blur();
+
+
   }
 
 /**

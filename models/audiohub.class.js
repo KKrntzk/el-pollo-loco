@@ -57,9 +57,11 @@
      */
     static playOne(sound) {
       if (!AudioHub.isMuted) {
-        sound.volume = 0.2;
-        sound.currentTime = 0;
-        sound.play().catch(() => {});
+        if(sound.readyState == 4){
+          sound.volume = 0.2;
+          sound.currentTime = 0;
+          sound.play();
+        }    
       }
     }
 
