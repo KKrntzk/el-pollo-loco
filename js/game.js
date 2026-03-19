@@ -175,9 +175,9 @@ let isReadyToStart = false;
  */
   function startGame() {
     if (!isReadyToStart) return;
-    hideStartButton(); 
-    clearCanvas();
     init();
+    hideStartButton(); 
+    clearCanvas();  
     startBackgroundMusic();
     showGameControls();
     initializeMuteButton();
@@ -186,8 +186,7 @@ let isReadyToStart = false;
 
   let buttonsActive = false;
 
-  window.addEventListener("keydown", (e) => {
-    if (buttonsActive) return;
+  window.addEventListener("keydown", (e) => { 
     if (e.keyCode == 39) keyboard.RIGHT = true;
     if (e.keyCode == 37) keyboard.LEFT = true;
     if (e.keyCode == 38) keyboard.UP = true;
@@ -197,7 +196,6 @@ let isReadyToStart = false;
   });
 
   window.addEventListener("keyup", (e) => {
-    if (buttonsActive) return;
     if (e.keyCode == 39) keyboard.RIGHT = false;
     if (e.keyCode == 37) keyboard.LEFT = false;
     if (e.keyCode == 38) keyboard.UP = false;

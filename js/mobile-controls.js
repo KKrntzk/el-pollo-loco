@@ -64,7 +64,6 @@
     const lock = document.querySelector(".device-lock");
     if (lock) lock.classList.add("show");
     buttonsActive = false;
-    keyboard = new Keyboard();
     hideMobileControls();
   }
 
@@ -89,7 +88,6 @@
  */
   function handlePortraitMode(lock, mobileControls) {
     lock.classList.add("show");
-    keyboard = new Keyboard();
     if (mobileControls) mobileControls.classList.add("d-none");
     buttonsActive = false;
   }
